@@ -9,8 +9,8 @@
 #ifndef UTIL_MEMBER_H_
 #define UTIL_MEMBER_H_
 
-#include <util/assert.h>
-#include <stddef.h>
+#include <assert.h>
+//#include <stddef.h>
 
 /**
  * A type describing a @a member inside a @a container type.

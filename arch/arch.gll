@@ -1,0 +1,21 @@
+regmetamodule
+{
+	name = "arch",
+	implementations =
+	{
+		"linux64",
+		"linux32",
+		"avr",
+	}
+}
+
+regmetamodule
+{
+	name = "arch_diag",
+	implementations =
+	{
+		"linux64",
+		"linux32",
+		"avr",
+	}
+}

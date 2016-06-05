@@ -1,9 +1,9 @@
 #ifndef GENOS_DLIST_H
 #define GENOS_DLIST_H
 
-#include "genos.h"
-#include "genos/container/dlist_head.h"
+#include "genos/datastruct/dlist_head.h"
 #include "utilxx/member.h" 
+#include "utilxx/string.h"
 
 template<typename type, dlist_head type::* member>
 class dlist 
@@ -119,9 +119,9 @@ public:
 	reverse_iterator rbegin() {return reverse_iterator(list.prev);};
 	reverse_iterator rend() {return reverse_iterator(&list);};
 
-	string to_info()
+	gxx::string to_info()
 	{
-		string str;
+		gxx::string str;
 		str.reserve(128);
 		int i = 0;
 		dlist_head* ptr;
@@ -133,14 +133,14 @@ public:
 		return str;
 	};
 
-	string to_str()
+	gxx::string to_str()
 	{
-		string str;
+		gxx::string str;
 		str.reserve(128);
 		str << "[";
 		for (auto r : *this)
 		{
-			str << to_str(r) << string(",");
+			str << to_str(r) << gxx::string(",");
 		};
 		str << "]";
 		return str;

@@ -1,8 +1,0 @@
-regmodule
-{
-	name = "test",
-	sources =
-	{
-		cxx = {"test.cpp"}
-	}
-}

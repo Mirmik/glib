@@ -26,8 +26,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
-#include "glib/utilxx/buffer.h"
-#include "glib/utilxx/charbuf.h"
+//#include "glib/utilxx/buffer.h"
+#include "utilxx/charbuf.h"
 
 //#include "glib/utilxx/to_string.h"
 
@@ -80,7 +80,7 @@ public:
 	explicit string(T* ptr, unsigned char base=16) 
 	: string((uintptr_t)ptr,base) {};
 
-	explicit string(gxx::buffer cptr);
+	//explicit string(gxx::buffer cptr);
 
 	~string(void);
 

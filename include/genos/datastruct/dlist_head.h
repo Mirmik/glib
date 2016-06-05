@@ -1,11 +1,11 @@
 #ifndef GENOS_DLIST_HEAD
 #define GENOS_DLIST_HEAD
 
-#include <inttypes.h>
-#include "util/assert.h"
-#include "sys/cdefs.h"
+#include "inttypes.h"
+#include "assert.h"
 #include "defines/decltypeof.h"
 #include "util/member.h"
+#include "compiler.h"
 
 struct dlist_head
 {
@@ -13,8 +13,8 @@ struct dlist_head
 	dlist_head* prev;
 	dlist_head* top;
 
-	__if_cplusplus(
-	dlist_head() : next(this), prev(this), top(0) {};
+	__if_c_plusplus(
+	inline dlist_head() : next(this), prev(this), top(0) {};
 	)
 };
 
