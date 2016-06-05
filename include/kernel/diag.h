@@ -16,8 +16,8 @@ struct diag_ops
 {
 	int (*putc)(int c);
 	int (*getc)();
-	int (*write)(void* buf, int n);
-	int (*read)(void* buf, int n);
+	int (*write)(const char* buf, int n);
+	int (*read)(char* buf, int n);
 //	int (*available)();
 //	int (*flush)();
 	int (*init)();

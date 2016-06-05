@@ -6,7 +6,7 @@
 #include <sys/cdefs.h>
 
 
-#if __c_plusplus
+#if __cplusplus
 #include <genos/gstl/utility.h>
 #define decltypeof(a) typename gstd::remove_reference<decltype(a)>::type
 #else

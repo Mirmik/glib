@@ -38,8 +38,7 @@
 #define __END_DECLS
 #endif
 
-
-#ifdef __c_plusplus
+#ifdef __cplusplus
 #define __if_c_plusplus(...) __VA_ARGS__
 #define __if_not_cplusplus(...)
 #define __if_C_if_CXX(c, cxx) cxx
@@ -49,6 +48,6 @@
 #define __if_C_if_CXX(c, cxx) c 
 #endif
 
-
+//#define types_compatible(type1,type2) __builtin_types_compatible_p(type1, type2)
 
 #endif /* COMPILER_H_ */

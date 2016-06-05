@@ -101,8 +101,7 @@ void debug_print_test();
 
 __END_DECLS
 
-#ifdef __c_plusplus
-
+#ifdef __cplusplus
 #include "utilxx/string.h"
 
 void dprln();
@@ -163,7 +162,7 @@ void dpr_dump(void* obj, uint32_t size);
 void dpr_dump_ascii(void* obj, uint32_t size);
 
 template<typename T> void dprptr(T* obj) 
-	{ dprhex(reinterpret_cast<uintptr_t>(obj)); };
+	{ debug_printhex_ptr((void*)obj); };
 
 template<typename T> void dprln(T obj) 
 	{ dpr(obj); debug_write("\r\n", 2); };
@@ -178,6 +177,6 @@ template<typename T> void dprptrln(T obj)
 	{ dprptr(obj); debug_write("\r\n", 2); };
 
 
-#endif //__c_plusplus
+#endif //__cplusplus
 
 #endif

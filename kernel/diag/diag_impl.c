@@ -57,7 +57,7 @@ int diag_init(){
 
 int diag_write_stub(const char* buf, int len)
 {
-	char *ptr = buf;
+	const char *ptr = buf;
 	for (;len;len--) diag_putc((int)*ptr++);
 };
 

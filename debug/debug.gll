@@ -25,7 +25,8 @@ regmodule
 	{
 		cc = {"dprint_func_impl.c", "dprint_diag.c"},
 		cxx = {"dprintxx.cpp"},
-	}
+	},
+	loc_cc = "-Wno-pointer-to-int-cast"
 }
 
 regmodule

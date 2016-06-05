@@ -107,17 +107,13 @@ void debug_printdec_double(double a, int prec)
 	};
 #endif
 
-//void debug_printhex_ptr(void* v)
-//{
-//	if (sizeof(void*)==1)
-//		debug_printhex_uint8((uint8_t)v);
-//	if (sizeof(void*)==2) 
-//		debug_printhex_uint16((uint16_t)v);
-//	if (sizeof(void*)==4)
-//		debug_printhex_uint32((uint32_t)v);
-//	if (sizeof(void*)==8)
-//		debug_printhex_uint64((uint64_t)v);
-//};
+void debug_printhex_ptr(void* v)
+{
+	if (__builtin_types_compatible_p(uint8_t , uintptr_t)) debug_printhex_uint8 ((uint8_t )v);
+	if (__builtin_types_compatible_p(uint16_t, uintptr_t)) debug_printhex_uint16((uint16_t)v);
+	if (__builtin_types_compatible_p(uint32_t, uintptr_t)) debug_printhex_uint32((uint32_t)v);
+	if (__builtin_types_compatible_p(uint64_t, uintptr_t)) debug_printhex_uint64((uint64_t)v);
+};
 	
 
 

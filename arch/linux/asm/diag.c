@@ -15,9 +15,9 @@ int terminal_diag_init()
 
 struct diag_ops terminal_diag =
 {
-	terminal_diag_putc, 
-	(diag_getc_t) do_nothing, 
-	diag_write_stub, 
-	(diag_read_t) do_nothing, 
-	terminal_diag_init
+					terminal_diag_putc, 
+	(diag_getc_t) 	do_nothing, 
+					diag_write_stub, 
+	(diag_read_t) 	do_nothing, 
+					terminal_diag_init
 };

@@ -11,10 +11,9 @@ struct dlist_head
 {
 	dlist_head* next;
 	dlist_head* prev;
-	dlist_head* top;
 
 	__if_c_plusplus(
-	inline dlist_head() : next(this), prev(this), top(0) {};
+	inline dlist_head() : next(this), prev(this) {};
 	)
 };
 
@@ -22,24 +21,12 @@ static inline void dlist_init(struct dlist_head* head)
 {
 	head->next = head;
 	head->prev = head;
-	head->top = 0;
 };
 
 static inline void dlist_init_list(struct dlist_head* head)
 {
 	head->next = head;
 	head->prev = head;
-	head->top = head;
-};
-
-static inline int8_t dlist_is_linked(struct dlist_head* head)
-{
-	return head->top != 0;
-};
-
-static inline int8_t dlist_is_list_top(struct dlist_head* head)
-{
-	return head == head->top;
 };
 
 static inline int8_t dlist_is_empty(struct dlist_head* head)
@@ -57,15 +44,11 @@ static inline void __dlist_add(struct dlist_head *_new, struct dlist_head *next,
 
 static inline void dlist_add_next(struct dlist_head* _new, struct dlist_head* head)
 {
-	//assert(head->top);
-	_new->top = head->top;
 	__dlist_add(_new, head->next, head);
 };
 
 static inline void dlist_add_prev(struct dlist_head* _new, struct dlist_head* head)
 {
-	//assert(head->top);
-	_new->top = head->top;
 	__dlist_add(_new, head, head->prev);
 };
 
