@@ -21,7 +21,6 @@
 
 #ifndef String_class_h
 #define String_class_h
-#ifdef __cplusplus
 
 #include <stdlib.h>
 #include <string.h>
@@ -76,11 +75,13 @@ public:
 	explicit string(float, unsigned char decimalPlaces=2);
 	explicit string(double, unsigned char decimalPlaces=2);
 	
-	template<typename T>
-	explicit string(T* ptr, unsigned char base=16) 
-	: string((uintptr_t)ptr,base) {};
 
-	//explicit string(gxx::buffer cptr);
+
+	//template<typename T>
+	//explicit string(T* ptr, unsigned char base=16) 
+	//: string((uintptr_t)ptr,base) {};
+
+	explicit string(gxx::buffer cptr);
 
 	~string(void);
 
@@ -240,5 +241,4 @@ public:
 
 };
 
-#endif  // __cplusplus
 #endif  // String_class_h

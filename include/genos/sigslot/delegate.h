@@ -12,9 +12,9 @@
 #ifndef GENOS_FUTURE_DELEGATE_H
 #define GENOS_FUTURE_DELEGATE_H
 	
-#include "glib/utilxx/horrible_cast.h"
-#include "glib/gstl/utility.h"			
-#include "glib/util/stub.h"
+#include "utilxx/horrible_cast.h"
+#include "genos/gstl/utility.h"			
+#include "util/stub.h"
 
 #include "inttypes.h"
 	
@@ -80,7 +80,7 @@ class delegate
 	//Бывает, что и с volatile делегатами приходится 
 	//работать.
 	delegate(volatile const delegate& d)
-	: delegate(remove_volatile(d)) {};
+	: delegate(const_cast<delegate>(d)) {};
 			
 
 	//Конструктор перемещения
