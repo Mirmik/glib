@@ -1,0 +1,9 @@
+regmodule
+{
+	name = "glib",
+	modules = 
+	{
+		{name = "gstring"},
+		{name = "xtox"},
+	}
+}
