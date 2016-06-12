@@ -24,7 +24,7 @@ class traits_type = genos::elem_traits<valtype>
 			typedef 						valtype				value_type;
 			typedef typename traits_type::	size_type 			size_type;
 			typedef typename traits_type::	ptrdiff_t 			difference_type;
-			typedef 		 gstd::pair<list_head, valtype>			pair_t;
+			typedef 		 gxx::pair<list_head, valtype>			pair_t;
 			genos::allocator<pair_t>									alloc;
 			
 			public:

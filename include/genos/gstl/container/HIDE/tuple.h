@@ -3,7 +3,7 @@
 	
 	#include "genos/gstl/utility.h"
 	
-	using namespace gstd;
+	using namespace gxx;
 	
 		template<typename... Args>
 		struct tuple;
@@ -158,7 +158,7 @@ class tuple_size< const volatile T >
 		template<typename F, typename Tuple>
 		auto call(F f, Tuple&& t)
 		{
-			typedef typename gstd::decay<Tuple>::type type;
+			typedef typename gxx::decay<Tuple>::type type;
 			return call_impl<F, Tuple, 0 == tuple_size<type>::value, 
 			tuple_size<type>::value
 			>::call(f, forward<Tuple>(t));

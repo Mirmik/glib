@@ -69,7 +69,7 @@ struct call_impl
     {
         return call_impl<F, Tuple, TotalArgs == 1 + sizeof...(N), 
                                    TotalArgs, N..., sizeof...(N)
-                        >::call(f, gstd::forward<Tuple>(t));
+                        >::call(f, gxx::forward<Tuple>(t));
     }
 };
 
@@ -78,7 +78,7 @@ struct call_impl<F, Tuple, true, TotalArgs, N...>
 {
     auto static call(F f, Tuple&& t)
     {
-        return f(tuple_get<N>(gstd::forward<Tuple>(t))...);
+        return f(tuple_get<N>(gxx::forward<Tuple>(t))...);
     }
 };
 */
@@ -86,10 +86,10 @@ struct call_impl<F, Tuple, true, TotalArgs, N...>
 template<typename F, typename Tuple>
 auto call(F f, Tuple&& t)
 {
-    typedef typename gstd::decay<Tuple>::type type;
-    return call_impl<F, Tuple, 0 == gstd::tuple_size<type>::value, 
-                                    gstd::tuple_size<type>::value
-                    >::call(f, gstd::forward<Tuple>(t));
+    typedef typename gxx::decay<Tuple>::type type;
+    return call_impl<F, Tuple, 0 == gxx::tuple_size<type>::value, 
+                                    gxx::tuple_size<type>::value
+                    >::call(f, gxx::forward<Tuple>(t));
 }
 */
 #endif

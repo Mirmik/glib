@@ -23,7 +23,7 @@
 
 #pragma GCC visibility push(default)
 
-namespace gstd{
+namespace gxx{
 
 	template <class Arg, class Result> struct unary_function;
 	template <class Arg1, class Arg2, class Result> struct binary_function;
@@ -392,7 +392,7 @@ namespace gstd{
 // are *NOT* part of the C++ standard, however
 
 template <class Op1, class Op2> class   unary_compose :
-	public gstd::unary_function<typename Op2::argument_type,
+	public gxx::unary_function<typename Op2::argument_type,
 		typename Op1::result_type>
 {
 protected:
@@ -412,7 +412,7 @@ compose1(const Op1& fn1, const Op2& fn2){
 }
 
 template <class Op1, class Op2, class Op3> class   binary_compose : 
-	public gstd::unary_function<typename Op2::argument_type, typename Op1::result_type>
+	public gxx::unary_function<typename Op2::argument_type, typename Op1::result_type>
 {
 protected:
 	Op1 mf1;

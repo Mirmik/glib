@@ -4,34 +4,34 @@
 	
 	
 //is_same cравнивает два типа, а не одинаковые ли они
-template<class T, class U> 	struct is_same 					: gstd::false_type 	{};
-template<class T> 			struct is_same<T, T> 			: gstd::true_type 	{};
+template<class T, class U> 	struct is_same 					: gxx::false_type 	{};
+template<class T> 			struct is_same<T, T> 			: gxx::true_type 	{};
 
 //is_reference
-template<class T>			struct is_reference 			: gstd::false_type 	{};
-template<class T>			struct is_reference<T&> 		: gstd::true_type 	{};
-template<class T>			struct is_reference<T&&> 		: gstd::true_type 	{};
+template<class T>			struct is_reference 			: gxx::false_type 	{};
+template<class T>			struct is_reference<T&> 		: gxx::true_type 	{};
+template<class T>			struct is_reference<T&&> 		: gxx::true_type 	{};
 
 //is_rvalue_reference
-template<class T>			struct is_rvalue_reference 				: gstd::false_type 	{};
-template<class T>			struct is_rvalue_reference<T&&> 		: gstd::true_type 	{};
+template<class T>			struct is_rvalue_reference 				: gxx::false_type 	{};
+template<class T>			struct is_rvalue_reference<T&&> 		: gxx::true_type 	{};
 
 //is_lvalue_reference
-template<class T>			struct is_lvalue_reference 				: gstd::false_type 	{};
-template<class T>			struct is_lvalue_reference<T&> 			: gstd::true_type 	{};
+template<class T>			struct is_lvalue_reference 				: gxx::false_type 	{};
+template<class T>			struct is_lvalue_reference<T&> 			: gxx::true_type 	{};
 
 //is_pointer
-template< class T > struct is_pointer_helper     : gstd::false_type {};
-template< class T > struct is_pointer_helper<T*> : gstd::true_type {};
-template< class T > struct is_pointer : is_pointer_helper<typename gstd::remove_cv<T>::type> {};
+template< class T > struct is_pointer_helper     : gxx::false_type {};
+template< class T > struct is_pointer_helper<T*> : gxx::true_type {};
+template< class T > struct is_pointer : is_pointer_helper<typename gxx::remove_cv<T>::type> {};
 
 //is_const
-template<class T> 			struct is_const 				: gstd::false_type 	{};
-template<class T> 			struct is_const<const T> 		: gstd::true_type 	{};
+template<class T> 			struct is_const 				: gxx::false_type 	{};
+template<class T> 			struct is_const<const T> 		: gxx::true_type 	{};
 
 //is_volatile
-template<class T> 			struct is_volatile 				: gstd::false_type 	{};
-template<class T> 			struct is_volatile<volatile T> 	: gstd::true_type 	{};
+template<class T> 			struct is_volatile 				: gxx::false_type 	{};
+template<class T> 			struct is_volatile<volatile T> 	: gxx::true_type 	{};
 
 //is_integral
 template <class T> 			struct is_integral 						: false_type { };
@@ -72,21 +72,21 @@ template<> 					struct is_floating_point<float> 		: true_type { };
 template<> 					struct is_floating_point<double> 		: true_type { };
 template<> 					struct is_floating_point<long double> 	: true_type { };
 
-template<class T>			struct is_arithmetic : gstd::bool_constant<
-                          gstd::is_integral<T>::value ||
-                                 gstd::is_floating_point<T>::value> {};
+template<class T>			struct is_arithmetic : gxx::bool_constant<
+                          gxx::is_integral<T>::value ||
+                                 gxx::is_floating_point<T>::value> {};
 
 template< class T >
-struct is_void : gstd::is_same<void, typename gstd::remove_cv<T>::type> {};
+struct is_void : gxx::is_same<void, typename gxx::remove_cv<T>::type> {};
 											  
 template<class T>
-struct is_array : gstd::false_type {};
+struct is_array : gxx::false_type {};
  
 template<class T>
-struct is_array<T[]> : gstd::true_type {};
+struct is_array<T[]> : gxx::true_type {};
  
 template<class T, size_t N>
-struct is_array<T[N]> : gstd::true_type {};											  
+struct is_array<T[N]> : gxx::true_type {};											  
 											  
 											  
 											  
@@ -114,7 +114,7 @@ template <class T> struct is_class_or_union {
 // is_convertible chokes if the first argument is an array. That's why
 // we use add_reference here.
 template <bool NotUnum, class T> struct is_enum_impl
-    : is_convertible<typename gstd::add_reference<T>::type, int> { };
+    : is_convertible<typename gxx::add_reference<T>::type, int> { };
 
 template <class T> struct is_enum_impl<true, T> : false_type { };
   
@@ -152,7 +152,7 @@ template <class T> struct is_enum<const volatile T> : is_enum<T> { };
 
 // We can't get is_pod right without compiler help, so fail conservatively.
 // We will assume it's false except for arithmetic types, enumerations,
-// pointers and const versions thereof. Note that gstd::pair is not a POD.
+// pointers and const versions thereof. Note that gxx::pair is not a POD.
 template <class T> struct is_pod
  : integral_constant<bool, (is_integral<T>::value ||
                             is_floating_point<T>::value ||
@@ -163,11 +163,11 @@ template <class T> struct is_pod<const T> : is_pod<T> { };
 
 // We can't get has_trivial_constructor right without compiler help, so
 // fail conservatively. We will assume it's false except for: (1) types
-// for which is_pod is true. (2) gstd::pair of types with trivial
+// for which is_pod is true. (2) gxx::pair of types with trivial
 // constructors. (3) array of a type with a trivial constructor.
 // (4) const versions thereof.
 template <class T> struct has_trivial_constructor : is_pod<T> { };
-template <class T, class U> struct has_trivial_constructor<gstd::pair<T, U> >
+template <class T, class U> struct has_trivial_constructor<gxx::pair<T, U> >
   : integral_constant<bool,
                       (has_trivial_constructor<T>::value &&
                        has_trivial_constructor<U>::value)> { };
@@ -178,11 +178,11 @@ template <class T> struct has_trivial_constructor<const T>
 
 // We can't get has_trivial_copy right without compiler help, so fail
 // conservatively. We will assume it's false except for: (1) types
-// for which is_pod is true. (2) gstd::pair of types with trivial copy
+// for which is_pod is true. (2) gxx::pair of types with trivial copy
 // constructors. (3) array of a type with a trivial copy constructor.
 // (4) const versions thereof.
 template <class T> struct has_trivial_copy : is_pod<T> { };
-template <class T, class U> struct has_trivial_copy<gstd::pair<T, U> >
+template <class T, class U> struct has_trivial_copy<gxx::pair<T, U> >
   : integral_constant<bool,
                       (has_trivial_copy<T>::value &&
                        has_trivial_copy<U>::value)> { };
@@ -192,10 +192,10 @@ template <class T> struct has_trivial_copy<const T> : has_trivial_copy<T> { };
 
 // We can't get has_trivial_assign right without compiler help, so fail
 // conservatively. We will assume it's false except for: (1) types
-// for which is_pod is true. (2) gstd::pair of types with trivial copy
+// for which is_pod is true. (2) gxx::pair of types with trivial copy
 // constructors. (3) array of a type with a trivial assign constructor.
 template <class T> struct has_trivial_assign : is_pod<T> { };
-template <class T, class U> struct has_trivial_assign<gstd::pair<T, U> >
+template <class T, class U> struct has_trivial_assign<gxx::pair<T, U> >
   : integral_constant<bool,
                       (has_trivial_assign<T>::value &&
                        has_trivial_assign<U>::value)> { };
@@ -204,11 +204,11 @@ template <class A, int N> struct has_trivial_assign<A[N]>
 
 // We can't get has_trivial_destructor right without compiler help, so
 // fail conservatively. We will assume it's false except for: (1) types
-// for which is_pod is true. (2) gstd::pair of types with trivial
+// for which is_pod is true. (2) gxx::pair of types with trivial
 // destructors. (3) array of a type with a trivial destructor.
 // (4) const versions thereof.
 template <class T> struct has_trivial_destructor : is_pod<T> { };
-template <class T, class U> struct has_trivial_destructor<gstd::pair<T, U> >
+template <class T, class U> struct has_trivial_destructor<gxx::pair<T, U> >
   : integral_constant<bool,
                       (has_trivial_destructor<T>::value &&
                        has_trivial_destructor<U>::value)> { };
@@ -245,150 +245,150 @@ Test(internal::ConvertHelper<From, To>::Create())) == sizeof(small_)> {};
 
 // primary template
 template<class>
-struct is_function : gstd::false_type { };
+struct is_function : gxx::false_type { };
  
 // specialization for regular functions
 template<class Ret, class... Args>
-struct is_function<Ret(Args...)> : gstd::true_type {};
+struct is_function<Ret(Args...)> : gxx::true_type {};
  
-// specialization for variadic functions such as gstd::printf
+// specialization for variadic functions such as gxx::printf
 template<class Ret, class... Args>
-struct is_function<Ret(Args......)> : gstd::true_type {};
+struct is_function<Ret(Args......)> : gxx::true_type {};
  
 // specialization for function types that have cv-qualifiers
 template<class Ret, class... Args>
-struct is_function<Ret(Args...)const> : gstd::true_type {};
+struct is_function<Ret(Args...)const> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args...)volatile> : gstd::true_type {};
+struct is_function<Ret(Args...)volatile> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args...)const volatile> : gstd::true_type {};
+struct is_function<Ret(Args...)const volatile> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args......)const> : gstd::true_type {};
+struct is_function<Ret(Args......)const> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args......)volatile> : gstd::true_type {};
+struct is_function<Ret(Args......)volatile> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args......)const volatile> : gstd::true_type {};
+struct is_function<Ret(Args......)const volatile> : gxx::true_type {};
  
 // specialization for function types that have ref-qualifiers
 template<class Ret, class... Args>
-struct is_function<Ret(Args...) &> : gstd::true_type {};
+struct is_function<Ret(Args...) &> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args...)const &> : gstd::true_type {};
+struct is_function<Ret(Args...)const &> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args...)volatile &> : gstd::true_type {};
+struct is_function<Ret(Args...)volatile &> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args...)const volatile &> : gstd::true_type {};
+struct is_function<Ret(Args...)const volatile &> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args......) &> : gstd::true_type {};
+struct is_function<Ret(Args......) &> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args......)const &> : gstd::true_type {};
+struct is_function<Ret(Args......)const &> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args......)volatile &> : gstd::true_type {};
+struct is_function<Ret(Args......)volatile &> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args......)const volatile &> : gstd::true_type {};
+struct is_function<Ret(Args......)const volatile &> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args...) &&> : gstd::true_type {};
+struct is_function<Ret(Args...) &&> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args...)const &&> : gstd::true_type {};
+struct is_function<Ret(Args...)const &&> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args...)volatile &&> : gstd::true_type {};
+struct is_function<Ret(Args...)volatile &&> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args...)const volatile &&> : gstd::true_type {};
+struct is_function<Ret(Args...)const volatile &&> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args......) &&> : gstd::true_type {};
+struct is_function<Ret(Args......) &&> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args......)const &&> : gstd::true_type {};
+struct is_function<Ret(Args......)const &&> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args......)volatile &&> : gstd::true_type {};
+struct is_function<Ret(Args......)volatile &&> : gxx::true_type {};
 template<class Ret, class... Args>
-struct is_function<Ret(Args......)const volatile &&> : gstd::true_type {};
+struct is_function<Ret(Args......)const volatile &&> : gxx::true_type {};
 
 
 template< class T >
-struct is_member_pointer_helper         : gstd::false_type {};
+struct is_member_pointer_helper         : gxx::false_type {};
  
 template< class T, class U >
-struct is_member_pointer_helper<T U::*> : gstd::true_type {};
+struct is_member_pointer_helper<T U::*> : gxx::true_type {};
  
 template< class T >
 struct is_member_pointer : 
-    is_member_pointer_helper<typename gstd::remove_cv<T>::type> {};
+    is_member_pointer_helper<typename gxx::remove_cv<T>::type> {};
 
 template<class T>
-struct is_member_object_pointer : gstd::integral_constant<
+struct is_member_object_pointer : gxx::integral_constant<
                                       bool,
-                                      gstd::is_member_pointer<T>::value &&
-                                      !gstd::is_member_function_pointer<T>::value
+                                      gxx::is_member_pointer<T>::value &&
+                                      !gxx::is_member_function_pointer<T>::value
                                   > {};
 								  
 template< class T >
-struct is_member_function_pointer_helper : gstd::false_type {};
+struct is_member_function_pointer_helper : gxx::false_type {};
  
 template< class T, class U>
-struct is_member_function_pointer_helper<T U::*> : gstd::is_function<T> {};
+struct is_member_function_pointer_helper<T U::*> : gxx::is_function<T> {};
  
 template< class T >
 struct is_member_function_pointer : is_member_function_pointer_helper<
-                                        typename gstd::remove_cv<T>::type
+                                        typename gxx::remove_cv<T>::type
                                     > {};
 									
 template< class T>
-struct is_object : gstd::bool_constant<
-                     gstd::is_scalar<T>::value ||
-                     gstd::is_array<T>::value  ||
-                     gstd::internal::is_class_or_union<T>::value > {};
+struct is_object : gxx::bool_constant<
+                     gxx::is_scalar<T>::value ||
+                     gxx::is_array<T>::value  ||
+                     gxx::internal::is_class_or_union<T>::value > {};
 
 					 
-template< class T > struct is_null_pointer : is_same<typename gstd::remove_cv<T>::type, nullptr_t> {};
+template< class T > struct is_null_pointer : is_same<typename gxx::remove_cv<T>::type, nullptr_t> {};
 					 
 template< class T >
-struct is_scalar : gstd::bool_constant<
-                     gstd::is_arithmetic<T>::value     ||
-                     gstd::is_enum<T>::value           ||
-                     gstd::is_pointer<T>::value        ||
-                     gstd::is_member_pointer<T>::value ||
-                     gstd::is_null_pointer<T>::value > {};
+struct is_scalar : gxx::bool_constant<
+                     gxx::is_arithmetic<T>::value     ||
+                     gxx::is_enum<T>::value           ||
+                     gxx::is_pointer<T>::value        ||
+                     gxx::is_member_pointer<T>::value ||
+                     gxx::is_null_pointer<T>::value > {};
 
 template< class T >
 struct is_fundamental
-  : gstd::integral_constant<
+  : gxx::integral_constant<
         bool,
-        gstd::is_arithmetic<T>::value ||
-        gstd::is_void<T>::value  ||
-        gstd::is_same<nullptr_t, typename gstd::remove_cv<T>::type>::value
+        gxx::is_arithmetic<T>::value ||
+        gxx::is_void<T>::value  ||
+        gxx::is_same<nullptr_t, typename gxx::remove_cv<T>::type>::value
 > {};
 
 template< class T >
-struct is_compound : gstd::integral_constant<bool, !gstd::is_fundamental<T>::value> {};
+struct is_compound : gxx::integral_constant<bool, !gxx::is_fundamental<T>::value> {};
 
 
 template< class T >
-struct alignment_of : gstd::integral_constant<
-                          gstd::size_t,
+struct alignment_of : gxx::integral_constant<
+                          gxx::size_t,
                           alignof(T)
                        > {};
 											  
 template<class T>
-struct rank : public gstd::integral_constant<gstd::size_t, 0> {};
+struct rank : public gxx::integral_constant<gxx::size_t, 0> {};
  
 template<class T>
-struct rank<T[]> : public gstd::integral_constant<gstd::size_t, rank<T>::value + 1> {};
+struct rank<T[]> : public gxx::integral_constant<gxx::size_t, rank<T>::value + 1> {};
  
-template<class T, gstd::size_t N>
-struct rank<T[N]> : public gstd::integral_constant<gstd::size_t, rank<T>::value + 1> {};
+template<class T, gxx::size_t N>
+struct rank<T[N]> : public gxx::integral_constant<gxx::size_t, rank<T>::value + 1> {};
 
 
 template<class T, unsigned N = 0>
-struct extent : gstd::integral_constant<gstd::size_t, 0> {};
+struct extent : gxx::integral_constant<gxx::size_t, 0> {};
  
 template<class T>
-struct extent<T[], 0> : gstd::integral_constant<gstd::size_t, 0> {};
+struct extent<T[], 0> : gxx::integral_constant<gxx::size_t, 0> {};
  
 template<class T, unsigned N>
-struct extent<T[], N> : gstd::integral_constant<gstd::size_t, gstd::extent<T, N-1>::value> {};
+struct extent<T[], N> : gxx::integral_constant<gxx::size_t, gxx::extent<T, N-1>::value> {};
  
-template<class T, gstd::size_t N>
-struct extent<T[N], 0> : gstd::integral_constant<gstd::size_t, N> {};
+template<class T, gxx::size_t N>
+struct extent<T[N], 0> : gxx::integral_constant<gxx::size_t, N> {};
  
-template<class T, gstd::size_t I, unsigned N>
-struct extent<T[I], N> : gstd::integral_constant<gstd::size_t, gstd::extent<T, N-1>::value> {};
+template<class T, gxx::size_t I, unsigned N>
+struct extent<T[I], N> : gxx::integral_constant<gxx::size_t, gxx::extent<T, N-1>::value> {};

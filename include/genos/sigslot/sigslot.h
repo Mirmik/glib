@@ -26,7 +26,7 @@ class sigslot{
 	using obj_t = AbstractDelegate*;			
 	using mtd_t = R (AbstractDelegate::*)(Args ...);
 	using fnc_t = R (*)(Args ...);
-	using absmemb_t	= gstd::pair<obj_t , mtd_t>;
+	using absmemb_t	= gxx::pair<obj_t , mtd_t>;
 
 	mvector<dlg_t> vect;
 
@@ -107,7 +107,7 @@ class sigslot{
 	
 	sigslot& operator+= (absmemb_t&& pr) 
 	{
-		include(gstd::move(pr));
+		include(gxx::move(pr));
 		return *this;
 	};	
 
@@ -131,7 +131,7 @@ class sigslot{
 	
 	sigslot& operator!= (absmemb_t&& pr) 
 	{
-		priority_include(gstd::move(pr));
+		priority_include(gxx::move(pr));
 		return *this;
 	};
 
@@ -139,7 +139,7 @@ class sigslot{
 	{
 		auto begin = vect.begin();
 		auto end = vect.end(); 
-		auto it = gstd::find(begin, end, dlg);		
+		auto it = gxx::find(begin, end, dlg);		
 		if (it == end) return 0; 
 		vect.remove(it);
 		return 1;
@@ -175,7 +175,7 @@ class sigslot{
 	
 	sigslot& operator-= (absmemb_t&& mtd) 
 	{
-		remove(gstd::move(mtd));
+		remove(gxx::move(mtd));
 		return *this;
 	};	
 

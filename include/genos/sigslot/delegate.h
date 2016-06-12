@@ -28,7 +28,7 @@ struct change_basic<T, R(B::*)(V...)>
 	using type =  R(T::*)(V...); 
 };
 
-#define delegate_mtd(obj, mtd) gstd::make_pair(reinterpret_cast<AbstractDelegate*>(obj), \
+#define delegate_mtd(obj, mtd) gxx::make_pair(reinterpret_cast<AbstractDelegate*>(obj), \
 horrible_cast<typename change_basic<AbstractDelegate, decltype(mtd)>::type, decltype(mtd)>(mtd))		
 
 template<typename R ,typename ... Args>	class delegate;
@@ -49,7 +49,7 @@ class delegate
 	using mtd_t 		= R (AbstractDelegate::*)(Args ...);
 	using fnc_t 		= R (*)(Args ...);
 	using extfnc_t	 	= R (*)(void* ,Args ...);
-	using absmemb_t		= gstd::pair<obj_t , mtd_t>;
+	using absmemb_t		= gxx::pair<obj_t , mtd_t>;
 
 
 	//Соответствует истине и будет работать только в G++
@@ -197,7 +197,7 @@ class delegate
 	//@2 мануальное задание указателя на метод класса. 
 	//Пример delegate<void, int> d(method(a, 0x00010002)); 
 	//(Смотри стандартную реализацию виртуальных функций)
-	/*delegate(gstd::pair<void* , delegate_mtd_t> pr) 
+	/*delegate(gxx::pair<void* , delegate_mtd_t> pr) 
 	{
 		object = reinterpret_cast <obj_t> (pr.first);
 		method = horrible_cast<mtd_t, delegate_mtd_t>(pr.second);
@@ -229,7 +229,7 @@ class delegate
 };	
 		
 		//Макрос для создания пары объект - метод.
-		//#define d_member(obj, mtd) gstd::make_pair(&obj, &mtd)
+		//#define d_member(obj, mtd) gxx::make_pair(&obj, &mtd)
 		
 		
 template<typename R ,typename ... Args>	
@@ -239,7 +239,7 @@ class fastdelegate
 	using mtd_t 		= R (AbstractDelegate::*)(Args ...);
 	using fnc_t 		= R (*)(Args ...);
 	using extfnc_t	 	= R (*)(void* ,Args ...);
-	using absmemb_t		= gstd::pair<obj_t , mtd_t>;
+	using absmemb_t		= gxx::pair<obj_t , mtd_t>;
 
 	//Соответствует истине и будет работать только в G++
 	union method_union

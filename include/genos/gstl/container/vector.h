@@ -7,12 +7,12 @@
 	#include "string.h"
 	#include "new.h"
 
-	namespace gstd {
+	namespace gxx {
 		
 		template
 		<
 		class valtype, 
-		class traits_type = gstd::elem_traits<valtype>
+		class traits_type = gxx::elem_traits<valtype>
 		>
 		class linear_strategy
 		{
@@ -29,7 +29,7 @@
 		template
 		<
 		class valtype, 
-		class traits_type = gstd::elem_traits<valtype>
+		class traits_type = gxx::elem_traits<valtype>
 		>
 		class double_strategy
 		{
@@ -45,9 +45,9 @@
 
 		template <
 		class valtype, 
-		class traits_type = gstd::elem_traits<valtype>,
+		class traits_type = gxx::elem_traits<valtype>,
 		class Strategy = linear_strategy<valtype>,
-		class Allocator = gstd::allocator<valtype>
+		class Allocator = gxx::allocator<valtype>
 		>
 		class vector {
 			

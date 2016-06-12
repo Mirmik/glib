@@ -20,7 +20,7 @@ template<class T> struct remove_const<const T>			{  	typedef T type;   };
 //remove_cv
 template< class T >
 struct remove_cv {
-	typedef typename gstd::remove_volatile<typename gstd::remove_const<T>::type>::type type;
+	typedef typename gxx::remove_volatile<typename gxx::remove_const<T>::type>::type type;
 };
 
 
@@ -47,7 +47,7 @@ template< class T> struct add_volatile { typedef volatile T type; };
 //add_cv
 template< class T >
 struct add_cv {
-	typedef typename gstd::add_volatile<typename gstd::add_const<T>::type>::type type;
+	typedef typename gxx::add_volatile<typename gxx::add_const<T>::type>::type type;
 };
 
 
@@ -55,7 +55,7 @@ struct add_cv {
 namespace detail {
 	template< class T, bool is_function_type = false >
 	struct add_pointer {
-		using type = typename gstd::remove_reference<T>::type*;
+		using type = typename gxx::remove_reference<T>::type*;
 	};
 	
 	template< class T >
@@ -76,7 +76,7 @@ namespace detail {
 } // namespace detail
 
 template< class T >
-struct add_pointer : detail::add_pointer<T, gstd::is_function<T>::value> {};
+struct add_pointer : detail::add_pointer<T, gxx::is_function<T>::value> {};
 
 
 
@@ -122,11 +122,11 @@ struct aligned_storage {
 template <size_t Len, class... Types>
 struct aligned_union
 {
-    static constexpr size_t alignment_value = gstd::max({alignof(Types)...});
+    static constexpr size_t alignment_value = gxx::max({alignof(Types)...});
  
     struct type
     {
-      alignas(alignment_value) char _s[gstd::max({Len, sizeof(Types)...})];
+      alignas(alignment_value) char _s[gxx::max({Len, sizeof(Types)...})];
     };
 };
 */

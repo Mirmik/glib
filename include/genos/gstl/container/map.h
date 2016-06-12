@@ -5,7 +5,7 @@
 	#include <genos/gstl/utility.h>
 	#include "genos/gstl/allocator.h"
 	
-	namespace gstd {
+	namespace gxx {
 		
 		template <
 		class valtype, 
@@ -21,7 +21,7 @@
 			typedef typename traits_type::	size_type 			size_type;
 			typedef typename traits_type::	ptrdiff_t 			difference_type;
 			
-			gstd::allocator<valtype> alloc;
+			gxx::allocator<valtype> alloc;
 			
 					
 		};

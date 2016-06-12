@@ -11,7 +11,7 @@
 
 //#include <genos/gstl/algorithm.h>
 
-namespace gstd{
+namespace gxx{
 #include "genos/gstl/utility/prototype.hpp"
 
 #include "genos/gstl/utility/pair.hpp"

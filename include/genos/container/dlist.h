@@ -21,11 +21,6 @@ public:
 		dlist_del(&list);
 	}
 
-	bool is_linked(type& obj)
-	{
-		return (obj.*member).top == &list; 
-	};
-
 	bool is_empty()
 	{
 		return dlist_is_empty(&list);
@@ -119,7 +114,7 @@ public:
 	reverse_iterator rbegin() {return reverse_iterator(list.prev);};
 	reverse_iterator rend() {return reverse_iterator(&list);};
 
-	gxx::string to_info()
+	gxx::string to_info() const
 	{
 		gxx::string str;
 		str.reserve(128);
@@ -133,7 +128,7 @@ public:
 		return str;
 	};
 
-	gxx::string to_str()
+	gxx::string to_str() const
 	{
 		gxx::string str;
 		str.reserve(128);

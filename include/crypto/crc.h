@@ -1,6 +1,8 @@
 #ifndef GENOS_CRYPTO_H
 #define GENOS_CRYPTO_H
 
+#include "string.h"
+
 /*
   Name  : CRC-8
   Poly  : 0x31    x^8 + x^5 + x^4 + 1
@@ -11,7 +13,7 @@
   MaxLen: 15 байт(127 бит) - обнаружение
     одинарных, двойных, тройных и всех нечетных ошибок
 */
-static unsigned char Crc8(unsigned char *pcBlock, unsigned int len)
+static unsigned char crc8(unsigned char *pcBlock, unsigned int len)
 {
     unsigned char crc = 0xFF;
     unsigned int i;
@@ -19,12 +21,26 @@ static unsigned char Crc8(unsigned char *pcBlock, unsigned int len)
     while (len--)
     {
         crc ^= *pcBlock++;
-
         for (i = 0; i < 8; i++)
             crc = crc & 0x80 ? (crc << 1) ^ 0x31 : crc << 1;
     }
-
     return crc;
+}
+
+static unsigned int strcrc8(const char *str)
+{
+    unsigned char* block = (unsigned char*) str; 
+    unsigned int len = strlen(str);
+    unsigned char crc = 0xFF;
+    unsigned int i;
+
+    while (len--)
+    {
+        crc ^= *block++;
+        for (i = 0; i < 8; i++)
+            crc = crc & 0x80 ? (crc << 1) ^ 0x31 : crc << 1;
+    }
+    return crc & 0xFF;
 }
 
 #endif 

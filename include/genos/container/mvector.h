@@ -179,7 +179,7 @@ public:
 		type *dst = end + bias;
 		while(src != begin)
 			{
-				new (--dst) type(gstd::move(*--src));
+				new (--dst) type(gxx::move(*--src));
 			};
 		return 1;
 	}	
@@ -190,7 +190,7 @@ public:
 		type *dst = begin - bias;
 		while(src != end)
 			{
-				new (dst++) type(gstd::move(*src++));
+				new (dst++) type(gxx::move(*src++));
 			};
 		return 1;
 	}	
@@ -201,7 +201,7 @@ public:
 		type *newbuffer = (type*) malloc(size * sizeof(type));
 		for (int i = 0; i < len; ++i)
 		{
-			new (newbuffer + i) type(gstd::move(*(buffer + i)));
+			new (newbuffer + i) type(gxx::move(*(buffer + i)));
 		};
 		free (buffer);
 		if (newbuffer) {

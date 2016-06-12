@@ -1,8 +1,8 @@
 #ifndef GENOS_ALGORITHM_H
 #define GENOS_ALGORITHM_H
 
-#include <glib/gstl/utility.h>
-#include <glib/gstl/functional.h>
+#include <genos/gstl/utility.h>
+#include <genos/gstl/functional.h>
 	
 	//Elliminate any previously defined macro
 	#undef min
@@ -10,7 +10,7 @@
 	
 	//#pragma GCC visibility push(default)
 	
-	namespace gstd{
+	namespace gxx{
 		
 		
 		template<class InputIterator, class Function>  

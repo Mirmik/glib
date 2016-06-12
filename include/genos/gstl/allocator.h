@@ -3,7 +3,7 @@
 	
 	#include "genos/gstl/traits.h"
 	
-	namespace gstd{
+	namespace gxx{
 	
 			
 	template<typename T>	T* 		sys_allocate		(size_t n)			

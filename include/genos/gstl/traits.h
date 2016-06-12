@@ -3,7 +3,7 @@
 	
 	#include "sys/types.h"
 	
-	namespace gstd{
+	namespace gxx{
 		
 		
 		template <typename T>

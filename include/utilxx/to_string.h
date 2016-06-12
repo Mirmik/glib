@@ -1,12 +1,12 @@
 #ifndef GENOS_TO_STRING_H
 #define GENOS_TO_STRING_H
 
-#include "genos/utilxx/string.h"
+#include "utilxx/string.h"
 
 template<typename type>
 gxx::string to_str(const type& value)
 {
-	return value.to_to_str();
+	return value.to_str();
 };
 
 gxx::string to_str(const int value);

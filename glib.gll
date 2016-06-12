@@ -5,5 +5,6 @@ regmodule
 	{
 		{name = "gstring"},
 		{name = "xtox"},
+		{name = "malloc_ops"},
 	}
 }

@@ -8,16 +8,16 @@
 #include "genos/gstl/utility.h"
 
 	template<typename T1, typename T2>
-	void hassign(T1& a, const T2& b){*(typename gstd::remove_reference<T2>::type*)&a = b;};
+	void hassign(T1& a, const T2& b){*(typename gxx::remove_reference<T2>::type*)&a = b;};
 	
 	template<typename T1, typename T2>
-	void hassign(T1& a, T2&& b){*(typename gstd::remove_reference<T2>::type*)&a = b;};
+	void hassign(T1& a, T2&& b){*(typename gxx::remove_reference<T2>::type*)&a = b;};
 	
 	template<size_t bias, typename T1, typename T2>
-	void hassign_bias(T1& a, const T2& b){*(typename gstd::remove_reference<T2>::type*)((char*)&a + bias) = b;};
+	void hassign_bias(T1& a, const T2& b){*(typename gxx::remove_reference<T2>::type*)((char*)&a + bias) = b;};
 	
 	template<size_t bias, typename T1, typename T2>
-	void hassign_bias(T1& a, T2&& b){*(typename gstd::remove_reference<T2>::type*)((char*)&a + bias) = b;};
+	void hassign_bias(T1& a, T2&& b){*(typename gxx::remove_reference<T2>::type*)((char*)&a + bias) = b;};
 	
 	template<typename T1, typename T2>
 	static inline T1& htreat(const T2& a){return *(T1*)&a;};
