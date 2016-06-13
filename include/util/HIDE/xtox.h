@@ -15,10 +15,10 @@
 
  __BEGIN_DECLS
 
- char *itoa( int num, char *buf, unsigned short int base );
- char *utoa( unsigned int num, char *buf, unsigned short int base );
- char *ltoa( long int num, char *buf, unsigned short int base );
- char *ultoa( unsigned long int num, char *buf, unsigned short int base );
+ char *itoa( int num, char *buf, int base );
+ char *utoa( unsigned int num, char *buf, int base );
+ char *ltoa( long int num, char *buf, int base );
+ char *ultoa( unsigned long int num, char *buf, int base );
 
 __END_DECLS
 

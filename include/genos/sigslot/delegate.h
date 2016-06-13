@@ -21,7 +21,6 @@
 class AbstractDelegate {};
 
 template<typename T, typename B> struct change_basic{};
-	
 template<typename T, typename B, typename R, typename ... V>
 struct change_basic<T, R(B::*)(V...)>
 { 
@@ -30,6 +29,8 @@ struct change_basic<T, R(B::*)(V...)>
 
 #define delegate_mtd(obj, mtd) gxx::make_pair(reinterpret_cast<AbstractDelegate*>(obj), \
 horrible_cast<typename change_basic<AbstractDelegate, decltype(mtd)>::type, decltype(mtd)>(mtd))		
+
+#define _dmtd(obj,mtd) delegate_mtd(obj,mtd)
 
 template<typename R ,typename ... Args>	class delegate;
 template<typename R ,typename ... Args>	class fastdelegate;
@@ -148,7 +149,7 @@ class delegate
 
 	//Конструктор. Делегат функции.
 	//@1 указатель на функцию.
-	explicit delegate(fnc_t func) : object(0)
+	delegate(fnc_t func) : object(0)
 	{
 		method.function = func;
 		method.attributes = 0;
@@ -298,5 +299,13 @@ public:
 		return function(args ...);
 	};
 };
-		
+
+template<typename B> struct hdfunction{};
+template<typename R, typename ... V>
+struct hdfunction<R(*)(V...)>
+{ 
+	using deltype =  delegate<R,V...>; 
+};
+#define _dfnc(fnc) hdfunction<decltype(&fnc)>::deltype(fnc)
+
 #endif

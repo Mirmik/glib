@@ -1,0 +1,8 @@
+regmodule
+{
+	name = "libc",
+	sources =
+	{
+		cc = paths.find_relative("*.c",CURDIR, CURDIR),	
+	},
+}

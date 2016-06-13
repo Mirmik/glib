@@ -128,6 +128,12 @@ void debug_print(const char *c)
 	debug_write((char*)c, debug_strlen(c));	
 };
 
+void debug_print_line()
+{	
+	debug_putchar('\r');	
+	debug_putchar('\n');
+};
+
 void debug_print_bool(uint8_t b)
 {
 	debug_print(b ? "true" : "false");	
@@ -146,8 +152,12 @@ void debug_print_test()
 	debug_print("DEBUG_print_TEST\n\r");		
 };
 
-void debug_print_dump(void* address, uint32_t size)
+void debug_print_dump(void* address, uint16_t size)
 {
+	//debug_printhex_ptr(address);
+	//debug_printhex_uint16(size);
+	//while(1);
+
 	uint8_t* dump = (uint8_t*) address; 
 	uint32_t addr_tmp = (size_t) address;
 	uint32_t i = 0;
@@ -185,7 +195,7 @@ void debug_print_dump(void* address, uint32_t size)
 	debug_print("\r\n");
 }
 
-void debug_print_dump_ascii(void* address, uint32_t size)
+void debug_print_dump_ascii(void* address, uint16_t size)
 {
 	uint8_t* dump = (uint8_t*) address; 
 	uint32_t addr_tmp = (size_t) address;
@@ -224,7 +234,7 @@ void debug_print_dump_ascii(void* address, uint32_t size)
 	debug_print("\n\r");
 }
 
-void debug_print_dump_simple(void* ptr, uint32_t size)
+void debug_print_dump_simple(void* ptr, uint16_t size)
 {
 	uint8_t* _ptr = (uint8_t*) ptr;
 	while(size--) {debug_printhex_uint8(*_ptr++);};

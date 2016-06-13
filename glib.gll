@@ -4,7 +4,8 @@ regmodule
 	modules = 
 	{
 		{name = "gstring"},
-		{name = "xtox"},
+	--	{name = "xtox"},
 		{name = "malloc_ops"},
+		{name = "errno.static"},
 	}
 }

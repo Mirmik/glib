@@ -17,6 +17,8 @@ struct dlist_head
 	)
 };
 
+__BEGIN_DECLS
+
 static inline void dlist_init(struct dlist_head* head)
 {
 	head->next = head;
@@ -76,6 +78,8 @@ static inline void dlist_move_prev(struct dlist_head* lst, struct dlist_head* he
 	__dlist_del(lst);
 	dlist_add_prev(lst, head);
 };
+
+__END_DECLS
 
 #define dlist_entry(ptr, type, member) \
 container_of(ptr, type, member)

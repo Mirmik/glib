@@ -1,0 +1,38 @@
+regmodule
+{
+	name = "arch.avr2560",
+	sources = 
+	{
+		cc = {"asm/arch.c"},
+		cxx = {"asm/archxx.cpp"},
+	}
+}
+
+
+regmodule
+{
+	name = "arch_diag.avr2560",
+	sources = 
+	{
+		cc = {"asm/diag.c"},
+	}
+}
+
+regmodule
+{
+	name = "subst.avr2560",
+	sources = 
+	{
+		cc = {"asm/context.c", "asm/switch_context.S"},
+	}
+}
+
+regmodule
+{
+	name = "libm.avr2560",
+	sources = 
+	{
+		cc = paths.find_relative("*.S",CURDIR .."/libm/", CURDIR),
+	},
+	loc = "-I" .. CURDIR .. "/locinc",
+}

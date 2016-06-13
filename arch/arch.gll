@@ -19,3 +19,14 @@ regmetamodule
 		"avr",
 	}
 }
+
+regmetamodule
+{
+	name = "libm",
+	implementations =
+	{
+		"linux64",
+		"linux32",
+		"avr",
+	}
+}

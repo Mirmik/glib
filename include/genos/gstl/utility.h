@@ -2,14 +2,13 @@
 #ifndef GENOS_GSTL_UTILITY
 	#define GENOS_GSTL_UTILITY
 
-
-#include <cstddef>
-
 //Реализации разбиты по нескольким файлам, дабы не было лапши из кода.
 //Некоторые шаблоны могут врать... Извините.
 //UNDER_CONSTRUCTED
 
 //#include <genos/gstl/algorithm.h>
+
+#include "defines/nullptr_t.h"
 
 namespace gxx{
 #include "genos/gstl/utility/prototype.hpp"

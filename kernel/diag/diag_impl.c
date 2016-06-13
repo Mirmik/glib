@@ -16,27 +16,27 @@ struct diag_ops* current_diag = &diag_stub;;
 
 void diag_setup(struct diag_ops* ndiag)
 {
-	assert(ndiag);
+	//assert(ndiag);
 	current_diag = ndiag;
 };
 
 int diag_putc(int c){
-	assert(current_diag->getc != (diag_putc_t) do_nothing);
+	//assert(current_diag->getc != (diag_putc_t) do_nothing);
 	return current_diag->putc(c);
 };
 
 int diag_getc(){
-	assert(current_diag->getc != (diag_getc_t) do_nothing);
+	//assert(current_diag->getc != (diag_getc_t) do_nothing);
 	return current_diag->getc();
 };
 
 int diag_write(const char* buf, int len){
-	assert(current_diag->write != (diag_write_t) do_nothing);
+	//assert(current_diag->write != (diag_write_t) do_nothing);
 	return current_diag->write(buf, len);
 };
 
 int diag_read(char* buf, int len){
-	assert(current_diag->read != (diag_read_t) do_nothing);
+	//assert(current_diag->read != (diag_read_t) do_nothing);
 	return current_diag->read(buf, len);
 };
 

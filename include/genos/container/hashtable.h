@@ -21,7 +21,7 @@ private:
 	int (*strategy) (hashtable_head*); 
 
 
-	inline struct hlist<type,link>* eval_cell(keytype& key)
+	inline struct hlist<type,link>* eval_cell(const keytype& key)
 	{
 		return reinterpret_cast<hlist<type,link>*>
 		(ht.table + (hash(key) % ht.table_size));
@@ -56,8 +56,6 @@ private:
 		if (strategy) newsz = strategy(&ht);
 		if (newsz == 0) return;
 
-		dpr("fad:");dprln(newsz);
-
 		void* buf = alloc->allocate(newsz * sizeof(hlist<type,link>));
  	
 		if (!ht.table) 
@@ -68,10 +66,6 @@ private:
 
 		hashtable_head nht;
 		hashtable_locate(&nht,buf,newsz * sizeof(hlist<type,link>));
-
-		dprln(to_info());
-		dprln(ht.table_size);
-		dprln(nht.table_size);
 
 		relocate(&nht);
 		ht.table = nht.table;
