@@ -21,7 +21,7 @@
 
 #include "utilxx/string.h"
 #include <stdlib.h>
-//#include "util/xtox.h"
+#include "util/xtox.h"
 #include "string.h"
 #include <stdio.h>
 #include <ctype.h>
