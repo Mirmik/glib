@@ -10,7 +10,7 @@
 #define UTIL_MEMBER_H_
 
 #include <assert.h>
-//#include <stddef.h>
+#include <stddef.h>
 
 /**
  * A type describing a @a member inside a @a container type.
