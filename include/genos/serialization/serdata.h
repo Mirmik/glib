@@ -4,8 +4,10 @@
 #include "genos/serialization/serialization.h"
 #include "genos/serialization/hserial.h"
 
+template<typename ... Types> struct serdata;
+
 template<typename T0>
-struct serdata1
+struct serdata<T0>
 {
 	T0 arg0;
 
@@ -18,7 +20,7 @@ struct serdata1
 };
 
 template<typename T0, typename T1>
-struct serdata2
+struct serdata<T0,T1>
 {
 	T0 arg0;
 	T1 arg1;
@@ -33,7 +35,7 @@ struct serdata2
 };
 
 template<typename T0, typename T1, typename T2>
-struct serdata3
+struct serdata<T0,T1,T2>
 {
 	T0 arg0;
 	T1 arg1;
