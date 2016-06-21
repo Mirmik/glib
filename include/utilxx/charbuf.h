@@ -1,6 +1,8 @@
 #ifndef GENOS_CHARBUF_H
 #define GENOS_CHARBUF_H
 
+#include "string.h"
+
 namespace gxx {
 
 template<unsigned int size>
@@ -13,17 +15,17 @@ public:
 		return data[i];
 	};
 
-	char* to_buf()
+	char* to_buf() const
 	{
-		return data;
+		return (char*)data;
 	};
 
-	char* c_str()
+	char* c_str() const
 	{
-		return data;
+		return (char*)data;
 	};
 
-	int length()
+	int length() const
 	{
 		return size;
 	};
@@ -46,6 +48,8 @@ public:
 	charbuf() { data[size] = 0; };
 
 	charbuf(const char* str) { memcpy(data, str, size); };
+
+	charbuf(const charbuf& cbuf) { memcpy(data, cbuf.to_buf(), size); };
 };
 
 };
