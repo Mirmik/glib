@@ -9,6 +9,7 @@ unsigned int hserial(char* buf, type& obj, uint8_t flag)
 	obj.hserial(buf,flag);
 };
 
+unsigned int hserial_half(char* buf, int8_t&, uint8_t flag);
 unsigned int hserial(char* buf, int8_t&, uint8_t flag);
 unsigned int hserial(char* buf, int16_t&, uint8_t flag);
 unsigned int hserial(char* buf, int32_t&, uint8_t flag);

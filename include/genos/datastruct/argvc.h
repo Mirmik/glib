@@ -3,7 +3,7 @@
 
 #include "utilxx/to_string.h"
 
-struct argv_t
+struct argvc_t
 {
 	int c;
 	char** v;

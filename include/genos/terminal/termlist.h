@@ -43,10 +43,20 @@ public:
 		ht.put(*t);
 	}
 
-	deleg_t find(const char* name)
+	void add(const char* name, R(*func)(Args...))
+	{
+		elem_t* t = (elem_t*) malloc(sizeof(elem_t));
+		t->name = name;
+		t->func = deleg_t(func);
+		ht.put(*t);
+	}
+
+	int find(const char* name, deleg_t& d)
 	{
 		elem_t* t = ht.get(name);
-		return t == 0 ? 0 : t->func; 
+		if (t == 0) return -1;
+		d = t->func;
+		return 0; 
 	};
 };
 

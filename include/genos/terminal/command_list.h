@@ -5,54 +5,11 @@
 	#include <genos/datastruct/dlist_head.h>
 	#include "genos/sigslot/delegate.h"
 	#include <string.h>
+	#include <util/split.h>
+	
 	//#include <genos/io/stream.h>
 
 	typedef void(*executed_t)(int,char**);
-
-	struct argvc_t {
-		int argc;
-		char * argv[10];
-	};	
-
-	static argvc_t split_argv(char* c)
-	{
-		argvc_t a;
-		int state = 0;
-		char* ptr = c;
-		a.argc=0;
-
-		while(*ptr != 0)
-		{
-			switch(state)
-			{
-				case 0: 
-					switch(*ptr)
-					{
-						case ' ': 
-							break;
-						default: 
-							state = 1; 
-							a.argv[a.argc] = ptr; 
-							a.argc++;
-							break;
-					}
-					break;
-				case 1:
-					switch(*ptr)
-					{ 
-						case ' ': 
-							state = 0;
-							*ptr = '\0';
-							break;
-						default:
-							break;
-					};
-					break;
-			};
-		++ptr;
-		};
-		return a;
-	};
 
 	class command_t{
 		public:

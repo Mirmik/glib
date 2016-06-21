@@ -4,6 +4,13 @@
 
 #include "debug/dprint.h"
 
+unsigned int hserial_half(char* buf, int8_t& ref, uint8_t flag)
+{
+	if (flag == SER) *buf = hbyte2hex(ref & 0xF);
+	else ref = hex2hbyte(*buf);
+	return 1;
+};
+
 unsigned int hserial(char* buf, int8_t& ref, uint8_t flag)
 {
 	if (flag == SER) uint8_to_hex(buf,ref);

@@ -1,7 +1,7 @@
 #ifndef GENOS_TO_STRING_H
 #define GENOS_TO_STRING_H
 
-#include "utilxx/string.h"
+#include "utilxx/gstring.h"
 
 template<typename type>
 gxx::string to_str(const type& value)

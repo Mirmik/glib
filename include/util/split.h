@@ -1,11 +1,11 @@
 #ifndef GENOS_UTILXX_SPLIT_H
 #define GENOS_UTILXX_SPLIT_H
 
-#include "genos/datastruct/argv.h"
+#include <genos/datastruct/argvc.h>
 
-inline static void internal_split(argv_t* args, char* str, char dv = ' ');
+inline static void internal_split(argvc_t* args, char* str, char dv = ' ');
 
-inline static void internal_split(argv_t* args, char* str, char dv)
+inline static void internal_split(argvc_t* args, char* str, char dv)
 {
 	args->c = 0;
 

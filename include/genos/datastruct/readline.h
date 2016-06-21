@@ -20,10 +20,10 @@ __if_c_plusplus(
 	inline readline() : data(nullptr), capacity(0) {};	
 	inline readline(void* _data, int _len) : data((char*)_data), capacity(_len - 1), cursor(0) {};
 	
-	inline void init(void* data, int len)
+	/*inline void init(void* data, int len)
 	{
 		readline_init(this, data, len);
-	};
+	};*/
 
 	inline int write(const char* str, int len)
 	{
@@ -47,13 +47,13 @@ __if_c_plusplus(
 )
 };
 
-static inline void readline_init(struct readline* rl, void* data, int len)
+/*static inline void readline_init(struct readline* rl, void* data, int len)
 {
 	assert(rl);
 	rl->data = (char*) data;
 	rl->capacity = len - 1;
 	rl->cursor = 0;
-};
+};*/
 
 static inline void readline_reset(struct readline* rl)
 {
@@ -82,6 +82,8 @@ static inline char* readline_getline(struct readline* rl)
 {
 	assert(rl);
 	*(rl->data + rl->cursor) = 0;
+
+
 	return rl->data;
 };
 
