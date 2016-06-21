@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
-//#include "glib/utilxx/buffer.h"
+#include "utilxx/buffer.h"
 #include "utilxx/charbuf.h"
 
 //#include "glib/utilxx/to_string.h"
@@ -62,10 +62,11 @@ public:
 	// be false).
 	string(const char *cstr = "");
 	string(const string &str);
-	//string(const __FlashStringHelper *str);
-    string(string &&rval);
+	string(string &&rval);
 	string(StringSumHelper &&rval);
 	
+	explicit string(const gxx::buffer cptr);
+    
 	explicit string(char c);
 	explicit string(unsigned char, unsigned char base=10);
 	explicit string(int, unsigned char base=10);
@@ -75,14 +76,6 @@ public:
 	explicit string(float, unsigned char decimalPlaces=2);
 	explicit string(double, unsigned char decimalPlaces=2);
 	
-
-
-	//template<typename T>
-	//explicit string(T* ptr, unsigned char base=16) 
-	//: string((uintptr_t)ptr,base) {};
-
-	explicit string(gxx::buffer cptr);
-
 	~string(void);
 
 	// memory management
@@ -98,7 +91,10 @@ public:
 	string & operator = (const string &rhs);
 	string & operator = (const char *cstr);
 	//string & operator = (const __FlashStringHelper *str);
-       #if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
+
+	string & operator = (const gxx::buffer cptr);
+
+    #if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
 	string & operator = (string &&rval);
 	string & operator = (StringSumHelper &&rval);
 	#endif

@@ -21,7 +21,7 @@
 
 #include "utilxx/string.h"
 #include <stdlib.h>
-#include "util/xtox.h"
+#include "util/extlibc/itoa.h"
 #include "string.h"
 #include <stdio.h>
 #include <ctype.h>
@@ -38,25 +38,12 @@ string::string(const char *cstr)
 	if (cstr) copy(cstr, strlen(cstr));
 }
 
-//string::string(charptr cptr)
-//{
-//	init();
-//	if (cptr.to_buf()) copy(cptr.to_buf(), cptr.length());
-//}
-
 string::string(const string &value)
 {
 	init();
 	*this = value;
 }
-/*
-string::string(const __FlashStringHelper *pstr)
-{
-	init();
-	*this = pstr;
-}*/
 
-#if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
 string::string(string &&rval)
 {
 	init();
@@ -67,7 +54,6 @@ string::string(StringSumHelper &&rval)
 	init();
 	move(rval);
 }
-#endif
 
 string::string(char c)
 {
@@ -121,7 +107,7 @@ string::string(unsigned long value, unsigned char base)
 string::string(const gxx::buffer cptr)
 {
 	init();
-	if (cptr.buf) copy(cptr.buf, cptr.len);
+	if (cptr.data()) copy(cptr.data(), cptr.length());
 }
 
 //string::string(float value, unsigned char decimalPlaces)
@@ -259,6 +245,15 @@ string & string::operator = (const char *cstr)
 	
 	return *this;
 }
+
+string & string::operator = (const gxx::buffer cptr)
+{
+	if (cptr.data()) copy(cptr.data(), cptr.length());
+	else invalidate();
+	
+	return *this;
+}
+
 /*
 string & string::operator = (const __FlashStringHelper *pstr)
 {
