@@ -1,11 +1,19 @@
 regmodule
 {
 	name = "glib",
+	
+	sources = 
+	{
+		cxx = {"utilxx/new.cpp"},
+	},
+
 	modules = 
 	{
 		{name = "gstring"},
 		{name = "itoa"},
 		{name = "malloc_ops"},
 		{name = "errno.static"},
+		{name = "resmngr"},
+		{name = "fdesc_table"},
 	}
 }

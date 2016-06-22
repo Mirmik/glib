@@ -105,7 +105,7 @@ __END_DECLS
 #define dln() debug_write("\r\n",2)
 
 #ifdef __cplusplus
-#include "utilxx/gstring.h"
+#include "utilxx/string.h"
 
 void dprln();
 

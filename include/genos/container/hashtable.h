@@ -50,7 +50,7 @@ private:
 		};
 	};
 
-	inline void memstrategy()
+	inline void check_memstrategy()
 	{
 		int newsz;
 		if (strategy) newsz = strategy(&ht);
@@ -92,7 +92,7 @@ public:
 		cmp = _cmp;
 	};
 
-	void set_memstrategy(allocator_ops* _alloc, int (*_strategy) (hashtable_head*))
+	void memstrategy(allocator_ops* _alloc, int (*_strategy) (hashtable_head*))
 	{
 		alloc = _alloc;
 		strategy = _strategy;
@@ -102,7 +102,7 @@ public:
 	{
 		assert(hash);
 		assert(ht.table || strategy);
-		memstrategy();
+		check_memstrategy();
 		ht.total++;
 		struct hlist<type,link>* cell = eval_cell(item.*keyfield);
 		cell->push_front(item);
@@ -140,7 +140,7 @@ public:
 		if (res == end) return 0;
 		cell->pop(*res);
 		ht.total--;
-		memstrategy();
+		check_memstrategy();
 		return &*res;
 	};
 

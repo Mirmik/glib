@@ -1,6 +1,6 @@
 #include "debug/dprint.h"
 #include "utilxx/horrible_cast.h"
-#include "utilxx/gstring.h"
+#include "utilxx/string.h"
 
 
 void dprln() {debug_print("\r\n");};

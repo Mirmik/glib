@@ -4,7 +4,7 @@
 #include "inttypes.h"
 #include "compiler.h"
 #include "utilxx/buffer.h"
-#include "utilxx/gstring.h"
+#include "utilxx/string.h"
 
 enum Ser
 {

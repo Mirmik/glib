@@ -6,8 +6,9 @@
 #include "stdlib.h"
 #include "string.h"
 #include "assert.h"
-#include "glib/utilxx/to_string.h"
-//#include "genos.h"
+#include <utilxx/new.h>
+#include "utilxx/to_string.h"
+
 
 template <typename type>
 class mvector
@@ -69,8 +70,25 @@ public:
 		++len;
 		return 1;
 	}
+/*
+	unsigned char push_back(type&& value)
+	{
+		if(!reserve(len + 1)) return 0;
+		new (buffer + len) type(value);
+		++len;
+		return 1;
+	}
 
-	unsigned char insert(const type& value, unsigned int i)
+	unsigned char push_front(type&& value)
+	{
+		if(!reserve(len + 1)) return 0;
+		shiftPart_right(buffer, buffer + len, 1);
+		new (buffer) type(value);
+		++len;
+		return 1;
+	}
+*/
+	unsigned char insert(const type& value, size_t i)
 	{
 		assert(i <= len);
 		if(!reserve(len + 1)) return 0;;
@@ -90,7 +108,7 @@ public:
 		return 1;
 	};
 
-	unsigned char remove(unsigned int i)
+	unsigned char remove(size_t i)
 	{
 		remove(buffer + i);
 	};
@@ -120,7 +138,7 @@ public:
 		rhs.len = 0;
 	}
 
-	mvector & construct_copy(const type *ptr, unsigned int length)
+	mvector & construct_copy(const type *ptr, size_t length)
 	{
 		if (!reserve(length)) {
 			invalidate();
@@ -132,7 +150,7 @@ public:
 		return *this;
 	}
 
-	mvector & copy(const type *ptr, unsigned int length)
+	mvector & copy(const type *ptr, size_t length)
 	{
 		if (!reserve(length)) {
 			invalidate();
@@ -154,7 +172,7 @@ public:
 		return buffer + len;
 	};
 
-	unsigned char size(unsigned int i)
+	unsigned char size(size_t i)
 	{
 		if (reserve(i)) 
 			{
@@ -164,7 +182,7 @@ public:
 		return 0;
 	}
 
-	unsigned char reserve(unsigned int size)
+	unsigned char reserve(size_t size)
 	{
 		if (buffer && capacity >= size) return 1;
 		if (changeBuffer(size)) {
@@ -173,7 +191,7 @@ public:
 		return 0;
 	}
 
-	unsigned char shiftPart_right(type* begin, type* end, unsigned int bias)
+	unsigned char shiftPart_right(type* begin, type* end, size_t bias)
 	{
 		type *src = end;
 		type *dst = end + bias;
@@ -184,7 +202,7 @@ public:
 		return 1;
 	}	
 
-	unsigned char shiftPart_left(type* begin, type* end, unsigned int bias)
+	unsigned char shiftPart_left(type* begin, type* end, size_t bias)
 	{
 		type *src = begin;
 		type *dst = begin - bias;
@@ -195,7 +213,7 @@ public:
 		return 1;
 	}	
 
-	unsigned char changeBuffer(unsigned int size)
+	unsigned char changeBuffer(size_t size)
 	{
 		//type *newbuffer = (type *)realloc(buffer, size  * sizeof(type));
 		type *newbuffer = (type*) malloc(size * sizeof(type));
@@ -239,7 +257,7 @@ public:
 		return buffer;
 	}
 
-	unsigned int length() const
+	size_t length() const
 	{
 		return len;
 	};
@@ -273,11 +291,6 @@ public:
 	{
 		push_back(value);
 		return *this;
-	};
-
-	void* operator new(size_t sz, type* ptr)
-	{
-		return ptr;
 	};
 };
 

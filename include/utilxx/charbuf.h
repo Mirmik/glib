@@ -1,7 +1,7 @@
 #ifndef GENOS_CHARBUF_H
 #define GENOS_CHARBUF_H
 
-#include "string.h"
+#include <string.h>
 
 namespace gxx {
 

@@ -1,0 +1,8 @@
+regmodule
+{
+	name = "resmngr",
+	sources = 
+	{
+		cxx = {"resmngr.cpp"},
+	}
+}
