@@ -1,6 +1,7 @@
 #ifndef GENOS_HASH_TABLE
 #define GENOS_HASH_TABLE
 
+#include "inttypes.h"
 #include "genos/datastruct/hashtable_head.h"
 #include "genos/gstl/algorithm.h"
 #include "mem/allocator.h"
@@ -8,8 +9,8 @@
 template <typename type, hlist_node type::* link, typename keytype, keytype type::* keyfield>
 class hashtable
 {
-	using hash_fn_t = uint(*)(keytype);
-	using cmp_fn_t = int(*)(keytype,keytype);
+	using hash_fn_t = uint32_t(*)(keytype);
+	using cmp_fn_t = int32_t(*)(keytype,keytype);
 
 private:
 	hashtable_head ht;

@@ -82,6 +82,7 @@ extern long long int strtoll(const char *nptr, char **endptr, int base);
  * @param base Base for the conversion. 1 < base < 37.
  * @return Pointer to buf.
  */
+ 
 extern char *itoa( int num, char *buf, unsigned short int base );
 extern char *utoa( unsigned int num, char *buf, unsigned short int base );
 extern char *ltoa( long int num, char *buf, unsigned short int base );
