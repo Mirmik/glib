@@ -9,8 +9,6 @@ struct messanger
 {
 	virtual int send(char* buf, size_t len) = 0;
 	virtual int recv(char* buf, size_t* len) = 0;
-	virtual int available() = 0;
-	virtual size_t sznext() = 0;
 };
 
 #endif
