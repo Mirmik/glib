@@ -32,7 +32,7 @@ public:
 	termlist()
 	{
 		ht.init(strcrc8,strcmp);
-		ht.set_memstrategy(&malloc_ops, hash_memstrat70);
+		ht.memstrategy(&malloc_ops, hash_memstrat70);
 	}
 
 	void add(const char* name, const deleg_t& d)

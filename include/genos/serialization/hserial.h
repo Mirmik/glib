@@ -19,6 +19,7 @@ unsigned int hserial(char* buf, uint16_t&, uint8_t flag);
 unsigned int hserial(char* buf, uint32_t&, uint8_t flag);
 unsigned int hserial(char* buf, uint64_t&, uint8_t flag);
 
-
+//unsigned int hserial(char* buf, float&, uint8_t flag);
+//unsigned int hserial(char* buf, double&, uint8_t flag);
 
 #endif
