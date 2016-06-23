@@ -196,9 +196,9 @@ public:
 	void replace(const string& find, const string& replace);
 	void remove(unsigned int index);
 	void remove(unsigned int index, unsigned int count);
-	void toLowerCase(void);
-	void toUpperCase(void);
-	void trim(void);
+//	void toLowerCase(void);
+//	void toUpperCase(void);
+//	void trim(void);
 
 	// parsing/conversion
 	long toInt(void) const;

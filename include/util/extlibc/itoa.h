@@ -15,10 +15,13 @@
 
  __BEGIN_DECLS
 
- char *itoa( int num, char *buf, int base );
- char *utoa( unsigned int num, char *buf, int base );
- char *ltoa( long int num, char *buf, int base );
- char *ultoa( unsigned long int num, char *buf, int base );
+char *itoa( int num, char *buf, int base );
+char *utoa( unsigned int num, char *buf, int base );
+char *ltoa( long int num, char *buf, int base );
+char *ultoa( unsigned long int num, char *buf, int base );
+extern double atof(const char *nptr);
+extern int atoi(const char *nptr);
+extern long atol(const char *nptr);
 
 __END_DECLS
 

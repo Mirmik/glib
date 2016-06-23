@@ -11,12 +11,13 @@
  *          - Docs
  */
 
-#ifndef STDLIB_H_
-#define STDLIB_H_
+#ifndef GSTDLIB_H_
+#define GSTDLIB_H_
 
 #include <defines/size_t.h>
 #include <defines/wchar_t.h>
 #include <defines/null.h>
+#include <util/extlibc/itoa.h>
 #include <compiler.h>
 
 /* In addition, the following symbolic names and macros shall be defined as in
@@ -25,12 +26,15 @@
 //#include <sys/wait.h>
 #include <limits.h>
 
-typedef struct ldiv {
+//#include_next "stdlib.h"
+
+
+typedef struct ldiv_t {
    long int quot;
    long int rem;
 } ldiv_t;
 
-typedef struct div {
+typedef struct div_t {
    int quot;
    int rem;
 } div_t;
@@ -67,6 +71,8 @@ __BEGIN_DECLS
  *   if there were no valid characters representing a number in the given
  *   @a base.
  */
+
+ 
 extern long int strtol(const char *nptr, char **endptr, int base);
 extern unsigned long int strtoul(const char *nptr, char **endptr, int base);
 extern double strtod(const char *nptr, char **endptr);
@@ -83,39 +89,27 @@ extern long long int strtoll(const char *nptr, char **endptr, int base);
  * @return Pointer to buf.
  */
  
-extern char *itoa( int num, char *buf, unsigned short int base );
-extern char *utoa( unsigned int num, char *buf, unsigned short int base );
-extern char *ltoa( long int num, char *buf, unsigned short int base );
-extern char *ultoa( unsigned long int num, char *buf, unsigned short int base );
-
 /* Allocate and free dynamic memory */
-/*extern void *calloc(size_t nmemb, size_t size);
+extern void *calloc(size_t nmemb, size_t size);
 extern void *malloc(size_t size);
 extern void free(void *ptr);
 extern void *realloc(void *ptr, size_t size);
-extern void *memalign(size_t boundary, size_t size);*/
-
-static void *calloc(size_t nmemb, size_t size){};
-static void *malloc(size_t size){};
-static void free(void *ptr){};
-static void *realloc(void *ptr, size_t size){};
-static void *memalign(size_t boundary, size_t size){};
-
-
+extern void *memalign(size_t boundary, size_t size);
+/*
 extern void qsort(void *base, size_t nmemb, size_t size,
 		int(*compar)(const void *, const void *));
 
 extern void *bsearch(const void *key, const void *base,
               size_t nmemb, size_t size,
               int (*compar)(const void *, const void *));
-
+*/
 /** Find the smallest element, greater or equals to specified. */
-extern void *lower_bound(const void *key, const void *base,
+/*extern void *lower_bound(const void *key, const void *base,
               size_t nmemb, size_t size,
               int (*compar)(const void *, const void *));
 
 /** Find the smallest element, strictly greater than specified. */
-extern void *upper_bound(const void *key, const void *base,
+/*extern void *upper_bound(const void *key, const void *base,
               size_t nmemb, size_t size,
               int (*compar)(const void *, const void *));
 
@@ -128,21 +122,21 @@ extern long int random(void);
 extern void srandom(unsigned int seed);
 extern char *initstate(unsigned int seed, char *state, size_t n);
 extern char *setstate(char *state);
-
+*/
 /* glibc extention */
-#include <stdint.h>
-struct random_data
-  {
-    int32_t *fptr;		/* Front pointer.  */
-    int32_t *rptr;		/* Rear pointer.  */
-    int32_t *state;		/* Array of state values.  */
-    int rand_type;		/* Type of random number generator.  */
-    int rand_deg;		/* Degree of random number generator.  */
-    int rand_sep;		/* Distance between front and rear.  */
-    int32_t *end_ptr;		/* Pointer behind state table.  */
-  };
+//#include <stdint.h>
+//struct random_data
+ // {
+//    int32_t *fptr;		/* Front pointer.  */
+//    int32_t *rptr;		/* Rear pointer.  */
+ //   int32_t *state;		/* Array of state values.  */
+//    int rand_type;		/* Type of random number generator.  */
+//    int rand_deg;		/* Degree of random number generator.  */
+//    int rand_sep;		/* Distance between front and rear.  */
+//    int32_t *end_ptr;		/* Pointer behind state table.  */
+//  };
 
-extern int random_r(struct random_data *buf, int32_t *result);
+/*extern int random_r(struct random_data *buf, int32_t *result);
 extern int srandom_r(unsigned int seed, struct random_data *buf);
 extern int initstate_r(unsigned int seed, char *statebuf,
                        size_t statelen, struct random_data *buf);
@@ -163,16 +157,16 @@ extern double strtod(const char *nptr, char **endptr);
 extern float strtof(const char *nptr, char **endptr);
 extern long double strtold(const char *nptr, char **endptr);
 extern void abort(void);
-
+*/
 /* Integer expression whose value is the maximum number of bytes in a character
  * specified by the current locale.
  * MB_CUR_MAX >= 1
 */
-#define MB_CUR_MAX 1
+//#define MB_CUR_MAX 1
 
-#define EXIT_FAILURE 1
-#define EXIT_SUCCESS 0
-extern void _NORETURN exit(int status);
+//#define EXIT_FAILURE 1
+//#define EXIT_SUCCESS 0
+//extern void _NORETURN exit(int status);
 
 /**
  * Returns the absolute value of an argument. If the argument is not negative,
@@ -183,6 +177,8 @@ extern void _NORETURN exit(int status);
  *
  * @return the absolute value of the argument
  */
+
+/*
 static inline int abs(int x) { return x < 0 ? -x : x; } // TODO move from here
 static inline long labs(long x) { return x < 0 ? -x : x; }
 
@@ -207,7 +203,7 @@ static inline int wctomb(char *s, wchar_t wchar) {
 	(void)wchar;
 	return 0;
 }
-
+*/
 __END_DECLS
 
 #endif /* STDLIB_H_ */

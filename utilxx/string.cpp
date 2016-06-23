@@ -20,11 +20,11 @@
 */
 
 #include "utilxx/string.h"
-#include <stdlib.h>
-//#include "util/extlibc/itoa.h"
+#include "util/extlibc/itoa.h"
+//#include <stdlib.h>
 #include "string.h"
 #include <stdio.h>
-#include <ctype.h>
+//#include <ctype.h>
 
 namespace gxx {
 
@@ -489,7 +489,7 @@ unsigned char string::operator>=(const string &rhs) const
 {
 	return compareTo(rhs) >= 0;
 }
-
+/*
 unsigned char string::equalsIgnoreCase( const string &s2 ) const
 {
 	if (this == &s2) return 1;
@@ -501,7 +501,7 @@ unsigned char string::equalsIgnoreCase( const string &s2 ) const
 		if (tolower(*p1++) != tolower(*p2++)) return 0;
 	} 
 	return 1;
-}
+}*/
 
 unsigned char string::startsWith( const string &s2 ) const
 {
@@ -716,7 +716,7 @@ void string::remove(unsigned int index, unsigned int count){
 	strncpy(writeTo, buffer + index + count,len - index);
 	buffer[len] = 0;
 }
-
+/*
 void string::toLowerCase(void)
 {
 	if (!buffer) return;
@@ -732,7 +732,8 @@ void string::toUpperCase(void)
 		*p = toupper(*p);
 	}
 }
-
+*/
+/*
 void string::trim(void)
 {
 	if (!buffer || len == 0) return;
@@ -744,7 +745,7 @@ void string::trim(void)
 	if (begin > buffer) memcpy(buffer, begin, len);
 	buffer[len] = 0;
 }
-
+*/
 /*********************************************/
 /*  Parsing / Conversion                     */
 /*********************************************/

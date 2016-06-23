@@ -14,7 +14,7 @@ regmodule
 		{name = "errno.static"},
 		{name = "resmngr"},
 		--{name = "fdesc_table"},
-		{name = "libc", strtg = Strtg.standart},
+		--{name = "libc", strtg = Strtg.standart},
 		--{name = "itoa", strtg = Strtg.standart},
 	}
 }
