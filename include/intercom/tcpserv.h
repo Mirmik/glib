@@ -10,7 +10,6 @@
 
 #include "intercom/socket.h"
 #include "pthread.h"
-#include "string.h"
 
 class TcpServer : public LinuxTcpSocket
 {
