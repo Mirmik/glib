@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include <netinet/tcp.h>
 
-#include "intercom/socket.h"
+#include "string.h"
 
 class LinuxSocket
 {

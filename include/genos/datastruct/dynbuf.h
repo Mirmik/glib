@@ -3,6 +3,7 @@
 
 #include "inttypes.h"
 #include <mem/allocator.h>
+#include <compiler.h>
 
 struct dynbuf
 {
@@ -10,6 +11,8 @@ struct dynbuf
 	size_t cap; //capasity
 	allocator_ops* alloc;
 };
+
+__BEGIN_DECLS
 
 static inline int dynbuf_init(struct dynbuf* db, allocator_ops* alloc)
 {
@@ -47,5 +50,7 @@ static inline uint8_t dynbuf_reserve(struct dynbuf* db, size_t sz)
 	}
 	return 0;
 };
+
+__END_DECLS
 
 #endif
