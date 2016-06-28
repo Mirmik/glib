@@ -1,66 +1,26 @@
-/**
- * @file
- * @brief A simple utility for tracking an input location (file:line) and
- *        accessing registered locations at run-time.
- *
- * @date 18.03.11
- * @author Eldar Abusalimov
- */
-
-#ifndef UTIL_LOCATION_H_
-#define UTIL_LOCATION_H_
-
-#include <stddef.h>
+#ifndef GENOS_LOCATION_H
+#define GENOS_LOCATION_H
 
 struct location {
-	const char *file;
 	int line;
+	const char* file;
+	const char* func;
 };
 
-struct location_func {
-	struct location at;
-	const char *func;
+#define current_location()				\
+({										\
+	struct location __current_location;	\
+	__current_location.line = __LINE__;	\
+	__current_location.file = __FILE__;	\
+	__current_location.func = __func__;	\
+	__current_location;					\
+})
+
+static inline void debug_print_location(struct location location)
+{
+	debug_print("file: "); debug_print(location.file);
+	debug_print("func: "); debug_print(location.func);
+	debug_print("line: "); debug_printdec_uint16(location.line);
 };
-
-#ifndef __cplusplus
-#define LOCATION_INIT { \
-		.file = __FILE__, \
-		.line = __LINE__, \
-	}
-
-#define LOCATION_FUNC_INIT { \
-		.at = LOCATION_INIT, \
-		.func = __func__,       \
-	}
-#else
-#define LOCATION_INIT { \
-		__FILE__,       \
-		__LINE__        \
-	}
-
-#define LOCATION_FUNC_INIT { \
-		LOCATION_INIT,       \
-		__func__             \
-	}
-#endif
-
-#define LOCATION_REF() \
-	({ static const struct location __loc = LOCATION_INIT; &__loc; })
-
-#define LOCATION_FUNC_REF() \
-	({ static const struct location_func __loc = LOCATION_FUNC_INIT; &__loc; })
-
-#define LOCATION_FMT(prefix, suffix) \
-	prefix "at %s:%d" suffix
-#define LOCATION_ARGS(loc) \
-	(loc) ? (loc)->file : NULL, \
-	(loc) ? (loc)->line : 0
-
-#define LOCATION_FUNC_FMT(prefix, suffix) \
-	LOCATION_FMT(prefix, suffix) \
-	prefix "in function %s" suffix
-#define LOCATION_FUNC_ARGS(loc) \
-	LOCATION_ARGS((loc) ? &(loc)->at : NULL), \
-	(loc) ? (loc)->func : NULL
 
 #endif /* UTIL_LOCATION_H_ */

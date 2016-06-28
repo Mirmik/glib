@@ -17,6 +17,16 @@ static inline char hbyte2hex(uint8_t n)
 	return n < 10 ? '0' + n : 'A' - 10 + n;
 };
 
+static inline uint8_t dec2hbyte(char c) 
+{
+	return (uint8_t)(c - '0');
+};
+
+static inline char hbyte2dec(uint8_t n) 
+{
+	return '0' + n;
+};
+
 static inline uint8_t hex2byte(const char* str) 
 {
 	uint8_accessor ret;

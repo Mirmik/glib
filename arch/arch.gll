@@ -22,6 +22,17 @@ regmetamodule
 
 regmetamodule
 {
+	name = "arch_drivers",
+	implementations =
+	{
+		"linux64",
+		"linux32",
+		"avr2560",
+	}
+}
+
+regmetamodule
+{
 	name = "libm",
 	implementations =
 	{

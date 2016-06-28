@@ -9,9 +9,9 @@ struct ring_head
 	size_t tail;
 	size_t size;
 
-	__if_c_plusplus(
-		inline ring_head(size_t sz):head(0),tail(0),size(sz){};
-		)
+//	__if_c_plusplus(
+//		inline ring_head(size_t sz):head(0),tail(0),size(sz){};
+//		)
 };
 
 __BEGIN_DECLS
@@ -87,6 +87,9 @@ inline static struct ring_head* ring_move_tail(struct ring_head* r, size_t bias)
 	ring_fixup_tail(r);
 	return r;
 }
+
+#define ring_for_each(n,r) \
+for(size_t n = (r)->tail; n != (r)->head; n = (n+1)%(r)->size)
 
 __END_DECLS
 

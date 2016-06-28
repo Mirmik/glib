@@ -16,6 +16,7 @@
 #define likely(x)	__builtin_expect(!!(x), 1)
 #define unlikely(x)	__builtin_expect(!!(x), 0)
 
+#define __extmem
 
 #undef EXTERN_C
 #ifdef __cplusplus

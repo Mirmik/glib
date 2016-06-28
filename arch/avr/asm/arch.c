@@ -3,6 +3,8 @@
 #include "avr/interrupt.h"
 #include "hal/arch.h"
 #include "kernel/diag.h"
+#include "kernel/panic.h"
+
 //#include "genos/time/sysclock.h"
 
 //#include "asm/Serial.h"
@@ -30,20 +32,22 @@ void arch_idle()
 	
 }
 
-void arch_halt()
-{
-	//emergency_stop();
+void arch_shutdown(arch_shutdown_mode_t mode){
+	switch(mode)
+	{
+		case ARCH_SHUTDOWN_MODE_HALT:
+		break;
+		case ARCH_SHUTDOWN_MODE_REBOOT:
+		break;
+		case ARCH_SHUTDOWN_MODE_ABORT:
+		break;
+	};
 	cli();
 	while(1);
 }
 
-void arch_shutdown(arch_shutdown_mode_t mode){
-
-	arch_halt();
-}
-
 ISR(__vector_default)
 {
-	//debug_panic("_default_vector");
+	panic("_default_vector");
 	while(1);
 };

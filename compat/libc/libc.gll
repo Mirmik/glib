@@ -6,3 +6,12 @@ regmodule
 		cc = paths.find_relative("*.c",CURDIR, CURDIR),	
 	},
 }
+
+regmodule
+{
+	name = "ctype",
+	sources =
+	{
+		cc = {"ctype/ctype.c"},	
+	},
+}

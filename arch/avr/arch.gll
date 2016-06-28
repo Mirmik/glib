@@ -36,3 +36,12 @@ regmodule
 	},
 	loc = "-I" .. CURDIR .. "/locinc",
 }
+
+regmodule
+{
+	name = "avr_gpio",
+	sources = 
+	{
+		cc = {"asm/gpio.c"},
+	},
+}

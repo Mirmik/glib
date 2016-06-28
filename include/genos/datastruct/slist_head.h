@@ -2,32 +2,32 @@
 #define GENOS_SLINK_HEAD_H
 
 #include "defines/decltypeof.h"
-#include "kernel/kassert.h"
+//#include "kernel/kassert.h"
 #include "util/member.h"
-
+#include "inttypes.h"
 struct slist_head
 {
-	slist_head* next;
+	struct slist_head* next;
 };
 
 void slist_init(struct slist_head* link)
 {
-	kassert(link);
+	//kassert(link);
 	link->next = link;
 }
 
 void slist_connect_after(struct slist_head* link, struct slist_head* head)
 {
-	kassert(link);
-	kassert(head);
+	//kassert(link);
+	//kassert(head);
 	link->next = head->next;
 	head->next = link;
 };
 
 void slist_connect_last(struct slist_head* link, struct slist_head* head)
 {
-	kassert(link);
-	kassert(head);
+	//kassert(link);
+	//kassert(head);
 	struct slist_head* iter = head;
 	while(iter->next != iter) iter = iter->next;
 	slist_connect_after(link, iter);

@@ -13,6 +13,8 @@ struct allocator_ops
 	void* (*reallocate) (void*, size_t sz);
 };
 
+typedef struct allocator_ops alloc_ops;
+
 extern struct allocator_ops malloc_ops;
 extern struct allocator_ops ctrl_malloc_ops;
 

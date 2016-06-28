@@ -4,7 +4,6 @@
  * @date 14.10.09
  * @author Nikolay Korotky
  */
-
 #include <ctype.h>
 
 /**< ASCII table */
