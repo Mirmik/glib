@@ -12,7 +12,11 @@
 #define panic(...) 									\
 	do { 											\
 		ipl_disable();								\
-		debug_print_location(current_location());	\
+		debug_print("kernel panic:"); dln();		\
+		debug_print_location(current_location()); 	\
+		debug_print("message: ");					\
+		debug_print(__VA_ARGS__);					\
+		dln();										\
 		arch_shutdown(ARCH_SHUTDOWN_MODE_HALT);		\
 	} while (0)
 

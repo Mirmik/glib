@@ -9,8 +9,8 @@
 
 struct dlist_head
 {
-	dlist_head* next;
-	dlist_head* prev;
+	struct dlist_head* next;
+	struct dlist_head* prev;
 
 	__if_c_plusplus(
 	inline dlist_head() : next(this), prev(this) {};

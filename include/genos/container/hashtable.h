@@ -85,6 +85,8 @@ public:
 		hashtable_locate(&ht, buf, len);
 		hash = _hash;
 		cmp = _cmp;
+		strategy = nullptr;
+		alloc = nullptr;
 	};
 
 	void init(hash_fn_t _hash, cmp_fn_t _cmp)
@@ -103,7 +105,7 @@ public:
 	{
 		assert(hash);
 		assert(ht.table || strategy);
-		check_memstrategy();
+		if (strategy) check_memstrategy();
 		ht.total++;
 		struct hlist<type,link>* cell = eval_cell(item.*keyfield);
 		cell->push_front(item);
@@ -141,7 +143,7 @@ public:
 		if (res == end) return 0;
 		cell->pop(*res);
 		ht.total--;
-		check_memstrategy();
+		if (strategy) check_memstrategy();
 		return &*res;
 	};
 

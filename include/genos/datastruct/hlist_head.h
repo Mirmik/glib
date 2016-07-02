@@ -6,13 +6,13 @@
 
 struct hlist_node
 {
-	hlist_node* next;
-	hlist_node** pprev;
+	struct hlist_node* next;
+	struct hlist_node** pprev;
 };
 
 struct hlist_head
 {
-	hlist_node* first;
+	struct hlist_node* first;
 };
 
 __BEGIN_DECLS
