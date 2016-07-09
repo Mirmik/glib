@@ -34,6 +34,8 @@ typedef int          __intptr_t;
 typedef __s32 __s_fast;
 typedef __u32 __u_fast;
 
+typedef __s32 __atomic_t;
+
 #endif /* __ASSEMBLER__ */
 
 #endif /* ASM_GENERIC_TYPES32_H_ */

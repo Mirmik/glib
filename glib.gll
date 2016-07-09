@@ -12,7 +12,7 @@ regmodule
 		{name = "gstring"},
 		{name = "malloc_ops"},
 		{name = "errno.static"},
-		{name = "resmngr"},
+--		{name = "resmngr"},
 		--{name = "fdesc_table"},
 		--{name = "libc", strtg = Strtg.standart},
 		--{name = "itoa", strtg = Strtg.standart},

@@ -19,9 +19,9 @@ typedef unsigned char gpio_mask_t;
 #define GPIO_PORT_BASE_F 0x2F
 #define GPIO_PORT_BASE_G 0x32
 
-#define GPIOA (*(struct gpio *)(GPIO_PORT_BASE_A))
-#define GPIOB (*(struct gpio *)(GPIO_PORT_BASE_B))
-#define GPIOC (*(struct gpio *)(GPIO_PORT_BASE_C))
-#define GPIOD (*(struct gpio *)(GPIO_PORT_BASE_D))
+#define GPIOA ((struct gpio *)(GPIO_PORT_BASE_A))
+#define GPIOB ((struct gpio *)(GPIO_PORT_BASE_B))
+#define GPIOC ((struct gpio *)(GPIO_PORT_BASE_C))
+#define GPIOD ((struct gpio *)(GPIO_PORT_BASE_D))
 
 #endif

@@ -1,8 +1,0 @@
-regmodule
-{
-	name = "msg",
-	sources = 
-	{
-		cc = {"msg.c"},
-	}
-}

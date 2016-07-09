@@ -2,7 +2,7 @@
 #define GENOS_HLIST_HEAD
 
 #include "compiler.h"
-#include "assert.h"
+//#include "assert.h"
 
 struct hlist_node
 {
@@ -25,8 +25,8 @@ static inline struct hlist_head* hlist_head_init(struct hlist_head* list)
 
 static inline void hlist_add_next(struct hlist_node* list, struct hlist_node** hnext)
 {
-	assert(list);
-	assert(hnext);
+//	assert(list);
+//	assert(hnext);
 
 	list->pprev = hnext;
 	list->next = *hnext;
@@ -36,7 +36,7 @@ static inline void hlist_add_next(struct hlist_node* list, struct hlist_node** h
 
 static inline void hlist_del(struct hlist_node* list)
 {
-	assert(list);
+//	assert(list);
 
 	list->next->pprev = list->pprev;	
 	*list->pprev = list->next;

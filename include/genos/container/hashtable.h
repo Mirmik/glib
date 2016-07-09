@@ -1,16 +1,20 @@
 #ifndef GENOS_HASH_TABLE
 #define GENOS_HASH_TABLE
 
+#include "assert.h"
 #include "inttypes.h"
 #include "genos/datastruct/hashtable_head.h"
+#include "genos/container/hlist.h"
 #include "genos/gstl/algorithm.h"
 #include "mem/allocator.h"
+#include "util/retype.h"
 
 template <typename type, hlist_node type::* link, typename keytype, keytype type::* keyfield>
 class hashtable
 {
 	using hash_fn_t = uint32_t(*)(keytype);
 	using cmp_fn_t = int32_t(*)(keytype,keytype);
+	using cell_t = hlist<type,link>;
 
 private:
 	hashtable_head ht;
@@ -22,31 +26,31 @@ private:
 	int (*strategy) (hashtable_head*); 
 
 
-	inline struct hlist<type,link>* eval_cell(const keytype& key)
+	inline cell_t* eval_cell(const keytype& key)
 	{
-		return reinterpret_cast<hlist<type,link>*>
+		return reinterpret_cast<cell_t*>
 		(ht.table + (hash(key) % ht.table_size));
 	}
 
-	inline struct hlist<type,link>* to_cell(struct hlist_head* ptr)
+	inline cell_t* to_cell(struct hlist_head* ptr)
 	{
-		return reinterpret_cast<hlist<type,link>*>(ptr);
+		return reinterpret_cast<cell_t*>(ptr);
 	}
 
 	inline void relocate(hashtable_head* dst)
 	{
 		for (int i = 0; i < ht.table_size; i++)
 		{
-			hlist<type,link>* srccell = to_cell(ht.table + i);
+			RETYPE(cell_t*, srccell, ht.table + i);
 			
-			auto c = srccell->begin();
-			while(c != srccell->end())
+			auto it = srccell->begin();
+			while(it != srccell->end())
 			{
-				auto next = c.next(); 
-				struct hlist<type,link>* dstcell = reinterpret_cast<hlist<type,link>*>
-											(dst->table + (hash(*c.*keyfield) % dst->table_size));
-				dstcell->push_front(*c);
-				c = next;
+				auto next = it.next(); 
+				RETYPE(cell_t*, dstcell, dst->table + 
+						(hash(*it.*keyfield) % dst->table_size));
+				dstcell->push_front(*it);
+				it = next;
 			};
 		};
 	};
@@ -57,16 +61,16 @@ private:
 		if (strategy) newsz = strategy(&ht);
 		if (newsz == 0) return;
 
-		void* buf = alloc->allocate(newsz * sizeof(hlist<type,link>));
+		void* buf = alloc->allocate(newsz * sizeof(cell_t));
  	
 		if (!ht.table) 
 		{
-			hashtable_locate(&ht,buf,newsz * sizeof(hlist<type,link>));
+			hashtable_locate(&ht,buf,newsz * sizeof(cell_t));
 			return;
 		}
 
 		hashtable_head nht;
-		hashtable_locate(&nht,buf,newsz * sizeof(hlist<type,link>));
+		hashtable_locate(&nht,buf,newsz * sizeof(cell_t));
 
 		relocate(&nht);
 		ht.table = nht.table;
@@ -107,7 +111,7 @@ public:
 		assert(ht.table || strategy);
 		if (strategy) check_memstrategy();
 		ht.total++;
-		struct hlist<type,link>* cell = eval_cell(item.*keyfield);
+		cell_t* cell = eval_cell(item.*keyfield);
 		cell->push_front(item);
 	};
 
@@ -117,7 +121,7 @@ public:
 		assert(cmp);
 		assert(ht.table);
 		
-		struct hlist<type,link>* cell = eval_cell(key);
+		cell_t* cell = eval_cell(key);
 		auto end = cell->end();
 		auto begin = cell->begin();
 		auto res = gxx::find_if(begin,end,[=](type& item)
@@ -133,7 +137,7 @@ public:
 		assert(cmp);
 		assert(ht.table);
 		
-		struct hlist<type,link>* cell = eval_cell(key);
+		cell_t* cell = eval_cell(key);
 		auto end = cell->end();
 		auto begin = cell->begin();
 		auto res = gxx::find_if(begin,end,[=](type& item)
@@ -161,7 +165,7 @@ public:
 
 static int hash_memstrat70(hashtable_head* ht)
 {
-	assert(ht);
+//	assert(ht);
 
 	if (ht->table == nullptr)
 	{

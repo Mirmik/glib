@@ -3,22 +3,19 @@
 
 #include "compiler.h"
 #include "kernel/sched/schedee.h"
+#include "kernel/sched/query.h"
+#include "genos/sigslot/delegate.h"
 
-struct autom_schedee
-{
-	struct schedee schedee;
-	void(*func)(void*);
-	void* arg;
+struct autom_schedee : public schedee {
+	query qry;
+	delegate<void> dlg;
+
+	//schedee methods
+	void execute();
+	void systick_handler();
+	void signal_handler();
+
+	autom_schedee(delegate<void> dlg, int prio);
 };
-
-__BEGIN_DECLS
-
-void autom_schedee_execute(struct schedee* schedee)
-{
-	struct autom_schedee* asched = (struct autom_schedee*) schedee;
-	asched->func(asched->arg);
-}
-
-__END_DECLS
 
 #endif
