@@ -160,7 +160,7 @@ void debug_print_dump(const void* address, uint16_t size)
 	//while(1);
 
 	uint8_t* dump = (uint8_t*) address; 
-	uint32_t addr_tmp = (size_t) address;
+	uintptr_t addr_tmp = (uintptr_t) address;
 	uint32_t i = 0;
 	uint32_t mark = 0;
 	
@@ -202,7 +202,7 @@ void debug_print_dump(const void* address, uint16_t size)
 void debug_print_dump_ascii(const void* address, uint16_t size)
 {
 	uint8_t* dump = (uint8_t*) address; 
-	uint32_t addr_tmp = (size_t) address;
+	uintptr_t addr_tmp = (uintptr_t) address;
 	uint32_t i = 0;
 	uint32_t mark = 0;
 	

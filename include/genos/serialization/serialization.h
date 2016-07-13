@@ -3,8 +3,8 @@
 
 #include "inttypes.h"
 #include "compiler.h"
-#include "utilxx/buffer.h"
-#include "utilxx/string.h"
+#include "gxx/buffer.h"
+#include "gxx/string.h"
 
 enum Ser
 {
