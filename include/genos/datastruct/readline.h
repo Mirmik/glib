@@ -16,7 +16,7 @@ struct readline
 	int cursor;
 	int capacity;
 
-__if_c_plusplus(
+__if_cplusplus(
 	inline readline() : data(nullptr), capacity(0) {};	
 	inline readline(void* _data, int _len) : data((char*)_data), capacity(_len - 1), cursor(0) {};
 	

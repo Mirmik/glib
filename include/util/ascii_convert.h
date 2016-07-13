@@ -3,7 +3,7 @@
 
 #include "inttypes.h"
 #include "util/accessor.h"
-#include "utilxx/charbuf.h"
+#include "gxx/charbuf.h"
 
 using namespace gxx;
 
