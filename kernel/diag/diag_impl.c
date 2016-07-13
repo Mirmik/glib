@@ -20,7 +20,7 @@ void diag_setup(struct diag_ops* ndiag)
 	current_diag = ndiag;
 };
 
-int diag_putc(int c){
+int diag_putc(char c){
 	//assert(current_diag->getc != (diag_putc_t) do_nothing);
 	return current_diag->putc(c);
 };

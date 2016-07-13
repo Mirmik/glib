@@ -21,8 +21,6 @@ int gpio_settings(struct gpio *gpio, gpio_mask_t mask, int32_t mode) {
 		return -1;
 	}
 	
-	debug_printhex_uint32(mode);
-
 	if (mode & GPIO_MODE_INPUT) {
 		gpio->ddr &= ~mask; 
 	};

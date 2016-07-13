@@ -6,17 +6,16 @@
 
 __BEGIN_DECLS
 
-struct allocator_ops
-{
+struct allocator_operations {
 	void* (*allocate) (size_t);
 	void (*deallocate) (void*);
 	void* (*reallocate) (void*, size_t sz);
 };
 
-typedef struct allocator_ops alloc_ops;
+typedef struct allocator_operations alloc_ops;
 
-extern struct allocator_ops malloc_ops;
-extern struct allocator_ops ctrl_malloc_ops;
+extern struct allocator_operations malloc_ops;
+extern struct allocator_operations ctrl_malloc_ops;
 
 __END_DECLS
 

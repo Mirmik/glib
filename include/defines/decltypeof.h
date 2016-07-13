@@ -7,7 +7,7 @@
 
 
 #if __cplusplus
-#include <genos/gstl/utility.h>
+#include <gxx/utility.h>
 #define decltypeof(a) typename gxx::remove_reference<decltype(a)>::type
 #else
 #define decltypeof(a) typeof(a)

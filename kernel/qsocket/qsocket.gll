@@ -1,0 +1,8 @@
+regmodule 
+{
+	name = "qsocket",
+	sources = 
+	{
+		cxx = {"qsocket.cpp"}
+	}
+}

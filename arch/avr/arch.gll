@@ -5,7 +5,10 @@ regmodule
 	{
 		cc = {"asm/arch.c"},
 		cxx = {"asm/archxx.cpp"},
-	}
+	},
+	modules = {
+		{name = "avr_gpio"},
+	},
 }
 
 

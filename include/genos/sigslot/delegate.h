@@ -13,7 +13,7 @@
 #define GENOS_FUTURE_DELEGATE_H
 	
 #include "utilxx/horrible_cast.h"
-#include "genos/gstl/utility.h"			
+#include "gxx/utility.h"			
 #include "util/stub.h"
 
 #include "inttypes.h"

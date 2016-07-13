@@ -1,7 +1,7 @@
 #include <kernel/sched/sched.h>
 
-#include "genos/container/dlist.h"
-#include "genos/container/hashtable.h"
+#include "gxx/container/dlist.h"
+#include "gxx/container/hashtable.h"
 
 #include "kernel/sched/idtable.h"
 #include <util/bits.h>

@@ -41,11 +41,11 @@
 #endif
 
 #ifdef __cplusplus
-#define __if_c_plusplus(...) __VA_ARGS__
+#define __if_cplusplus(...) __VA_ARGS__
 #define __if_not_cplusplus(...)
 #define __if_C_if_CXX(c, cxx) cxx
 #else
-#define __if_c_plusplus(...)
+#define __if_cplusplus(...)
 #define __if_not_c_plusplus(...) __VA_ARGS__
 #define __if_C_if_CXX(c, cxx) c 
 #endif

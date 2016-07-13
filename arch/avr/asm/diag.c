@@ -28,7 +28,7 @@ int usart0_diag_init()
 	//UCSR0B&= ~_BV(UDRIE0);
 };
 
-int usart0_diag_putchar(int c)
+int usart0_diag_putchar(char c)
 {
 	char temp;
 	temp = SREG;
@@ -39,14 +39,7 @@ int usart0_diag_putchar(int c)
 	SREG = temp;
 };
 
-struct diag_ops usart0_diag = {
-	usart0_diag_putchar, 
-	(diag_getc_t) do_nothing, 
-	diag_write_stub, 
-	(diag_read_t) do_nothing, 
-	usart0_diag_init
-}; 
-
+struct diag_ops usart0_diag;
 
 				
 		

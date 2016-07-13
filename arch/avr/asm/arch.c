@@ -14,6 +14,10 @@
 extern struct diag_ops usart0_diag;
 //extern volatile int64_t supertick;
 
+
+int usart0_diag_init();
+int usart0_diag_putchar(char c);
+
 int interrupt_checker();
 void arch_init()
 {
@@ -21,10 +25,14 @@ void arch_init()
 //	set_clock_param(F_CPU, 256 * 64, 256);
 	//bits_set(TIMSK0, _BV(TOIE0));
 
+	usart0_diag.init = usart0_diag_init;
+	usart0_diag.putc = usart0_diag_putchar;
+	usart0_diag.write = diag_write_stub;
+
 	current_diag = &usart0_diag;
 
 	//if (interrupt_checker() == 0) error_stub();	
-	archxx_init();
+//	archxx_init();
 }
 
 void arch_idle()

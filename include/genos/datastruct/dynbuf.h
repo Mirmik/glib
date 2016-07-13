@@ -19,8 +19,7 @@ static inline int dynbuf_init(struct dynbuf* db)
 	db->cap = 0;
 };
 
-static inline int dynbuf_invalidate(struct dynbuf* db, 
-	struct allocator_ops* alloc)
+static inline int dynbuf_invalidate(struct dynbuf* db, alloc_ops* alloc)
 {
 	if (db->buf) alloc->deallocate(db->buf);
 	db->buf = 0;
@@ -29,7 +28,7 @@ static inline int dynbuf_invalidate(struct dynbuf* db,
 };
 
 static inline uint8_t dynbuf_change_buffer(struct dynbuf* db, 
-	struct allocator_ops* alloc, size_t newsz)
+	alloc_ops* alloc, size_t newsz)
 {
 	void* newbuf = db->buf ? 
 		alloc->reallocate(db->buf, newsz) :
@@ -43,7 +42,7 @@ static inline uint8_t dynbuf_change_buffer(struct dynbuf* db,
 };
 
 static inline uint8_t dynbuf_reserve(struct dynbuf* db, 
-	struct allocator_ops* alloc, size_t sz)
+	alloc_ops* alloc, size_t sz)
 {
 	if (db->buf && db->cap >= sz) return 1;
 	if (dynbuf_change_buffer(db,alloc,sz)) {

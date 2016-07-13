@@ -4,7 +4,9 @@ regmodule
 	
 	sources = 
 	{
-		cxx = {"utilxx/new.cpp"},
+		cc = {"kernel/panic/end_of_programm.c"}, 
+			--"startup/cxx_invoke_constructors.c"},
+		--cxx = {"utilxx/new.cpp"},
 	},
 
 	modules = 
@@ -12,6 +14,7 @@ regmodule
 		{name = "gstring"},
 		{name = "malloc_ops"},
 		{name = "errno.static"},
+		{name = "placenew"},
 --		{name = "resmngr"},
 		--{name = "fdesc_table"},
 		--{name = "libc", strtg = Strtg.standart},

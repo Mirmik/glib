@@ -118,9 +118,10 @@ void debug_printhex_ptr(void* v)
 
 
 int debug_strlen(const char *c)
-{int i;
+{	
+	int i;
 	for(i=0;c[i]!=0;i++);
-	return (i);
+	return i;
 };
 
 void debug_print(const char *c)
@@ -152,7 +153,7 @@ void debug_print_test()
 	debug_print("DEBUG_print_TEST\n\r");		
 };
 
-void debug_print_dump(void* address, uint16_t size)
+void debug_print_dump(const void* address, uint16_t size)
 {
 	//debug_printhex_ptr(address);
 	//debug_printhex_uint16(size);
@@ -169,33 +170,36 @@ void debug_print_dump(void* address, uint16_t size)
 		if (mark == 0)
 		{
 			debug_printhex_uint32(addr_tmp);
-			debug_print(": ");
+			debug_putchar(':');
+			debug_putchar(' ');
 		}
 		
 		debug_printhex_uint8(dump[i]);
 		
 		if ( mark == 7 )
 		{
-			debug_print("|");
+			debug_putchar('|');
 			mark++;
 		}
 		else if ( mark == 15 )
 		{
-			debug_print("\n\r");
+			debug_putchar('\n');
+			debug_putchar('\r');
 			mark = 0;
 			
 			addr_tmp += 0x10;
 		}
 		else
 		{
-			debug_print(" ");
+			debug_putchar(' ');
 			mark++;
 		}
 	} 
-	debug_print("\r\n");
+	debug_putchar('\n');
+	debug_putchar('\r');
 }
 
-void debug_print_dump_ascii(void* address, uint16_t size)
+void debug_print_dump_ascii(const void* address, uint16_t size)
 {
 	uint8_t* dump = (uint8_t*) address; 
 	uint32_t addr_tmp = (size_t) address;
@@ -208,30 +212,33 @@ void debug_print_dump_ascii(void* address, uint16_t size)
 		if (mark == 0)
 		{
 			debug_printhex_uint32(addr_tmp);
-			debug_print(": ");
+			debug_putchar(':');
+			debug_putchar(' ');
 		}
 		
 		debug_putchar(dump[i]);
 		
 		if ( mark == 7 )
 		{
-			debug_print("|");
+			debug_putchar(' ');
 			mark++;
 		}
 		else if ( mark == 15 )
 		{
-			debug_print("\n\r");
+			debug_putchar('\n');
+			debug_putchar('\r');
 			mark = 0;
 			
 			addr_tmp += 0x10;
 		}
 		else
 		{
-			debug_print(" ");
+			debug_putchar(' ');
 			mark++;
 		}
 	} 
-	debug_print("\n\r");
+	debug_putchar('\n');
+	debug_putchar('\r');
 }
 
 void debug_print_dump_simple(void* ptr, uint16_t size)

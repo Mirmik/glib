@@ -12,7 +12,7 @@ struct dlist_head
 	struct dlist_head* next;
 	struct dlist_head* prev;
 
-	__if_c_plusplus(
+	__if_cplusplus(
 	inline dlist_head() : next(this), prev(this) {};
 	)
 };

@@ -2,7 +2,11 @@
 	#define GENOS_DEBUG_PRINT
 	
 #include "inttypes.h" 
-//#include <asm/genos/debug.h> 
+#include "compiler.h"
+
+#ifdef __cplusplus
+#include "gxx/string.h"
+#endif
 
 /*	
 	2012-2015 Mirmik
@@ -21,10 +25,6 @@
 	debug_putchar, выводящую один символ char и 
 	блокирующую процессор на время проведения этой операции.
 */
-
-//#include "kernel/diag.h"
-#include "stddef.h"
-#include "compiler.h"
 
 __BEGIN_DECLS
 //Инициализация вывода
@@ -73,8 +73,8 @@ void debug_write(const char* c, int i);
  void debug_print_line();
 
 //Вывод дампа памяти. size - размер в байтах.
- void debug_print_dump(void* address, uint16_t size);
- void debug_print_dump_ascii(void* address, uint16_t size);
+ void debug_print_dump(const void* address, uint16_t size);
+ void debug_print_dump_ascii(const void* address, uint16_t size);
  
  void debug_print_dump_simple(void* address, uint16_t size);
 
@@ -102,10 +102,9 @@ void debug_print_test();
 
 __END_DECLS
 
-#define dln() debug_write("\r\n",2)
+#define dln() {debug_putchar('\r');debug_putchar('\n');}
 
 #ifdef __cplusplus
-#include "utilxx/string.h"
 
 void dprln();
 

@@ -1,18 +1,11 @@
 #include "debug/dprint.h"
 #include "utilxx/horrible_cast.h"
-#include "utilxx/string.h"
-
 
 void dprln() {debug_print("\r\n");};
 
 void dpr(char obj) { debug_putchar(obj); };
 void dpr(char* obj) { debug_print(obj); };
 void dpr(const char* obj) { debug_print(obj); };
-
-//template<> void dpr(genos::charptr obj) 
-//{ 
-//	debug_write(obj.to_buf(),obj.length()); 
-//};
 
 void dpr(uint8_t obj) { debug_printdec_uint8(obj); };
 void dpr(uint16_t obj) { debug_printdec_uint16(obj); };
