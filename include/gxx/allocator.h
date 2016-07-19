@@ -1,7 +1,7 @@
 #ifndef GENOS_GSTL_ALLOCATOR
 #define GENOS_GSTL_ALLOCATOR
 
-#include "globalconfigure.h"	
+#include "genos_configure.h"	
 #include "gxx/traits.h"
 
 namespace gxx {

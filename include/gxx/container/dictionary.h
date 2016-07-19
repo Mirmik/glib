@@ -1,6 +1,7 @@
 #ifndef GENOS_DICTIONARY_H
 #define GENOS_DICTIONARY_H
 
+#include "genos_configure.h"
 #include "mem/allocator.h"
 #include "gxx/container/hashtable.h"
 #include "gxx/container/traits.h"
@@ -38,6 +39,8 @@ public:
 		ht.memstrategy(_alloc, hash_memstrat70);
 	};
 
+	dictionary() : dictionary(&standart_allocator) {};
+
 	void insert(const keytype& key,const valtype& val) {
 		dictnode<keytype,valtype>* dn = new dictnode<keytype,valtype>(key,val);
 		ht.put(*dn);
@@ -45,6 +48,13 @@ public:
 
 	valtype operator[](const keytype& key) {
 		return ht.get(key)->val;
+	};
+
+	int get(valtype& tgt, const keytype& key) {
+		auto ret = ht.get(key);
+		if (ret == nullptr) return -1;
+		tgt = ret->val;
+		return 0;	
 	};
 
 	const hashtable_t& get_table() {

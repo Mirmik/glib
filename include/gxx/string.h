@@ -45,6 +45,11 @@ namespace gxx {
 // result objects are assumed to be writable by subsequent concatenations.
 class StringSumHelper;
 
+enum StrBufOpt {
+	RAW,
+	DUMP
+};
+
 // The string class
 class string
 {
@@ -66,6 +71,7 @@ public:
 	string(StringSumHelper &&rval);
 	
 	explicit string(const gxx::buffer cptr);
+	explicit string(const gxx::buffer cptr, StrBufOpt flag);
     
 	explicit string(char c);
 	explicit string(unsigned char, unsigned char base=10);
@@ -203,6 +209,8 @@ public:
 	// parsing/conversion
 	long toInt(void) const;
 	float toFloat(void) const;
+
+	gxx::buffer gbuf();
 
 protected:
 	char *buffer;	        // the actual char array

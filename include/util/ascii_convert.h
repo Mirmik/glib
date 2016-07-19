@@ -35,6 +35,48 @@ static inline uint8_t hex2byte(const char* str)
 	return ret.num;
 };
 
+static inline void byte2hex(char* buf, uint8_t src)
+{
+	uint8_accessor acs; acs.num = src;
+	*buf++ = hbyte2hex(acs.h); 
+	*buf++ = hbyte2hex(acs.l); 
+};
+
+static inline void hex2num(void* num, const char* hex, int numlen) {
+	char* start = (char*) num;
+	char* stop = (char*) num + numlen;
+	for (char* ptr = start; ptr != stop; ++ptr) {
+		*ptr = hex2byte(hex); 
+		hex += 2;
+	};
+};
+
+static inline void hex2num_swap(void* num, const char* hex, int numlen) {
+	char* start = (char*) num + numlen - 1;
+	char* stop = (char*) num - 1;
+	for (char* ptr = start; ptr != stop; --ptr) {
+		*ptr = hex2byte(hex);  
+		hex += 2;
+	};
+};
+
+static inline void num2hex(char* hex, void* num, int numlen) {
+	char* start = (char*) num;
+	char* stop = (char*) num + numlen;
+	for (char* ptr = start; ptr != stop; ++ptr) {
+		byte2hex(hex, *ptr);
+		hex += 2;
+	};
+};
+
+static inline void num2hex_swap(char* hex, void* num, int numlen) {
+	char* start = (char*) num + numlen - 1;
+	char* stop = (char*) num - 1;
+	for (char* ptr = start; ptr != stop; --ptr) {
+		byte2hex(hex, *ptr);
+		hex += 2;
+	};
+};
 //#define get_halfbyte_number(u,n) (u>>(4*(n)) & 0xF)
 
 static inline void uint8_to_hex(char* buf, uint8_t src)

@@ -3,10 +3,11 @@
 
 #include "gxx/to_string.h"
 
-struct argvc_t
-{
+struct argvc_t {
 	int c;
 	char** v;
+
+	argvc_t() : v(nullptr), c(0) {}	
 
 	gxx::string to_str()
 	{
@@ -18,5 +19,23 @@ struct argvc_t
 		str << "]";
 		return str;
 	};
+
+	//void internal_split(argvc_t* args, char* str, char dv = " ");
+	void internal_split(char* str, char dv = ' ') {
+		assert(v);
+		c = 0;
+
+		newarg_search:
+		while(*str == dv) ++str;
+		if (*str == 0) goto end;
+	
+		v[c++] = str;
+		while(*str != dv && *str != 0) ++str;
+		if (*str == dv) { *str++ = 0; goto newarg_search; };
+
+		end:
+		return;
+	};
+
 };
 #endif

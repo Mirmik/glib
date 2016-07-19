@@ -1,13 +1,8 @@
-/**
- * @file
- * @brief
- *
- * @author  Anton Kozlov
- * @date    11.07.2015
- */
-
 #ifndef COMPILER_H_
 #define COMPILER_H_
+
+#undef putc
+#undef getc
 
 #define _NORETURN __attribute__((noreturn))
 #define _PRINTF_FORMAT(format_i, arg_start_i) \

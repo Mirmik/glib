@@ -21,9 +21,11 @@
 
 #include "gxx/string.h"
 #include "util/extlibc/itoa.h"
+#include "util/ascii_convert.h"
 //#include <stdlib.h>
 #include "string.h"
 #include <stdio.h>
+#include "debug/dprint.h"
 //#include <ctype.h>
 
 namespace gxx {
@@ -109,6 +111,23 @@ string::string(const gxx::buffer cptr)
 	init();
 	if (cptr.data()) copy(cptr.data(), cptr.length());
 }
+
+string::string(const gxx::buffer cptr, StrBufOpt flag) {
+	init();
+	const char* src = (const char*) cptr.data();
+	
+	if (flag == StrBufOpt::DUMP) {
+		reserve(cptr.length() * 2 + 1);
+		char* dst = (char*) buffer;
+		num2hex(dst, cptr.data(), cptr.length());
+		len = cptr.length()*2;
+		*(buffer + len) = 0;
+	}
+
+	if (flag == StrBufOpt::RAW)
+		if (cptr.data()) copy(cptr.data(), cptr.length());			
+};
+
 
 //string::string(float value, unsigned char decimalPlaces)
 //{
@@ -347,6 +366,7 @@ unsigned char string::concat(unsigned long num)
 //	char* string = dtostrf(num, 4, 2, buf);
 //	return concat(string, strlen(string));
 //}
+
 
 
 /*
@@ -762,4 +782,8 @@ float string::toFloat(void) const
 	return 0;
 }
 
+};
+
+gxx::buffer string::gbuf() {
+	return gxx::buffer(buffer, len);
 };
