@@ -48,11 +48,15 @@ static inline void dlist_add_next(struct dlist_head* _new, struct dlist_head* he
 {
 	__dlist_add(_new, head->next, head);
 };
+#define dlist_add_front(a,b) dlist_add_next(a,b)
+#define dlist_add(a,b) dlist_add_next(a,b)
 
 static inline void dlist_add_prev(struct dlist_head* _new, struct dlist_head* head)
 {
 	__dlist_add(_new, head, head->prev);
 };
+#define dlist_add_back(a,b) dlist_add_prev(a,b)
+#define dlist_add_tail(a,b) dlist_add_prev(a,b)
 
 static inline void __dlist_del(struct dlist_head* head)
 {

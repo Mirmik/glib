@@ -3,6 +3,6 @@ regmodule
 	name = "gstring",
 	sources = 
 	{
-		cxx = {"string.cpp"}
+		cxx = {"string.cpp", "to_string.cpp"}
 	}
 }

@@ -26,6 +26,7 @@
 #include "string.h"
 #include <stdio.h>
 #include "debug/dprint.h"
+#include "mem/sysalloc.h"
 //#include <ctype.h>
 
 namespace gxx {
@@ -109,23 +110,23 @@ string::string(unsigned long value, unsigned char base)
 string::string(const gxx::buffer cptr)
 {
 	init();
-	if (cptr.data()) copy(cptr.data(), cptr.length());
+	if (cptr.data) copy(cptr.data, cptr.size);
 }
 
 string::string(const gxx::buffer cptr, StrBufOpt flag) {
 	init();
-	const char* src = (const char*) cptr.data();
+	const char* src = (const char*) cptr.data;
 	
 	if (flag == StrBufOpt::DUMP) {
-		reserve(cptr.length() * 2 + 1);
+		reserve(cptr.size * 2 + 1);
 		char* dst = (char*) buffer;
-		num2hex(dst, cptr.data(), cptr.length());
-		len = cptr.length()*2;
+		num2hex(dst, cptr.data, cptr.size);
+		len = cptr.size*2;
 		*(buffer + len) = 0;
 	}
 
 	if (flag == StrBufOpt::RAW)
-		if (cptr.data()) copy(cptr.data(), cptr.length());			
+		if (cptr.data) copy(cptr.data, cptr.size);			
 };
 
 
@@ -145,7 +146,7 @@ string::string(const gxx::buffer cptr, StrBufOpt flag) {
 
 string::~string()
 {
-	free(buffer);
+	sysfree(buffer);
 }
 
 /*********************************************/
@@ -161,7 +162,7 @@ inline void string::init(void)
 
 void string::invalidate(void)
 {
-	if (buffer) free(buffer);
+	if (buffer) sysfree(buffer);
 	buffer = NULL;
 	capacity = len = 0;
 }
@@ -178,7 +179,7 @@ unsigned char string::reserve(unsigned int size)
 
 unsigned char string::changeBuffer(unsigned int maxStrLen)
 {
-	char *newbuffer = (char *)realloc(buffer, maxStrLen + 1);
+	char *newbuffer = (char *)sysrealloc(buffer, maxStrLen + 1);
 	if (newbuffer) {
 		buffer = newbuffer;
 		capacity = maxStrLen;
@@ -224,7 +225,7 @@ void string::move(string &rhs)
 			rhs.len = 0;
 			return;
 		} else {
-			free(buffer);
+			sysfree(buffer);
 		}
 	}
 	buffer = rhs.buffer;
@@ -267,7 +268,7 @@ string & string::operator = (const char *cstr)
 
 string & string::operator = (const gxx::buffer cptr)
 {
-	if (cptr.data()) copy(cptr.data(), cptr.length());
+	if (cptr.data) copy(cptr.data, cptr.size);
 	else invalidate();
 	
 	return *this;
@@ -351,6 +352,10 @@ unsigned char string::concat(unsigned long num)
 	char buf[1 + 3 * sizeof(unsigned long)];
 	ultoa(num, buf, 10);
 	return concat(buf, strlen(buf));
+}
+
+unsigned char string::concat(const gxx::buffer& cptr) {
+	return concat(cptr.data, cptr.size);
 }
 
 //unsigned char string::concat(float num)

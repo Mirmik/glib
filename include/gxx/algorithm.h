@@ -1460,7 +1460,7 @@
 			
 			// _lib.alg.min.max_, minimum and maximum:
 			template<class T>  
-			constexpr T& min(const T& a, const T& b)
+			T min(const T a, const T b)
 			{
 			if(b < a){
 			return b;
@@ -1469,7 +1469,7 @@
 			}
 			
 			template<class T, class Compare>  
-			constexpr T& min(const T& a, const T& b, Compare comp)
+			T min(const T a, const T b, Compare comp)
 			{
 			if( comp(b, a) == true){
 			return b;
@@ -1478,7 +1478,7 @@
 			}
 			
 			template<class T>  
-			constexpr T& max(const T& a, const T& b)
+			T max(const T a, const T b)
 			{
 			if( a < b){
 			return b;
@@ -1487,7 +1487,7 @@
 			}
 			
 			template<class T, class Compare>  
-			constexpr T& max(const T& a, const T& b, Compare comp)
+			T max(const T a, const T b, Compare comp)
 			{
 			if( comp(a, b) ){
 			return b;

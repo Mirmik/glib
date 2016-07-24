@@ -48,7 +48,7 @@ void dprhex(int64_t obj) { debug_printhex_uint64(obj); };
 
 //template<> void dprhex(float obj) { dprhex(horrible_cast<float_uint, float>(obj)); };
 //template<> void dprhex(double obj) { dprhex(horrible_cast<double_uint, double>(obj)); };
-void dpr(gxx::string obj) {dpr(obj.c_str());};
+//void dpr(gxx::string obj) {dpr(obj.c_str());};
 
 void dpr_dump(void* obj, uint32_t size) 
 { 

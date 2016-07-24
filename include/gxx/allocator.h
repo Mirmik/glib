@@ -2,12 +2,24 @@
 #define GENOS_GSTL_ALLOCATOR
 
 #include "genos_configure.h"	
+#include "debug/dprint.h"
 #include "gxx/traits.h"
 
 namespace gxx {
 
 template <typename T, typename traits_type = elem_traits<T>>
 class allocator { 
+	public:
+	typedef typename traits_type::	ptr_type 			pointer;
+	typedef typename traits_type::	size_type 			size_type;
+	
+	virtual pointer allocate(size_type n) = 0;
+	virtual pointer reallocate(pointer old, size_type n) = 0;
+	virtual void deallocate(pointer p) = 0;
+};
+
+template <typename T, typename traits_type = elem_traits<T>>
+class system_allocator : public allocator<T,traits_type> { 
 	public:
 	typedef typename traits_type::	ptr_type 			pointer;
 	typedef typename traits_type::	const_ptr_type 		const_pointer;
@@ -17,18 +29,20 @@ class allocator {
 	typedef typename traits_type::	size_type 			size_type;
 	typedef typename traits_type::	ptrdiff_t 			difference_type;
 	
-	virtual pointer allocate(size_type n) = 0;
-	virtual pointer reallocate(pointer old, size_type n) = 0;
-	virtual void deallocate(pointer p) = 0;
-};
-
-template<>
-class allocator<void, elem_traits<void>> { 
 	public:
-	typedef typename elem_traits<void>::ptr_type pointer;
-};
+	pointer allocate(size_type n) { 
+		return reinterpret_cast<pointer>(sysalloc(n * sizeof(T))); 
+	};
+	
+	pointer reallocate(pointer old, size_type n) { 
+		return reinterpret_cast<pointer>(sysrealloc(old, n * sizeof(T))); 
+	};
 
-template <typename T, typename traits_type = elem_traits<T>>
+	void deallocate(pointer p) {
+		sysfree(reinterpret_cast<void*>(p)); 
+	};
+};	
+/*template <typename T, typename traits_type = elem_traits<T>>
 class malloc_allocator : public allocator<T,traits_type> { 
 	using pointer = typename allocator<T,traits_type>::pointer;
 	using size_type = typename allocator<T,traits_type>::size_type;
@@ -84,7 +98,7 @@ class ctrlmalloc_allocator : public allocator<T,traits_type> {
 	void deallocate(pointer p) {
 		ctrlfree(reinterpret_cast<void*>(p)); 
 	};
-};	
+};	*/
 
 };	
 	

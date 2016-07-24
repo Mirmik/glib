@@ -1,6 +1,8 @@
 #ifndef GENOS_LOCATION_H
 #define GENOS_LOCATION_H
 
+#include <debug/dprint.h>
+
 struct location {
 	int line;
 	const char* file;

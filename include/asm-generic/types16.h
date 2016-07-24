@@ -1,10 +1,3 @@
-/**
- * @file
- *
- * @date Aug 28, 2013
- * @author: Anton Bondarev
- */
-
 #ifndef ASM_GENERIC_TYPES16_H_
 #define ASM_GENERIC_TYPES16_H_
 

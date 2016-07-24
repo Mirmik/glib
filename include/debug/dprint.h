@@ -4,9 +4,9 @@
 #include "inttypes.h" 
 #include "compiler.h"
 
-#ifdef __cplusplus
-#include "gxx/string.h"
-#endif
+//#ifdef __cplusplus
+//#include "gxx/string.h"
+//#endif
 
 /*	
 	2012-2015 Mirmik
@@ -158,7 +158,7 @@ void dprhex(int64_t obj);
 
 //template<> void dprhex(float obj);
 //template<> void dprhex(double obj);
-void dpr(gxx::string obj);
+//void dpr(gxx::string obj);
 
 void dpr_dump(void* obj, uint32_t size);
 void dpr_dump_ascii(void* obj, uint32_t size);

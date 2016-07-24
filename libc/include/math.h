@@ -4,7 +4,7 @@
 #include "compiler.h"
 
 __BEGIN_DECLS
-/*
+
 static __inline unsigned __FLOAT_BITS(float __f)
 {
 	union {float __f; unsigned __i;} __u;
@@ -47,7 +47,7 @@ static __inline unsigned long long __DOUBLE_BITS(double __f)
 	sizeof(x) == sizeof(float) ? (int)(__FLOAT_BITS(x)>>31) : \
 	sizeof(x) == sizeof(double) ? (int)(__DOUBLE_BITS(x)>>63) : \
 	__signbitl(x) )
-
+/*
 #define isunordered(x,y) (isnan((x)) ? ((void)(y),1) : isnan((y)))
 */
 //#define isless(x, y)            __tg_pred_2(x, y, __isless)

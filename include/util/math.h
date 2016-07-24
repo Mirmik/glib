@@ -5,6 +5,10 @@
 
 #include "defines/decltypeof.h"
 
+#undef min
+#undef max
+#undef abs
+
 #define abs(a)	 								\
 	({ 											\
 		decltypeof(a) __abs_a = a; 				\

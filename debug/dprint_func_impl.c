@@ -1,4 +1,5 @@
 #include <debug/dprint.h>
+#include <stdint.h>
 
 void debug_printhex_uint4(uint8_t b){
 	uint8_t c = b < 10 ? b + '0' : b + 'A' - 10;
@@ -107,12 +108,18 @@ void debug_printdec_double(double a, int prec)
 	};
 #endif
 
-void debug_printhex_ptr(void* v)
-{
-	if (__builtin_types_compatible_p(uint8_t , uintptr_t)) debug_printhex_uint8 ((uint8_t )v);
-	if (__builtin_types_compatible_p(uint16_t, uintptr_t)) debug_printhex_uint16((uint16_t)v);
-	if (__builtin_types_compatible_p(uint32_t, uintptr_t)) debug_printhex_uint32((uint32_t)v);
-	if (__builtin_types_compatible_p(uint64_t, uintptr_t)) debug_printhex_uint64((uint64_t)v);
+void debug_printhex_ptr(void* v) {
+	#if __WORDSIZE == 8 
+		debug_printhex_uint8 ((uint8_t )v);
+	#elif __WORDSIZE == 16
+		debug_printhex_uint16((uint16_t)v);
+	#elif __WORDSIZE == 32
+		debug_printhex_uint32((uint32_t)v);
+	#elif __WORDSIZE == 64
+		debug_printhex_uint64((uint64_t)v);
+	#else
+		#error "Wrong __WORDSIZE"
+	#endif
 };
 	
 

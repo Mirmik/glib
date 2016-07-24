@@ -1,5 +1,5 @@
 regmodule {
-	name = "placenew",
+	name = "new",
 	sources = {
 		cxx = {"new.cpp"}
 	}

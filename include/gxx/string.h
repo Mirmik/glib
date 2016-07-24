@@ -120,6 +120,8 @@ public:
 	unsigned char concat(unsigned long num);
 	unsigned char concat(float num);
 	unsigned char concat(double num);
+	unsigned char concat(const gxx::buffer& cptr);
+	//unsigned char concat(gxx::buffer&& cptr);
 	//unsigned char concat(const __FlashStringHelper * str);
 	
 	template<unsigned int size>
@@ -140,6 +142,7 @@ public:
 	string & operator << (unsigned long num){concat(num); return (*this);}
 	string & operator << (float num)		{concat(num); return (*this);}
 	string & operator << (double num)		{concat(num); return (*this);}
+	string & operator << (const gxx::buffer& cptr) {concat(cptr); return (*this);}
 
 	template<unsigned int size>
 	string & operator << (charbuf<size> buf){concat(buf); return (*this);}
@@ -184,6 +187,11 @@ public:
 	void toCharArray(char *buf, unsigned int bufsize, unsigned int index=0) const
 		{getBytes((unsigned char *)buf, bufsize, index);}
 	const char * c_str() const { return buffer; }
+
+	const char * to_str() const { 
+		if (buffer) return buffer;
+		else return "InvalideString"; 
+	}
 
 	// search
 	int indexOf( char ch ) const;
