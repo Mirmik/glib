@@ -1,6 +1,7 @@
 #ifndef GENOS_HASHTABLE_HEAD
 #define GENOS_HASHTABLE_HEAD
 
+#include <defines/size_t.h>
 #include "genos/datastruct/hlist_head.h"
 
 /*struct hashtable_operations

@@ -1,7 +1,7 @@
 #ifndef GENOS_TERM_LIST_H
 #define GENOS_TERM_LIST_H
 
-#include "genos/container/hashtable.h"
+#include "gxx/container/hashtable.h"
 #include "genos/sigslot/delegate.h"
 #include "mem/allocator.h"
 #include "crypto/crc.h"
