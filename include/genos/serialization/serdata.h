@@ -14,7 +14,7 @@ struct serdata<T0>
 	unsigned int hserial(char* buf, uint8_t flag)
 	{
 		unsigned int bias = 0;
-		bias += ::hserial(buf+bias, arg0, flag);
+		bias += ::hserial(buf+bias, &arg0, flag);
 		return bias;
 	};
 };
@@ -28,8 +28,8 @@ struct serdata<T0,T1>
 	unsigned int hserial(char* buf, uint8_t flag)
 	{
 		unsigned int bias = 0;
-		bias += ::hserial(buf+bias, arg0, flag);
-		bias += ::hserial(buf+bias, arg1, flag);
+		bias += ::hserial(buf+bias, &arg0, flag);
+		bias += ::hserial(buf+bias, &arg1, flag);
 		return bias;
 	};
 };
@@ -44,9 +44,9 @@ struct serdata<T0,T1,T2>
 	unsigned int hserial(char* buf, uint8_t flag)
 	{
 		unsigned int bias = 0;
-		bias += ::hserial(buf+bias, arg0, flag);
-		bias += ::hserial(buf+bias, arg1, flag);
-		bias += ::hserial(buf+bias, arg2, flag);
+		bias += ::hserial(buf+bias, &arg0, flag);
+		bias += ::hserial(buf+bias, &arg1, flag);
+		bias += ::hserial(buf+bias, &arg2, flag);
 		return bias;
 	};
 };
