@@ -60,7 +60,7 @@ static inline void hex2num_swap(void* num, const char* hex, int numlen) {
 	};
 };
 
-static inline void num2hex(char* hex, void* num, int numlen) {
+static inline void num2hex(char* hex, const void* num, int numlen) {
 	char* start = (char*) num;
 	char* stop = (char*) num + numlen;
 	for (char* ptr = start; ptr != stop; ++ptr) {
@@ -69,7 +69,7 @@ static inline void num2hex(char* hex, void* num, int numlen) {
 	};
 };
 
-static inline void num2hex_swap(char* hex, void* num, int numlen) {
+static inline void num2hex_swap(char* hex, const void* num, int numlen) {
 	char* start = (char*) num + numlen - 1;
 	char* stop = (char*) num - 1;
 	for (char* ptr = start; ptr != stop; --ptr) {

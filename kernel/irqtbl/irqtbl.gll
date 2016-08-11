@@ -1,0 +1,6 @@
+regmodule {
+	name = "gsys_irqtbl",
+	sources = {
+		cxx = {"irqtbl.cpp"}
+	}
+}

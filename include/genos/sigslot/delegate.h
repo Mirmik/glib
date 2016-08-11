@@ -77,6 +77,13 @@ class delegate
 		object = d.object;
 		method.method = d.method.method;
 	};
+	
+	//Конструктор копирования
+	delegate(delegate&& d)
+	{
+		object = d.object;
+		method.method = d.method.method;
+	};
 			
 	//Бывает, что и с volatile делегатами приходится 
 	//работать.
@@ -116,6 +123,13 @@ class delegate
 	//@1 указатель на объект, метод которого вызывается.
 	//@2 указатель на метод.
 	//Пример delegate<void, int> d(&a, &A::func);
+	template <typename T>
+	delegate(T* ptr_obj, R(T::*mtd)(Args ...))
+	{
+		object = reinterpret_cast <obj_t> (ptr_obj);
+		method.method = horrible_cast<mtd_t, R(T::*)(Args ...)>(mtd);
+	};
+
 	template <typename T1, typename T2>
 	void set(T1* ptr_obj, R(T2::*mtd)(Args ...))
 	{

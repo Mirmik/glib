@@ -107,26 +107,26 @@ string::string(unsigned long value, unsigned char base)
 	*this = buf;
 }
 
-string::string(const gxx::buffer cptr)
+string::string(const gxx::buffer& cptr)
 {
 	init();
-	if (cptr.data) copy(cptr.data, cptr.size);
+	if (cptr.data()) copy((const char*)cptr.data(), cptr.size());
 }
 
-string::string(const gxx::buffer cptr, StrBufOpt flag) {
+string::string(const gxx::buffer& cptr, StrBufOpt flag) {
 	init();
-	const char* src = (const char*) cptr.data;
+	const char* src = (const char*) cptr.data();
 	
 	if (flag == StrBufOpt::DUMP) {
-		reserve(cptr.size * 2 + 1);
+		reserve(cptr.size() * 2 + 1);
 		char* dst = (char*) buffer;
-		num2hex(dst, cptr.data, cptr.size);
-		len = cptr.size*2;
+		num2hex(dst, cptr.data(), cptr.size());
+		len = cptr.size()*2;
 		*(buffer + len) = 0;
 	}
 
 	if (flag == StrBufOpt::RAW)
-		if (cptr.data) copy(cptr.data, cptr.size);			
+		if (cptr.data()) copy((const char*)cptr.data(), cptr.size());			
 };
 
 
@@ -266,9 +266,9 @@ string & string::operator = (const char *cstr)
 	return *this;
 }
 
-string & string::operator = (const gxx::buffer cptr)
+string & string::operator = (const gxx::buffer& cptr)
 {
-	if (cptr.data) copy(cptr.data, cptr.size);
+	if (cptr.data()) copy((const char*)cptr.data(), cptr.size());
 	else invalidate();
 	
 	return *this;
@@ -355,7 +355,7 @@ unsigned char string::concat(unsigned long num)
 }
 
 unsigned char string::concat(const gxx::buffer& cptr) {
-	return concat(cptr.data, cptr.size);
+	return concat((const char*)cptr.data(), cptr.size());
 }
 
 //unsigned char string::concat(float num)
@@ -789,6 +789,3 @@ float string::toFloat(void) const
 
 };
 
-gxx::buffer string::gbuf() {
-	return gxx::buffer(buffer, len);
-};

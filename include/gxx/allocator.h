@@ -1,6 +1,7 @@
 #ifndef GENOS_GSTL_ALLOCATOR
 #define GENOS_GSTL_ALLOCATOR
 
+#include <mem/allocator.h>
 #include "genos_configure.h"	
 #include "debug/dprint.h"
 #include "gxx/traits.h"

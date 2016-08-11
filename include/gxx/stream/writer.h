@@ -13,9 +13,9 @@
 
 static void writer_printf_helper(void* d, char c);
 
-namespace gxx {
+namespace genos {
 
-class writer {
+class StreamWriter {
 public:
 	virtual int putc(const char c) = 0;
 	virtual int write(const char*, size_t) = 0;
@@ -160,7 +160,7 @@ public:
 };
 
 static void writer_printf_helper(void* d, char c) {
-	RETYPE(writer*, w, d);
+	RETYPE(genos::StreamWriter*, w, d);
 	w->putc(c);
 }
 

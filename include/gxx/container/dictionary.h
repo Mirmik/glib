@@ -2,7 +2,7 @@
 #define GENOS_DICTIONARY_H
 
 #include "genos_configure.h"
-#include "mem/allocator.h"
+#include "gxx/allocator.h"
 #include "gxx/container/hashtable.h"
 #include "gxx/container/traits.h"
 
@@ -46,9 +46,9 @@ public:
 		ht.put(*dn);
 	};
 
-	valtype operator[](const keytype& key) {
-		return ht.get(key)->val;
-	};
+	//valtype operator[](const keytype& key) {
+	//	return ht.get(key)->val;
+	//};
 
 	int get(valtype& tgt, const keytype& key) {
 		auto ret = ht.get(key);
@@ -56,6 +56,18 @@ public:
 		tgt = ret->val;
 		return 0;	
 	};
+
+	bool contains(const keytype& key) {
+		auto ret = ht.get(key);
+		if (ret == nullptr) return false;
+		return true;	
+	}
+
+	valtype& operator[](const keytype& key) {
+		auto ret = ht.get(key);
+		if (ret == nullptr) dprln("AllBad");
+		return ret->val;
+	}
 
 	const hashtable_t& get_table() {
 		return ht;

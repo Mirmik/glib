@@ -97,6 +97,14 @@ public:
 		dlist_add_back(&ptr->lnk, &lst);		
 	};
 
+	T& back() {
+		return container_of(lst.prev, record_t, lnk)->value;
+	}
+
+	T& front() {
+		return container_of(lst.next, record_t, lnk)->value; 
+	}
+
 	bool empty() {
 		return lst.next == &lst;
 	}

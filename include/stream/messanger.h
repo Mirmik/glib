@@ -2,6 +2,9 @@
 #define STREAM_MESSANGER_H
 
 #include "inttypes.h"
+#include <genos/sigslot/sigslot.h>
+#include <gxx/buffer.h>
+#include <util/errbus.h>
 
 class Messanger {
 	/*	
@@ -13,14 +16,9 @@ class Messanger {
 	*/
 	virtual int send(const void* buf, int len, uint8_t flag = 0) = 0;
 	
-	/*	
-		recv - Принять сообщение.
-		@buf : буффер-приёмник
-		@max : максимальная длина принимаемого сообщения
-		@flag : опции
-		@return : код возврата. Отрицательный в случае ошибки. 
-	*/
-	virtual int recv(const void* buf, int max, uint8_t flag = 0) = 0;
+public:
+	genos::signal<gxx::buffer> receivedMessage;
+	genos::signal<ErrorBus> errorFrame;
 };
 
 #endif

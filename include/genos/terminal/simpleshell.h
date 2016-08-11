@@ -36,6 +36,24 @@ public:
 		return ref(argvc.c, argvc.v);
 	}
 
+	int execute_s(char* _str) {
+		argvc_t argvc;
+		
+		char str[128];
+		strcpy(str,_str);
+
+		char* v[10];
+
+		argvc.v = v;
+		argvc.internal_split(str);
+
+		delegate<int,int,char**> ref;
+		auto retcode = dict.get(ref, argvc.v[0]);
+		if (retcode) return FunctionNotExist;
+		
+		return ref(argvc.c, argvc.v);
+	}
+
 	gxx::string strerr(int retcode) {
 		switch (retcode) {
 			case RetCodeOK: 

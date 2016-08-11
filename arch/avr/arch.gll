@@ -1,16 +1,25 @@
+regmodule {
+	name = "genos_avr_head",
+	sources = {
+		cc = {
+			"asm/atmega/vectors.S", 
+			"asm/atmega/irqcall.S", 
+			"asm/atmega/start.S", 
+		}
+	}
+}
+
 regmodule
 {
 	name = "arch.avr2560",
 	sources = 
 	{
-		cc = {"asm/arch.c"},
-		cxx = {"asm/archxx.cpp"},
+		cxx = {"asm/arch.cpp"},
 	},
 	modules = {
 		{name = "avr_gpio"},
 	},
 }
-
 
 regmodule
 {

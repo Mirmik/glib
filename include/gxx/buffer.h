@@ -3,53 +3,48 @@
 
 #include "stdint.h"
 #include "defines/size_t.h"
+#include <string.h>
 #include <assert.h>
+#include <mem/sysalloc.h>
 
 namespace gxx {
 
-class buffer
-{
-public:
-	char* data;
-	size_t size;
+class buffer {
+private:
+	void* _data;
+	size_t _size;
 
 public:
-	buffer(char* ptr, size_t len) 
-		: data(ptr), size(len) {};
-
-
-	buffer() 
-		: data(nullptr), size(0) {};
-
-	void invalidate() {
-		data = nullptr;
-		size = 0;
+	buffer(void* __data, size_t __size)
+		: _data(__data), _size(__size) {};
+	
+	void* data() const {
+		return _data;
 	}
 
-	bool is_valid() {
-		return data;
-	}
-
-	void set(char* _data, size_t _size) {
-		data = _data;
-		size = _size;
-	}
-
-	template < typename CharAllocator >
-	void allocate(size_t sz) {
-		assert(data == nullptr);
-		CharAllocator alloc;
-		data = alloc.allocate(sz);
-		size = sz;
-	}
-
-	template < typename CharAllocator >
-	void reallocate(size_t sz) {
-		CharAllocator alloc;
-		data = alloc.reallocate(data, sz);
-		size = sz;
+	size_t size()  const {
+		return _size;
 	}
 };
+
+class alocated_buffer : public buffer {
+public:
+	void* _data;
+	size_t _size;
+
+	alocated_buffer(size_t __size) 
+		: buffer(sysalloc(__size), __size) {}
+
+	~alocated_buffer() {
+		sysfree(_data);
+	}
+
+	void reserve (size_t newsize) {
+		_data = sysrealloc(_data, newsize);
+	}
+};
+
+void buffer_fill(const buffer& buffer, char c);
 
 };
 

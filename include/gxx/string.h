@@ -70,8 +70,8 @@ public:
 	string(string &&rval);
 	string(StringSumHelper &&rval);
 	
-	explicit string(const gxx::buffer cptr);
-	explicit string(const gxx::buffer cptr, StrBufOpt flag);
+	explicit string(const gxx::buffer& cptr);
+	explicit string(const gxx::buffer& cptr, StrBufOpt flag);
     
 	explicit string(char c);
 	explicit string(unsigned char, unsigned char base=10);
@@ -98,7 +98,7 @@ public:
 	string & operator = (const char *cstr);
 	//string & operator = (const __FlashStringHelper *str);
 
-	string & operator = (const gxx::buffer cptr);
+	string & operator = (const gxx::buffer& cptr);
 
     #if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
 	string & operator = (string &&rval);
@@ -218,7 +218,7 @@ public:
 	long toInt(void) const;
 	float toFloat(void) const;
 
-	gxx::buffer gbuf();
+	//gxx::const_buffer gbuf();
 
 protected:
 	char *buffer;	        // the actual char array

@@ -1,28 +1,42 @@
 #ifndef DYNAMIC_ARRAY_H
 #define DYNAMIC_ARRAY_H
 
-#include "genos/datastruct/dynbuf.h"
-#include "mem/allocator.h"
+//#include "genos/datastruct/dynbuf.h"
+//#include "mem/allocator.h"
 #include "defines/size_t.h"
 
-template<typename type>
+
+namespace gxx {
+
+template<typename T, typename Allocator = system_allocator<listrecord<T>>>
 class dynarray {
-	dynbuf dbuf;
-	size_t cappacity;
+public:
+	using traits_type = elem_traits<T>;	
+	using pointer = 		typename traits_type::ptr_type;
+	using const_pointer = 	typename traits_type::const_ptr_type;
+	using reference = 		typename traits_type::reference;
+	using const_reference = typename traits_type::const_reference;
+	using size_type = 		typename traits_type::size_type;
+	using difference_type = typename traits_type::ptrdiff_t;
+	using value_type = 		typename traits_type::value_type;
 
-	dynarray() { 
-		dynbuf_init(&dbuf);
-		cappacity = 0; 
+private:
+	Allocator alloc;
+	value_type* _data;
+	size_type _capasity;
+
+public:
+	dynarray() : _capasity(0), _data(nullptr) {}
+
+	int reserve(size_t sz) {
+		if (sz > _capasity) return changeBuffer(sz);
+		else return 1;
 	}
 
-	void reserve(size_t dim) {
-		dynbuf_reserve(&dbuf, &malloc_ops, sizeof(type) * dim);
-		cappacity = dim;
-	}
+	int changeBuffer (size_t sz) {
 
-	type& operator[](int i) {
-		dynbuf_get(&dbuf,type,i);
 	};
 };
 
+};
 #endif

@@ -331,7 +331,7 @@
 		}
 		
 		// subclause _lib.alg.modifying.operations_, modifying sequence operations:
-		
+*/		
 		template<class InputIterator, class OutputIterator>  
 		OutputIterator
 		copy(InputIterator first, InputIterator last, OutputIterator result)
@@ -343,6 +343,18 @@
 			}
 			return result;
 		}
+
+		template<class InputIterator, class OutputIterator>  
+		OutputIterator
+		move(InputIterator first, InputIterator last, OutputIterator result)
+		{
+			while(first != last){
+				*result = gxx::move(*first);
+				++first;
+				++result;
+			}
+			return result;
+		}		
 		
 		template<class BidirectionalIterator1, class BidirectionalIterator2>  
 		BidirectionalIterator2
@@ -353,6 +365,19 @@
 				--result;
 				--last;
 				*result = *last;
+			}
+			return result;
+		}
+		
+		template<class BidirectionalIterator1, class BidirectionalIterator2>  
+		BidirectionalIterator2
+		move_backward(BidirectionalIterator1 first, BidirectionalIterator1 last,
+		BidirectionalIterator2 result)
+		{
+			while(first !=last ){
+				--result;
+				--last;
+				*result = gxx::move(*last);
 			}
 			return result;
 		}
@@ -375,7 +400,7 @@
 			return first2;
 		}
 		
-		
+/*		
 		template<class ForwardIterator1, class ForwardIterator2>  
 		void
 		iter_swap(ForwardIterator1 a, ForwardIterator2 b)
@@ -383,8 +408,8 @@
 			typename iterator_traits<ForwardIterator1>::value_type temp(*a);
 			*a = *b;
 			*b = temp;
-		}
-		
+		}*/
+/*		
 		
 		template<class InputIterator, class OutputIterator, class UnaryOperation>  
 		OutputIterator

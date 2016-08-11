@@ -22,7 +22,47 @@ using size_t = ::size_t;
 #include "gxx/utility/type_transform.hpp"
 #include "gxx/utility/type_relation.hpp"
 #include "gxx/utility/move.hpp"
-};
 
+template<typename T>
+void destructor(T* ptr) {
+	ptr->~T();
+}
+
+template<class InputIterator>  
+void
+destructor(InputIterator first, InputIterator last)
+{
+	while(first != last){
+		gxx::destructor(&*first);
+		++first;
+	}
+}
+
+template<typename T, typename ... Args>
+void constructor(T* ptr, Args ... args) {
+	new(ptr) T(args ...);
+}
+
+template<typename T>
+void copyConstructor(T* ptr, const T& other) {
+	new(ptr) T(other);
+}
+
+template<typename T>
+void moveConstructor(T* ptr, T&& other) {
+	new(ptr) T(gxx::forward<T>(other));
+}
+
+template<class InputIterator, typename ... Args>  
+void
+constructor(InputIterator first, InputIterator last, Args ... args)
+{
+	while(first != last){
+		gxx::constructor(&*first, args ...);
+		++first;
+	}
+}
+
+};
 
 #endif

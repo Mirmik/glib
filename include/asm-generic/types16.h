@@ -16,6 +16,7 @@ typedef unsigned long long __u64;
 
 typedef unsigned int      __size_t;
 typedef signed int        __ptrdiff_t;
+typedef signed int        __ssize_t;
 
 typedef unsigned int      __uintptr_t;
 typedef int               __intptr_t;

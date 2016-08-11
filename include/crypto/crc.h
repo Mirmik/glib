@@ -13,6 +13,26 @@
   MaxLen: 15 байт(127 бит) - обнаружение
     одинарных, двойных, тройных и всех нечетных ошибок
 */
+class Crc8Functor {
+    unsigned char crc = 0xFF;
+    unsigned char CRC_Polynom = 0x31;
+public:
+    void operator()(char byte) {
+        crc ^= byte;
+        for (uint8_t i = 0; i < 8; i++) {
+          crc = (crc & (1<<7)) 
+          ? ((crc << 1) ^ CRC_Polynom) 
+          : (crc << 1);
+        }
+    };
+
+    operator unsigned char () {
+        return crc;
+    }
+
+    Crc8Functor() {};
+};
+
 static unsigned char crc8(unsigned char *pcBlock, unsigned int len)
 {
     unsigned char crc = 0xFF;
