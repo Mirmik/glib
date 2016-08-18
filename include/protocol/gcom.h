@@ -3,10 +3,11 @@
 
 #include <stream/msgsend.h>
 #include <gQ/gQByteArray.h>
+#include <gQ/gQSerialBuffer.h>
 //#include <gxx/hashtable.h>
 
 //cs 			2
-//system 		1
+//proto 		1
 //code			1
 //datalength	2
 //data 			var
@@ -17,7 +18,7 @@ class gCom {
 public:
 	gCom(Messanger* sender) : m_sender(sender) {};
 
-	void send(uint8_t sys, uint8_t code, uint16_t datasize, void* data);
+	void send(uint8_t proto, uint8_t code, gQSKB buffer);
 		
 };
 

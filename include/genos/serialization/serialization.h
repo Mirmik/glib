@@ -9,7 +9,8 @@
 
 #define	SER 1
 #define DESER 2
-#define SERDIR_MASK 3
+#define SERIAL_SIZE 4
+#define SERDIR_MASK 7
 
 #define PROTOORD_LITTLE 4
 #define PROTOORD_BIG 8
@@ -42,6 +43,27 @@ unsigned int rserial(char* buf, char* ref, uint8_t flag) {
 static inline 
 unsigned int rserial(char* buf, int8_t* ref, uint8_t flag) {
 	return __rserial(buf, ref, 1, flag);
+};
+
+static inline 
+unsigned int rserial(char* buf, int16_t* ref, uint8_t flag) {
+	return __rserial(buf, ref, 2, flag);
+};
+
+static inline 
+unsigned int rserial(char* buf, int32_t* ref, uint8_t flag) {
+	return __rserial(buf, ref, 4, flag);
+};
+
+static inline 
+unsigned int rserial(char* buf, int64_t* ref, uint8_t flag) {
+	return __rserial(buf, ref, 8, flag);
+};
+
+template<typename T>
+static inline 
+unsigned int rserial(char* buf, T* ref, uint8_t flag) {
+	return ref->rserial(buf, flag);
 };
 
 

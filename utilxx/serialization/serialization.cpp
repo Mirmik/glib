@@ -29,8 +29,9 @@ void memcpy_swap(void* dst, void* src, size_t sz) {
 	}
 };
 
-unsigned int __rserial
-	(char* buf, void* ref, uint16_t len, uint8_t flag) {
+unsigned int __rserial (char* buf, void* ref, uint16_t len, uint8_t flag) {
+	if (bits_mask_eq(flag, SERDIR_MASK, SERIAL_SIZE)) return len;
+
 	bool reverse = is_need_reverse(bits_mask(flag, PROTOORD_MASK));
 	if (bits_mask_eq(flag, SERDIR_MASK, SER)) {
 		if (reverse) memcpy_swap(buf, ref, len); 
