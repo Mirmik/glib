@@ -10,6 +10,7 @@
 
 #include "defines/nullptr_t.h"
 #include "defines/size_t.h"
+#include <utilxx/new.h>
 
 namespace gxx{
 using size_t = ::size_t;

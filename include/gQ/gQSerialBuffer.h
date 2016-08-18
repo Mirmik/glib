@@ -1,7 +1,8 @@
 #ifndef GQ_SERIAL_BUFFER_H
 #define GQ_SERIAL_BUFFER_H
 
-#include <genos/serialization/serialization.h>
+#include <genos/serialization.h>
+#include <gQ/gQByteAllocated.h>
 
 class gQSKB : public gQBasicAllocated {
 
@@ -17,35 +18,6 @@ private:
 		
 		Record() : data(nullptr), refs(0), rsize(0), lsize(0) 
 			, capacity(0), nullpos(0) {};
-	};
-
-	class RSerial {
-		gQSKB* m_skb;
-		
-	public:
-		RSerial(gQSKB* const skb) : m_skb(skb) {};
-
-		template <typename T>
-		void push_back (T& ref) {
-			auto sz = ::rserial(m_skb->rightptr(), &ref, SERIAL_SIZE);
-			m_skb->reserve(m_skb->leftsize(), m_skb->rightsize() + sz);
-			::rserial(m_skb->rightptr(), &ref, SER);
-		};
-	};
-
-	class RDeserial {
-		gQSKB* m_skb;
-		char* m_cursor;
-		
-	public:
-		RSerial(gQSKB* const skb, char* cursor) : m_skb(skb), m_cursor(cursor) {};
-
-		template <typename T>
-		unsigned char deser(T& obj) {
-			::rserial(m_cursor, &obj, DESER);
-			if (m_cursor > leftptr()) return -1;
-			return 0;
-		};
 	};
 
 	Record* m_record;
@@ -158,9 +130,9 @@ public:
 		return leftptr();
 	}	
 
-	RSerial rserial() {
-		return RSerial(this);
-	}
+	//RSerial rserial() {
+	//	return RSerial(this);
+	//}
 
 	const char* c_str() {
 		reserve(leftsize(), rightsize() + 1);
