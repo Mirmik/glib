@@ -30,31 +30,25 @@ public:
 		argvc.internal_split(str);
 
 		delegate<int,int,char**> ref;
+
+		if (!strcmp(argvc.v[0], "help")) {
+			dprln("HELP: TODO");
+			return RetCodeOK;
+		}
+
 		auto retcode = dict.get(ref, argvc.v[0]);
 		if (retcode) return FunctionNotExist;
 		
 		return ref(argvc.c, argvc.v);
 	}
 
-	int execute_s(char* _str) {
-		argvc_t argvc;
-		
+	int execute_s(char* _str) {	
 		char str[128];
 		strcpy(str,_str);
-
-		char* v[10];
-
-		argvc.v = v;
-		argvc.internal_split(str);
-
-		delegate<int,int,char**> ref;
-		auto retcode = dict.get(ref, argvc.v[0]);
-		if (retcode) return FunctionNotExist;
-		
-		return ref(argvc.c, argvc.v);
+		return execute(str);
 	}
 
-	gxx::string strerr(int retcode) {
+	static gxx::string strerr(int retcode) {
 		switch (retcode) {
 			case RetCodeOK: 
 				return gxx::string("RetCodeOK");

@@ -65,6 +65,12 @@ public:
 		_length++; 
 	}
 
+	void push_back(const T& ref) {
+		reserve(_length + 1);
+		new(_data + _length) T(ref);
+		_length++; 
+	}
+
 	value_type& operator[](size_t num) {
 		if (num > _length) reserve(num);
 		return *(_data + num);

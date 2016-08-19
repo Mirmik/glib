@@ -59,3 +59,13 @@ void dpr_dump_ascii(void* obj, uint32_t size)
 { 
 	debug_print_dump_ascii(obj, size); 
 };
+
+void dprtab() {
+	debug_putchar('\t');
+};
+
+void dprtab(uint8_t obj) {
+	while(obj--) {
+		debug_putchar('\t');
+	}
+};

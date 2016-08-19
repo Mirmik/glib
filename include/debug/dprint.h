@@ -178,6 +178,8 @@ template<typename T> void dprhexln(T obj)
 template<typename T> void dprptrln(T obj) 
 	{ dprptr(obj); debug_write("\r\n", 2); };
 
+void dprtab();
+void dprtab(uint8_t obj);
 
 #endif //__cplusplus
 
