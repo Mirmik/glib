@@ -1,11 +1,10 @@
 #ifndef GENOS_UTILXX_BUFFER_H
 #define GENOS_UTILXX_BUFFER_H
 
-#include "stdint.h"
+//#include "stdint.h"
 #include "defines/size_t.h"
 #include <string.h>
 #include <assert.h>
-#include <mem/sysalloc.h>
 #include <genos/serialization.h>
 
 namespace gxx {
@@ -27,25 +26,27 @@ public:
 		return _size;
 	}
 
-	size_t serialization(char* ptr, size_t maxlen) const {
+	size_t serialization(char* ptr, size_t maxlen, uint8_t flag) const {
 		size_t off = 0;
-		off += ::serialization(ptr + off, _size, maxlen - off);
-		off += __serialization(ptr + off, _data, _size, maxlen - off);
+		off += ::serialization(ptr + off, _size, maxlen - off, PROTOORD_LITTLE);
+		off += plainSerialization(ptr + off, _data, _size, maxlen - off);
+		return off;
 	}
 
-	size_t deserialization(char* ptr, size_t maxlen) {
+	size_t deserialization(char* ptr, size_t maxlen, uint8_t flag) {
 		size_t off = 0;
-		off += ::deserialization(ptr + off, _size, maxlen - off);
-		off += __deserialization(ptr + off, _data, _size, maxlen - off);
+		off += ::deserialization(ptr + off, _size, maxlen - off, PROTOORD_LITTLE);
+		off += plainDeserialization(ptr + off, _data, _size, maxlen - off);
+		return off;
 	}
 
-	size_t serialSize() {
+	size_t serialSize() const {
 		return sizeof(uint16_t) + _size; 
 	}
 
 	static size_t deserialSize(char* ptr) {
 		uint16_t sz;
-		::deserialization(ptr, sz, sizeof(uint16_t));
+		::deserialization(ptr, sz, sizeof(uint16_t), PROTOORD_LITTLE);
 		return sz + sizeof(uint16_t); 
 	}
 };

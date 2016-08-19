@@ -1,9 +1,16 @@
-#include "genos/serialization/serialization.h"
-#include "string.h"
-#include "debug/dprint.h"
-#include "hal/arch.h"
-#include "util/bits.h"
+#include "genos/serialization.h"
 
+template <> size_t deserialSize<int8_t>(char* ptr) { return 1; };
+template <> size_t deserialSize<int16_t>(char* ptr) { return 2; };
+template <> size_t deserialSize<int32_t>(char* ptr) { return 4; };
+template <> size_t deserialSize<int64_t>(char* ptr) { return 8; };
+
+template <> size_t deserialSize<uint8_t>(char* ptr) { return 1; };
+template <> size_t deserialSize<uint16_t>(char* ptr) { return 2; };
+template <> size_t deserialSize<uint32_t>(char* ptr) { return 4; };
+template <> size_t deserialSize<uint64_t>(char* ptr) { return 8; };
+
+/*
 bool is_need_reverse(uint8_t order) {
 #if BYTE_ORDER == __LITTLE_ENDIAN
 	//dprln("here1");
@@ -129,4 +136,4 @@ unsigned int serialization_raw(char* buf, char* ptr, size_t* plen, uint8_t flag)
 	bias += __serialization_old_type(buf + bias, ptr, *plen, flag);
 	return bias;
 };
-
+*/

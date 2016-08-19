@@ -39,7 +39,7 @@ public:
 		ht.memstrategy(_alloc, hash_memstrat70);
 	};
 
-	dictionary() : dictionary(&standart_allocator) {};
+	dictionary() : dictionary(&malloc_ops) {};
 
 	void insert(const keytype& key,const valtype& val) {
 		dictnode<keytype,valtype>* dn = new dictnode<keytype,valtype>(key,val);
