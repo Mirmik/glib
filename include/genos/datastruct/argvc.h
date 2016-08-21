@@ -1,7 +1,7 @@
 #ifndef GENOS_DATASTRUCT_ARGV_H
 #define GENOS_DATASTRUCT_ARGV_H
 
-#include "gxx/to_string.h"
+#include "gxx/ByteArray.h"
 
 struct argvc_t {
 	int c;

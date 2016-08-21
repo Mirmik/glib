@@ -2,7 +2,7 @@
 #define GENOS_SERIAL_INVOKER_H
 
 #include <gQ/gQSerialBuffer.h>
-#include <gxx/container/dictionary.h>
+//#include <gxx/container/dictionary.h>
 
 class SerialInvoker {
 

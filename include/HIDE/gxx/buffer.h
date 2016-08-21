@@ -50,7 +50,24 @@ public:
 		return sz + sizeof(uint16_t); 
 	}
 };
+/*
+class alocated_buffer : public buffer {
+public:
+	void* _data;
+	size_t _size;
 
+	alocated_buffer(size_t __size) 
+		: buffer(sysalloc(__size), __size) {}
+
+	~alocated_buffer() {
+		sysfree(_data);
+	}
+
+	void reserve (size_t newsize) {
+		_data = sysrealloc(_data, newsize);
+	}
+};
+*/
 void buffer_fill(const buffer& buffer, char c);
 
 };

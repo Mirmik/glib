@@ -1,6 +1,0 @@
-regmodule {
-	name = "gxx_buffer",
-	sources = {
-		cxx = {"buffer.cpp"}
-	}
-}

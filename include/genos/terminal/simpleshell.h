@@ -1,13 +1,13 @@
 #ifndef GENOS_SIMPLE_SHELL_H
 #define GENOS_SIMPLE_SHELL_H
 
-#include <gxx/container/dictionary.h>
+#include <gxx/Dictionary.h>
 #include <genos/sigslot/delegate.h>
 #include <genos/datastruct/argvc.h>
-#include "gxx/string.h"
+#include "gxx/ByteArray.h"
 
 class SShell {
-	dictionary<const char*, delegate<int, int, char**>> dict;
+	gxx::Dictionary<const char*, delegate<int, int, char**>> dict;
 
 public:
 	static constexpr uint8_t RetCodeOK = 0;
@@ -36,8 +36,8 @@ public:
 			return RetCodeOK;
 		}
 
-		auto retcode = dict.get(ref, argvc.v[0]);
-		if (retcode) return FunctionNotExist;
+		auto retcode = dict.get(argvc.v[0],ref);
+		if (retcode == false) return FunctionNotExist;
 		
 		return ref(argvc.c, argvc.v);
 	}
@@ -59,7 +59,7 @@ public:
 			case WrongArgsData: 
 				return gxx::string("WrongArgsData");
 			default: 
-				return gxx::string("UnregistredRetCode ") + retcode;
+				return gxx::string::format("UnregistredRetCode %d", retcode);
 		};
 	};
 };

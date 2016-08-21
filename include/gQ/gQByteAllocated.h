@@ -23,7 +23,7 @@ public:
 	};
 };
 
-
+/*
 template <typename T> 
 class gQAllocatedArray : public gQBasicAllocated {
 	T* m_data;
@@ -67,6 +67,6 @@ public:
 		m_alloc->deallocate(newdata);
 		return 1;
 	}
-};
+};*/
 
 #endif

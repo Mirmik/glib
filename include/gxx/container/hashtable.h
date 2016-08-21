@@ -1,195 +1,52 @@
-#ifndef GENOS_HASH_TABLE
-#define GENOS_HASH_TABLE
+#ifndef GENOS_HASHTABLE_HEAD
+#define GENOS_HASHTABLE_HEAD
 
-#include "assert.h"
-#include "inttypes.h"
-#include "genos/datastruct/hashtable_head.h"
-#include "gxx/container/hlist.h"
-#include "gxx/algorithm.h"
-#include "mem/allocator.h"
-#include "util/retype.h"
-//#include "gxx/allocator.h"
+#include <gxx/Allocator.h>
+#include <gxx/container/hlist_head.h>
+//#include <gxx/container/hashstrategy.h>
 
-template <
-typename type, 
-hlist_node type::* link, 
-typename keytype, 
-keytype type::* keyfield
->
-class hashtable
-{
-	using hash_fn_t = uint32_t(*)(keytype);
-	using cmp_fn_t = int32_t(*)(keytype,keytype);
-	using cell_t = hlist<type,link>;
+namespace gxx {
 
-private:
-	hashtable_head ht;
+	struct BasicHashTable : public BasicAllocated {
+		struct hlist_head* m_table;
+		size_t m_tableSize;
+		size_t m_total;
+		size_t (*m_strategy) (BasicHashTable*);
 
-	hash_fn_t hash;
-	cmp_fn_t  cmp;
+	public:
+		BasicHashTable() : m_table(nullptr), m_tableSize(0)
+			, m_total(0), m_strategy(nullptr) {}	
 
-	alloc_ops* alloc;
-	int (*strategy) (hashtable_head*); 
-
-	inline cell_t* eval_cell(const keytype& key) {
-		return reinterpret_cast<cell_t*>
-			(ht.table + (hash(key) % ht.table_size));
-	}
-
-	inline cell_t* to_cell(struct hlist_head* ptr) const {
-		return reinterpret_cast<cell_t*>(ptr);
-	}
-
-	inline void relocate(hashtable_head* dst)
-	{
-		for (int i = 0; i < ht.table_size; i++)
-		{
-			RETYPE(cell_t*, srccell, ht.table + i);
-			
-			auto it = srccell->begin();
-			while(it != srccell->end())
-			{
-				auto next = it.next(); 
-				RETYPE(cell_t*, dstcell, dst->table + 
-						(hash(*it.*keyfield) % dst->table_size));
-				dstcell->push_front(*it);
-				it = next;
-			};
-		};
-	};
-
-	inline void check_memstrategy()
-	{
-		int newsz;
-		if (strategy) newsz = strategy(&ht);
-		if (newsz == 0) return;
-
-		void* buf = alloc->allocate(newsz * sizeof(cell_t));
- 	
-		if (!ht.table) 
-		{
-			hashtable_locate(&ht,buf,newsz * sizeof(cell_t));
-			return;
+		~BasicHashTable() {
+			if (m_table) m_alloc->deallocate(m_table);
 		}
 
-		hashtable_head nht;
-		hashtable_locate(&nht,buf,newsz * sizeof(cell_t));
+		void reserve(size_t sz) {
+			hlist_head* newtbl = (hlist_head*) 
+				m_alloc->constructArray<hlist_head>(sz);
+			if (!is_valid()) {
+				m_table = newtbl;
+				m_tableSize = sz;
+				m_total = 0;
+				return;
+			}
+			relocate(newtbl, sz);
+			m_alloc->deallocate(m_table);
+			m_table = newtbl;
+			m_tableSize = sz;
+		}
 
-		relocate(&nht);
-		hlist_head* oldbuf = ht.table; 
-		ht.table = nht.table;
-		alloc->deallocate(oldbuf);
-		ht.table_size = nht.table_size;
-		return;
- 	}
+		void setStrategy(size_t (*func) (BasicHashTable*)) {
+			m_strategy = func;
+		};
 
-public:
-	hashtable() : cmp(nullptr), hash(nullptr), strategy(nullptr) 
-	{
-		hashtable_head_init(&ht);
+		virtual void relocate(hlist_head* dst, size_t dstsize) = 0;
+
+		bool is_valid() const {
+			return m_table;
+		}
 	};
-
-	void init(void* buf, int len, hash_fn_t _hash, cmp_fn_t _cmp)
-	{
-		hashtable_locate(&ht, buf, len);
-		hash = _hash;
-		cmp = _cmp;
-		strategy = nullptr;
-		alloc = nullptr;
-	};
-
-	void init(hash_fn_t _hash, cmp_fn_t _cmp)
-	{
-		hash = _hash;
-		cmp = _cmp;
-	};
-
-	void memstrategy(alloc_ops* _alloc, int (*_strategy) (hashtable_head*))
-	{
-		alloc = _alloc;
-		strategy = _strategy;
-	}
-
-	void put(type& item)
-	{
-		assert(hash);
-		assert(ht.table || strategy);
-		if (strategy) check_memstrategy();
-		ht.total++;
-		cell_t* cell = eval_cell(item.*keyfield);
-		cell->push_front(item);
-	};
-
-	type* get(const keytype& key)
-	{
-		assert(hash);
-		assert(cmp);
-		assert(ht.table);
-		
-		cell_t* cell = eval_cell(key);
-		auto end = cell->end();
-		auto begin = cell->begin();
-		auto res = gxx::find_if(begin,end,[=](type& item)
-		{
-			return cmp(item.*keyfield, key) == 0;
-		});
-		return res == end ? (type*)0 : &*res;												
-	};
-
-	type* del(const keytype& key)
-	{
-		assert(hash);
-		assert(cmp);
-		assert(ht.table);
-		
-		cell_t* cell = eval_cell(key);
-		auto end = cell->end();
-		auto begin = cell->begin();
-		auto res = gxx::find_if(begin,end,[=](type& item)
-		{
-			return cmp(item.*keyfield, key) == 0;
-		});
-		if (res == end) return 0;
-		cell->pop(*res);
-		ht.total--;
-		if (strategy) check_memstrategy();
-		return &*res;
-	};
-
-	gxx::string to_info() const
-	{
-		gxx::string str;
-		str.reserve(128);
-		str << "[";
-		for(int i = 0; i < ht.table_size; i++)
-			str << to_cell(ht.table + i)->total() << gxx::string(",");
-		str << "]";
-		return str;
-	}
-};
-
-static int hash_memstrat70(hashtable_head* ht)
-{
-//	assert(ht);
-
-	if (ht->table == nullptr)
-	{
-		return 4;
-	};
-
-	if (ht->total < 4) return 0;
-
-	if (ht->total >= ht->table_size) // > 100%
-	{
-		return ht->table_size + (ht->table_size >> 1); //150%
-	};
-
-	if (ht->total <= (ht->table_size >> 1)) // < 50%
-	{
-		return ht->table_size >> 1; //50%
-	};
-
-	return 0;
+	
 };
 
 #endif

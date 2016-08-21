@@ -12,10 +12,11 @@ static void do_nothing() {  };
 template <typename R = void,typename ... V> 
 static R do_nothing(V...) { return (R)0; };
 
-struct ignore_t
-{
+struct ignore_t {
     template <class type>
     type& operator= (type& value) { return value; }
+    template <class type>
+    operator type() { return type(); }
 };
 static ignore_t ignore;
 
