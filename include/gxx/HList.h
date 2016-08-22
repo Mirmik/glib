@@ -9,9 +9,7 @@ template<typename type, hlist_node type::* member>
 class HList : public hlist_head
 {
 public:
-	HList() {
-		hlist_head_init(this);
-	}
+	HList() : hlist_head() {}
 
 	~HList(){}
 
@@ -42,12 +40,14 @@ public:
 	public:
 		hlist_node* current;
 	public:
-		iterator(hlist_node* head) : current(head) {};		
+		iterator(hlist_node* head) : current(head) {};	
+		iterator(const iterator& b) : current(b.current) {};		
 				
 		iterator operator++(int) { iterator i = *this; current=current->next; return i; }
 		iterator operator++() { current=current->next; return *this; }
 		bool operator!= (const iterator& b) {return current != b.current;};
 		bool operator== (const iterator& b) {return current == b.current;};
+		iterator& operator= (const iterator& b) { current = b.current; return *this; }
 		iterator next() { return iterator(current->next); };
 				
 		type& operator*() {return *member_container<type, hlist_node, member>(current);};

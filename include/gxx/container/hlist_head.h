@@ -2,6 +2,7 @@
 #define GENOS_HLIST_HEAD
 
 #include "compiler.h"
+#include <debug/dprint.h>
 
 struct hlist_node {
 	struct hlist_node* next;
@@ -10,6 +11,8 @@ struct hlist_node {
 
 struct hlist_head {
 	struct hlist_node* first;
+
+	hlist_head() : first(nullptr) {};
 };
 
 __BEGIN_DECLS

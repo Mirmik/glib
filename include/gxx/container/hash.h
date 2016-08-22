@@ -2,6 +2,8 @@
 #define GENOS_HASH_H
 
 #include <string.h>
+#include "genos_configure.h"
+#include <inttypes.h>
 
 namespace gxx {
 

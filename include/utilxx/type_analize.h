@@ -4,7 +4,7 @@
 #ifndef TYPE_ANALIZE_H
 #define TYPE_ANALIZE_H
 
-template<typename T>
+template<typename ... T>
 const char* pretty_function()
 	{return __PRETTY_FUNCTION__;};
 	

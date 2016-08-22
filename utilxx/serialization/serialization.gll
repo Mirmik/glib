@@ -2,6 +2,6 @@ regmodule
 {
 	name = "serialization",
 	sources = {
-		cxx = {"serialization.cpp"},
+		cxx = {"serialization.cpp", "hserial.cpp"},
 	},
 }

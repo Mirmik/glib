@@ -4,6 +4,8 @@
 #include <mem/allocator.h>
 #include <defines/size_t.h>
 #include <gxx/utility.h>
+#include <debug/dprint.h>
+#include <utilxx/type_analize.h>
 
 namespace gxx {
 
@@ -49,13 +51,13 @@ public:
 	template <typename T, typename ... Args>
 	T* constructArray(size_t sz, Args ... args) {
 		T* ptr = (T*)(allocate(sz * sizeof(T)));
-		gxx::constructor(ptr, ptr + sz, args ...);
+		gxx::array_constructor(ptr, ptr + sz, args ...);
 		return ptr;
 	}
 
 	template <typename T>
 	void destructArray(T* ptr, size_t sz) {
-		gxx::destructor(ptr, ptr + sz);
+		gxx::array_destructor(ptr, ptr + sz);
 		deallocate(ptr);
 	}
 };

@@ -18,7 +18,7 @@ namespace gxx {
 		Vector() : m_capasity(0), m_size(0), m_data(nullptr) {}
 	
 		~Vector() {
-			gxx::destructor(begin(),end());
+			gxx::array_destructor(begin(),end());
 			if (m_data) m_alloc->deallocateArray(m_data);
 		}
 
@@ -35,7 +35,7 @@ namespace gxx {
 				return 1;
 			}
 			auto itpair = gxx::save_move(begin(), end(), newbuf, newbuf + sz);
-			gxx::destructor(itpair.first, end());
+			gxx::array_destructor(itpair.first, end());
 			auto oldbuf = m_data; 
 			m_data = newbuf;
 			m_alloc->deallocateArray<T>(oldbuf);

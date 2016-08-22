@@ -14,6 +14,7 @@ class SShell {
 public:
 	static constexpr uint8_t RetCodeOK = 0;
 	static constexpr uint8_t FunctionNotExist = -1;
+	static constexpr uint8_t EmptyString = -2;
 	static constexpr uint8_t WrongArgsTotal = -3;
 	static constexpr uint8_t WrongArgsData = -4;
 
@@ -27,6 +28,8 @@ public:
 		argvc_t argvc;
 		
 		char* v[10];
+
+		if (strlen(str) == 0) return EmptyString;
 
 		argvc.v = v;
 		argvc.internal_split(str);
@@ -59,6 +62,8 @@ public:
 		switch (retcode) {
 			case RetCodeOK: 
 				return gxx::string("RetCodeOK");
+			case EmptyString: 
+				return gxx::string("EmptyString");
 			case FunctionNotExist: 
 				return gxx::string("FunctionNotExist");
 			case WrongArgsTotal: 

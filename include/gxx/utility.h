@@ -12,6 +12,9 @@
 #include "defines/size_t.h"
 #include <utilxx/new.h>
 
+#include <debug/dprint.h>
+#include <utilxx/type_analize.h>
+
 namespace gxx{
 using size_t = ::size_t;
 
@@ -31,7 +34,7 @@ void destructor(T* ptr) {
 
 template<class InputIterator>  
 void
-destructor(InputIterator first, InputIterator last)
+array_destructor(InputIterator first, InputIterator last)
 {
 	while(first != last){
 		gxx::destructor(&*first);
@@ -56,8 +59,7 @@ void moveConstructor(T* ptr, T&& other) {
 
 template<class InputIterator, typename ... Args>  
 void
-constructor(InputIterator first, InputIterator last, Args ... args)
-{
+array_constructor(InputIterator first, InputIterator last, Args ... args) {
 	while(first != last){
 		gxx::constructor(&*first, args ...);
 		++first;

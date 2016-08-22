@@ -31,17 +31,21 @@ namespace gxx {
 
 		void relocate(hlist_head* pdst, size_t dstsize) {
 			for (int i = 0; i < m_tableSize; i++) {
-				for(T& r : *(hlist*)(m_table + i)) {
+				hlist& cell = *(hlist*)(m_table + i);
+				typename hlist::iterator it = cell.begin(); 
+				while(it != cell.end()) {
+					T& r = *it;
+					++it;
 					put_to_cell(pdst, dstsize, r);	
 				}
 			}
 		};
 
 		void put(T& obj) {
+			m_total++;
 			assert((m_table && m_tableSize != 0) || m_strategy);
 			check_memstrategy();
 			put_to_cell(m_table, m_tableSize, obj);
-			m_total++;
 		}
 
 		bool get(const K& key, T*& ptr) const {

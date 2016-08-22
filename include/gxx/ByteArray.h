@@ -69,6 +69,8 @@ namespace gxx {
 
 		static ByteArray format(const char* fmt, ...);
 
+		static ByteArray hexdata(const void* data, size_t sz);
+
 		template<typename T>
 		ByteArray & operator+= (T obj) {
 			concat(obj);

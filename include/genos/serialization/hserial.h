@@ -1,7 +1,11 @@
 #ifndef GENOS_HSERIAL
 #define GENOS_HSERIAL
 
-#include "genos/serialization/serialization.h"
+#include "genos/serialization.h"
+
+#define SER 1
+#define DESER 2
+#define SERDIR_MASK 3
 
 template <typename type>
 unsigned int hserial(char* buf, type& obj, uint8_t flag) {

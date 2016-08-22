@@ -1,7 +1,7 @@
 #ifndef GENOS_SERDATA
 #define GENOS_SERDATA
 
-#include "genos/serialization/serialization.h"
+#include "genos/serialization.h"
 #include "genos/serialization/hserial.h"
 
 template<typename ... Types> struct serdata;

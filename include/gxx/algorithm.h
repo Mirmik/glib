@@ -22,6 +22,21 @@
 			}
 			return f;
 		}
+
+		/*template<class InputIterator, class Function>  
+		Function for_each_safe(InputIterator first, InputIterator last, Function f)
+		{
+			InputIterator next(first); 
+			if (first == last) return f;
+			++next;
+			while(next !=last){
+				f(*first);
+				first = next;
+				++next;
+			}
+			f(*next);
+			return f;
+		}*/
 			
 		template<class InputIterator, class T>  
 		InputIterator find(InputIterator first, InputIterator last, const T& value)

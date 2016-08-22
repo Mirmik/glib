@@ -38,7 +38,7 @@ namespace gxx {
 
 		bool contains(const K& key) const {
 			Node* ignore;
-			return this->get(key,ignore);
+			return Parent::get(key,ignore);
 		}
 
 		V& operator[] (const K& key) {

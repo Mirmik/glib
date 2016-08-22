@@ -1,6 +1,7 @@
 #include <gxx/ByteArray.h>
 #include <debug/dprint.h>
 #include "util/numconvert.h"
+#include "util/ascii_convert.h"
 #include <string.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -231,7 +232,18 @@ namespace gxx {
 		char fmt[] = "%.*x";
 		fmt[3] = format;
 		sprintf(buf, fmt, prec, num); 
-		return gxx::move(ByteArray(buf));
+		return ByteArray(buf);
+	};
+
+	ByteArray hexdata(const void* data, size_t sz) {
+		ByteArray buf;
+		buf.reserve(sz * 2 + 1);
+		char* dst = buf.data();
+		const uint8_t* src = (const uint8_t*) data;
+		for (int i = 0; i < sz; i++) {
+			byte2hex(dst, *src++);
+			dst = dst + 2;
+		}
 	};
 
 	ByteArray ByteArray::format(const char* fmt, ...) {
