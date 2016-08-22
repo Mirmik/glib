@@ -1,6 +1,8 @@
 #ifndef GENOS_HASH_H
 #define GENOS_HASH_H
 
+#include <string.h>
+
 namespace gxx {
 
 	extern uint32_t defaultSeed; 

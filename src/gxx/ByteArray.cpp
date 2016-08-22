@@ -21,6 +21,10 @@ namespace gxx {
 		if (str) copy(str, strlen(str));
 	}
 
+	ByteArray::ByteArray(const gxx::buffer& buf) : ByteArray() {
+		if (buf.data()) copy((const char*)buf.data(), buf.size());
+	};
+
 	ByteArray::~ByteArray() {
 		if (m_data) m_alloc->deallocate(m_data);
 	};

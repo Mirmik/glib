@@ -4,6 +4,8 @@
 #include <inttypes.h>
 #include <gxx/Allocator.h>
 
+#include <gxx/buffer.h>
+
 namespace gxx {
 
 	class ByteArray : public BasicAllocated {
@@ -22,6 +24,7 @@ namespace gxx {
 		ByteArray & operator= (ByteArray&& other);
 
 		ByteArray(const char* str);
+		ByteArray(const gxx::buffer& buf);
 		void release();
 
 		size_t size() const;

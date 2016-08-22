@@ -5,7 +5,8 @@
 #define sysrealloc realloc
 #define sysfree free
 
-#define GQ_DEFAULT_ALLOCATOR &gQ::ctrlmalloc
+#define GXX_DEFAULT_ALLOCATOR &gxx::mallocAllocator
+#define GXX_DEFAULT_SEED 0xABCDEFAB
 #define GENOS_SERIAL_ORDER PROTOORD_LITTLE
 
 #endif

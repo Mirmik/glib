@@ -2,6 +2,7 @@
 #define GENOS_VECTOR_H
 
 #include <gxx/utility.h>
+#include <gxx/algorithm.h>
 #include <gxx/Allocator.h>
 
 namespace gxx {
@@ -61,12 +62,12 @@ namespace gxx {
 			gxx::constructor(m_data + m_size, ref);
 			m_size++; 
 		}
-	/*
-		value_type& operator[](size_t num) {
-			if (num > _length) reserve(num);
-			return *(_data + num);
-		}
 	
+		T& operator[](size_t num) {
+			if (num > m_size) reserve(num);
+			return *(m_data + num);
+		}
+	/*
 		value_type * begin()
 		{
 			return _data; 

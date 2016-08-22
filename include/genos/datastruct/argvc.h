@@ -2,6 +2,7 @@
 #define GENOS_DATASTRUCT_ARGV_H
 
 #include "gxx/ByteArray.h"
+#include <assert.h>
 
 struct argvc_t {
 	int c;

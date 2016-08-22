@@ -1,10 +1,12 @@
 #ifndef GENOS_SIMPLE_SHELL_H
 #define GENOS_SIMPLE_SHELL_H
 
-#include <gxx/Dictionary.h>
 #include <genos/sigslot/delegate.h>
 #include <genos/datastruct/argvc.h>
-#include "gxx/ByteArray.h"
+#include <gxx/Dictionary.h>
+#include <gxx/ByteArray.h>
+
+#include <debug/dprint.h>
 
 class SShell {
 	gxx::Dictionary<const char*, delegate<int, int, char**>> dict;

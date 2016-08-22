@@ -7,7 +7,9 @@
 #include <gxx/container/hash.h>
 #include <gxx/container/compare.h>
 #include <gxx/algorithm.h>
-#include "gxx/HList.h"
+#include <gxx/HList.h>
+
+#include <assert.h>
 
 namespace gxx {
 
