@@ -67,6 +67,14 @@ namespace gxx {
 			if (num > m_size) reserve(num);
 			return *(m_data + num);
 		}
+
+		size_t size() {
+			return m_size;
+		}
+
+		size_t capacity() {
+			return m_capasity;
+		}
 	/*
 		value_type * begin()
 		{
