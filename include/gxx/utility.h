@@ -1,6 +1,6 @@
 
 #ifndef GENOS_GSTL_UTILITY
-	#define GENOS_GSTL_UTILITY
+#define GENOS_GSTL_UTILITY
 
 //Реализации разбиты по нескольким файлам, дабы не было лапши из кода.
 //Некоторые шаблоны могут врать... Извините.

@@ -2,9 +2,9 @@
 #define GENOS_SIGSLOT_H
 
 #include <genos/sigslot/delegate.h>
-#include <gxx/container/vector.h>
+#include <gxx/Vector.h>
 
-namespace genos {
+namespace gxx {
 
 template<typename ... Args>	class slot; 
 template<typename ... Args>	class signal;
@@ -21,7 +21,7 @@ public:
 	template <typename Abstract>
 	using member = void (Abstract::*)(Args ...);
 	
-	gxx::vector<delegate<void,Args...>> vect;
+	gxx::Vector<delegate<void,Args...>> vect;
 
 	void operator()(Args ... args) {
 		for(auto dlg : vect) {

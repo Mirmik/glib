@@ -135,6 +135,7 @@ SECTIONS
 		*(.gnu.linkonce.b.*)
 		*(COMMON)
 		_ebss = ABSOLUTE(.);
+		_heap_start = ABSOLUTE(.);
 	} > sram
 
 	/* Global data not cleared after reset.	*/

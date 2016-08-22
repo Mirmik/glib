@@ -345,6 +345,18 @@
 		}
 
 		template<class InputIterator, class OutputIterator>  
+		gxx::pair<InputIterator,OutputIterator>
+		save_copy(InputIterator first, InputIterator last, OutputIterator dfirst, OutputIterator dlast)
+		{
+			while(first != last && dfirst != dlast){
+				*dfirst = *first;
+				++first;
+				++dfirst;
+			}
+			return make_pair(first,dfirst);
+		}
+
+		template<class InputIterator, class OutputIterator>  
 		OutputIterator
 		move(InputIterator first, InputIterator last, OutputIterator result)
 		{
@@ -356,6 +368,18 @@
 			return result;
 		}		
 		
+		template<class InputIterator, class OutputIterator>  
+		gxx::pair<InputIterator,OutputIterator>
+		save_move(InputIterator first, InputIterator last, OutputIterator result, OutputIterator result_last)
+		{
+			while(first != last && result != result_last){
+				*result = gxx::move(*first);
+				++first;
+				++result;
+			}
+			return gxx::make_pair(first,result);
+		}		
+
 		template<class BidirectionalIterator1, class BidirectionalIterator2>  
 		BidirectionalIterator2
 		copy_backward(BidirectionalIterator1 first, BidirectionalIterator1 last,

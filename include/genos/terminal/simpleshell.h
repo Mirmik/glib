@@ -48,6 +48,11 @@ public:
 		return execute(str);
 	}
 
+	void executor(char* str) {
+		auto ret = execute(str);
+		if (ret) dprln(strerr(ret).c_str());
+	}
+
 	static gxx::string strerr(int retcode) {
 		switch (retcode) {
 			case RetCodeOK: 

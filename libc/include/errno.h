@@ -15,6 +15,7 @@
 #define errno (*__errno_location())
 #define SET_ERRNO(x) (errno = x)
 
+ #define ENOERR           0     /* No error */
  #define EPERM            1      /* Operation not permitted */
  #define ENOENT           2      /* No such file or directory */
  #define ESRCH            3      /* No such process */
@@ -160,10 +161,14 @@
 ////////////////////////////
 #define ENOTSUP         133    /* Not supported error */
 
+#define EEOF             200   /* End of file reached */
+#define ENOSUPP          201   /* Operation not supported */
+#define EDEVNOSUPP       202   /* Device does not support this operation */
+#define ENOLCK           203   /* No locks available. */
+
 #endif
 
 
-//define ENOERR           0     /* No error */
 //define EPERM            1001  /* Not permitted */ /* FIXME: see issue 519 */
 //define ENOENT           2     /* No such entity */
 //define ESRCH            3     /* No such process */
@@ -206,10 +211,6 @@
 //define EOVERFLOW        75    /* Value too large to be stored in data type. */
 //define EILSEQ           84    /* Illegal byte sequence */
 //define ENOTSUP          95    /* Not supported error */
-//define EEOF             200   /* End of file reached */
-//define ENOSUPP          201   /* Operation not supported */
-//define EDEVNOSUPP       202   /* Device does not support this operation */
-//define ENOLCK           203   /* No locks available. */
 
 //* Additional errors used by networking */
 //define ENXIO            300   /* Device not configured */
