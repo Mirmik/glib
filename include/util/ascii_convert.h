@@ -42,7 +42,7 @@ static inline void byte2hex(char* buf, uint8_t src)
 	*buf++ = hbyte2hex(acs.l); 
 };
 
-static inline void hex2num(void* num, const char* hex, int numlen) {
+static inline void hex2bytes(void* num, const char* hex, int numlen) {
 	char* start = (char*) num;
 	char* stop = (char*) num + numlen;
 	for (char* ptr = start; ptr != stop; ++ptr) {
@@ -51,7 +51,7 @@ static inline void hex2num(void* num, const char* hex, int numlen) {
 	};
 };
 
-static inline void hex2num_swap(void* num, const char* hex, int numlen) {
+static inline void hex2bytes_swap(void* num, const char* hex, int numlen) {
 	char* start = (char*) num + numlen - 1;
 	char* stop = (char*) num - 1;
 	for (char* ptr = start; ptr != stop; --ptr) {
@@ -60,7 +60,7 @@ static inline void hex2num_swap(void* num, const char* hex, int numlen) {
 	};
 };
 
-static inline void num2hex(char* hex, const void* num, int numlen) {
+static inline void bytes2hex(char* hex, const void* num, int numlen) {
 	char* start = (char*) num;
 	char* stop = (char*) num + numlen;
 	for (char* ptr = start; ptr != stop; ++ptr) {
@@ -69,7 +69,7 @@ static inline void num2hex(char* hex, const void* num, int numlen) {
 	};
 };
 
-static inline void num2hex_swap(char* hex, const void* num, int numlen) {
+static inline void bytes2hex_swap(char* hex, const void* num, int numlen) {
 	char* start = (char*) num + numlen - 1;
 	char* stop = (char*) num - 1;
 	for (char* ptr = start; ptr != stop; --ptr) {
@@ -184,4 +184,22 @@ static inline int32_t hex_to_int32(const char* ptr)
 static inline int64_t hex_to_int64(const char* ptr)
 { return static_cast<int64_t>(hex_to_uint64(ptr)); }
 
+
+#if BYTE_ORDER == __LITTLE_ENDIAN
+static inline void bytes2lhex(char* hexdst, const void* bytessrc, size_t bytesTotal) { return bytes2hex 		(hexdst, bytessrc, bytesTotal); }
+static inline void bytes2bhex(char* hexdst, const void* bytessrc, size_t bytesTotal) { return bytes2hex_swap 	(hexdst, bytessrc, bytesTotal); }
+
+static inline void lhex2bytes(void* bytesdst, const char* hexsrc, size_t bytesTotal) { return hex2bytes 		(bytesdst, hexsrc, bytesTotal); }
+static inline void bhex2bytes(void* bytesdst, const char* hexsrc, size_t bytesTotal) { return hex2bytes_swap	(bytesdst, hexsrc, bytesTotal); }
+
+#elif BYTE_ORDER == __BIG_ENDIAN
+static inline void bytes2lhex(char* hexdst, const void* bytessrc, size_t bytesTotal) { return bytes2hex_swap 	(hexdst, bytessrc, bytesTotal); }
+static inline void bytes2bhex(char* hexdst, const void* bytessrc, size_t bytesTotal) { return bytes2hex 		(hexdst, bytessrc, bytesTotal); }
+
+static inline void lhex2bytes(void* bytesdst, const char* hexsrc, size_t bytesTotal) { return hex2bytes_swap	(bytesdst, hexsrc, bytesTotal); }
+static inline void bhex2bytes(void* bytesdst, const char* hexsrc, size_t bytesTotal) { return hex2bytes			(bytesdst, hexsrc, bytesTotal); }
+
+#else
+	#error "WrongByteOrder"
+#endif
 #endif

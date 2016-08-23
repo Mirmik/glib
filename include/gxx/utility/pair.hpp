@@ -29,12 +29,15 @@
 		{return lhs.first != rhs.first || lhs.second != rhs.second;};
 		
 		
-		/*template< class T1, class T2 >
-		constexpr bool operator<( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs )
-		{if (lhs.first < rhs.first) return true; ? lhs.second < rhs.second : false;};
-		
-		
 		template< class T1, class T2 >
+		bool operator<( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs ) {
+			if (lhs.first < rhs.first) return true; 
+			if (lhs.second < rhs.second) return true;
+			return false;
+		};
+		
+		
+		/*template< class T1, class T2 >
 		constexpr bool operator<=( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs );
 		
 		
@@ -43,8 +46,8 @@
 		
 		
 		template< class T1, class T2 >
-		constexpr bool operator>=( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs );
-		*/
+		constexpr bool operator>=( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs );*/
+		
 		
 		
 

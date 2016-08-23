@@ -15,12 +15,12 @@ unsigned int __hserial_half(char* buf, uint8_t* ref, uint8_t flag) {
 unsigned int __hserial(char* buf, void* ref, uint16_t len, uint8_t flag) {
 	bool reverse = is_need_reverse(bits_mask(flag, PROTOORD_MASK));
 	if (bits_mask_eq(flag, SERDIR_MASK, SER)) {
-		if (reverse) num2hex_swap(buf, ref, len); 
-		else num2hex(buf, ref, len);	
+		if (reverse) bytes2hex_swap(buf, ref, len); 
+		else bytes2hex(buf, ref, len);	
 	}
 	else { 
-		if (reverse) hex2num_swap(ref, buf, len);
-		else hex2num(ref, buf, len);
+		if (reverse) hex2bytes_swap(ref, buf, len);
+		else hex2bytes(ref, buf, len);
 	}
 	return len * 2;
 };

@@ -22,6 +22,7 @@ using size_t = ::size_t;
 
 #include "gxx/utility/pair.hpp"
 #include "gxx/utility/utility.hpp"
+#include "gxx/utility/function_parse.hpp"
 #include "gxx/utility/type_traits.hpp"
 #include "gxx/utility/type_transform.hpp"
 #include "gxx/utility/type_relation.hpp"

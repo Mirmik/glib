@@ -69,26 +69,44 @@ class delegate
 	//Конструктор пустого делегата.		
 	delegate(): 
 		delegate((DoNothing*)0, &DoNothing::do_nothing<R,Args...>) 
-		{}		
+		{
+
+		}		
 
 	//Конструктор копирования
-	delegate(const delegate& d)
-	{
+	delegate(const delegate& d) {
 		object = d.object;
 		method.method = d.method.method;
 	};
 	
 	//Конструктор копирования
-	delegate(delegate&& d)
-	{
+	delegate(delegate&& d) {
 		object = d.object;
 		method.method = d.method.method;
 	};
-			
+
+	//Конструктор. Делегат функции.
+	//@1 указатель на функцию.
+	delegate(fnc_t func) {
+		object = 0;
+		method.function = func;
+		method.attributes = 0;
+	};			
+
+	//Конструктор. Делегат метода класса. Ручная инициализация 
+	//@1 указатель на объект, метод которого вызывается.
+	//@2 указатель на метод.
+	//Пример delegate<void, int> d(&a, &A::func);
+	template <typename T>
+	delegate(T* ptr_obj, R(T::*mtd)(Args ...)) {
+		object = reinterpret_cast <obj_t> (ptr_obj);
+		method.method = horrible_cast<mtd_t, R(T::*)(Args ...)>(mtd);
+	};
+	
 	//Бывает, что и с volatile делегатами приходится 
 	//работать.
-	delegate(volatile const delegate& d)
-	: delegate(const_cast<delegate>(d)) {};
+	//delegate(volatile const delegate& d)
+	//: delegate(const_cast<delegate>(d)) {};
 			
 
 	//Конструктор перемещения
@@ -98,38 +116,27 @@ class delegate
 	//	method = d.method;
 	//};
 			
-	delegate& operator=(const delegate& d) 
-	{
+	delegate& operator=(const delegate& d) {
 		object = d.object;
 		method.method = d.method.method;
 		return *this;
 	};
 			
-	//delegate& operator=(delegate&& d) 
-	//{
-	//	object = d.object;
-	//	method = d.method;
-	//	return *this;
-	//};
+	delegate& operator=(delegate&& d) {
+		object = d.object;
+		method = d.method;
+		return *this;
+	};
 
-	explicit delegate(const fastdelegate<R,Args...>& fd)
+	/*explicit delegate(const fastdelegate<R,Args...>& fd)
 	: object(fd.object)
 	{
 		method.attributes = 0;
 		method.function = reinterpret_cast<fnc_t>(fd.extfunction);
-	};
+	};*/
 
-	//Конструктор. Делегат метода класса. Ручная инициализация 
-	//@1 указатель на объект, метод которого вызывается.
-	//@2 указатель на метод.
-	//Пример delegate<void, int> d(&a, &A::func);
-	template <typename T>
-	delegate(T* ptr_obj, R(T::*mtd)(Args ...))
-	{
-		object = reinterpret_cast <obj_t> (ptr_obj);
-		method.method = horrible_cast<mtd_t, R(T::*)(Args ...)>(mtd);
-	};
 
+/*
 	template <typename T1, typename T2>
 	void set(T1* ptr_obj, R(T2::*mtd)(Args ...))
 	{
@@ -159,31 +166,22 @@ class delegate
 		method.function = reinterpret_cast<fnc_t>(func);
 	};
 	///////////////
-
-
-	//Конструктор. Делегат функции.
-	//@1 указатель на функцию.
-	delegate(fnc_t func) : object(0)
-	{
-		method.function = func;
-		method.attributes = 0;
-	};	
-
+*/
 	//Конструктор. Делегат метода класса. Ручная инициализация 
 	//@1 указатель на объект, метод которого вызывается.
 	//@2 указатель на метод.
 	//Пример delegate<void, int> d(&a, &A::func);
-	template <typename T1, typename T2>
-	delegate(T1* ptr_obj, R(T2::*mtd)(Args ...)) :
-		delegate(delegate_mtd(ptr_obj, mtd))
-		{};	
+	//template <typename T1, typename T2>
+	//delegate(T1* ptr_obj, R(T2::*mtd)(Args ...)) :
+	//	delegate(delegate_mtd(ptr_obj, mtd))
+	//	{};	
 	
 	//Конструктор. Делегат метода класса. Для использования в delegate_method
 	//@1 пара, состоящая из объекта и указателя на метод.
 	//Вы можете использовать макрос method для создания пары.
 	//Пример delegate<void, int> d(method(a, A::func));
 	//template <typename T1, typename T2>
-	explicit delegate(const absmemb_t& pr)
+	/*explicit delegate(const absmemb_t& pr)
 	{
 		set(pr);
 	};	
@@ -191,10 +189,10 @@ class delegate
 	explicit delegate(absmemb_t&& pr)
 	{
 		set(pr);
-	};	
+	};	*/
 
 
-	delegate& operator=(fnc_t func) 
+	/*delegate& operator=(fnc_t func) 
 	{
 		set(func);	
 		return *this;
@@ -204,7 +202,7 @@ class delegate
 	{
 		set(pr);	
 		return *this;
-	};
+	};*/
 
 	//Осторожно, черная магия!!!
 	//Конструктор. Делегат метода класса.
@@ -231,7 +229,7 @@ class delegate
 			case METHOD: 
 			return (object->*method.method)(arg ...);
 			
-			case FUNCTION: 
+			case FUNCTION:
 			return method.function(arg ...);
 		};
 	};
