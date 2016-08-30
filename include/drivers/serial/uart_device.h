@@ -24,8 +24,7 @@ struct uart_ops {
 	int (*uart_setup)(struct uart *dev, const struct uart_params *params);
 };
 
-struct uart_irqops
-{
+struct uart_irqops {
 	void(*uart_rx)(struct uart *dev);
 	void(*uart_tx)(struct uart *dev);
 	void(*uart_tx_empty)(struct uart *dev);

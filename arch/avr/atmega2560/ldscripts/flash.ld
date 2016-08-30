@@ -102,7 +102,6 @@ SECTIONS
     	*(.init)
 		*(.handlers)
 
-		. = ALIGN(2);
      	_ctors_start = . ;
      	KEEP(SORT(*)(.ctors))
     	_ctors_end = . ;
@@ -110,6 +109,7 @@ SECTIONS
      	KEEP(SORT(*)(.dtors))
 		_dtors_end = . ;
     	
+		. = ALIGN(2);
 		*(.text)
 		*(.text.*)
 		_etext = . ;
@@ -120,10 +120,10 @@ SECTIONS
 	.data			:
 	{
 		_sdata = ABSOLUTE(.);
-		KEEP(*(.rodata))
-		*(.rodata.*)                
 		KEEP(*(.data))
 		*(.data.*)
+		KEEP(*(.rodata))
+		*(.rodata.*)                
 		*(.gnu.linkonce.d.*)
 		_edata = ABSOLUTE(.);
 	} > sram AT > flash

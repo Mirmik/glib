@@ -2,58 +2,57 @@ regmodule {
 	name = "genos_avr_head",
 	sources = {
 		cc = {
-			"asm/atmega/vectors.S", 
-			"asm/atmega/irqcall.S", 
-			"asm/atmega/start.S", 
+			"src/asm/atmega/vectors.S", 
+			"src/asm/atmega/irqcall.S", 
+			"src/asm/atmega/start.S", 
 		}
 	}
 }
 
-regmodule
-{
+regmodule {
 	name = "arch.avr2560",
-	sources = 
-	{
-		cxx = {"asm/arch.cpp"},
+	sources = {
+--		cxx = {"src/asm/arch.cpp"},
+		cc = {"src/asm/procdelay.c", "src/asm/arch.c"},
 	},
 	modules = {
 		{name = "avr_gpio"},
+		{name = "avr_periph_usart"},
+		{name = "avr_periph_tc"},
 	},
 }
 
-regmodule
-{
+regmodule {
+	name = "avr_periph_usart",
+	sources = {
+		cxx = {"src/drivers/usart.cpp"},
+	},
+}
+
+regmodule {
+	name = "avr_periph_tc",
+	sources = {
+		cc = {"src/drivers/timer_counter.c"},
+	},
+}
+
+regmodule {
 	name = "arch_diag.avr2560",
-	sources = 
-	{
-		cc = {"asm/diag.c"},
+	sources = {
+		cc = {"src/asm/diag.c"},
 	}
 }
 
-regmodule
-{
+regmodule {
 	name = "subst.avr2560",
-	sources = 
-	{
-		cc = {"asm/context.c", "asm/switch_context.S"},
+	sources = {
+		cc = {"src/asm/context.c", "src/asm/switch_context.S"},
 	}
 }
 
-regmodule
-{
-	name = "libm.avr2560",
-	sources = 
-	{
-		cc = paths.find_relative("*.S",CURDIR .."/libm/", CURDIR),
-	},
-	loc = "-I" .. CURDIR .. "/locinc",
-}
-
-regmodule
-{
+regmodule {
 	name = "avr_gpio",
-	sources = 
-	{
-		cc = {"asm/gpio.c"},
+	sources = {
+		cc = {"src/drivers/gpio.c"},
 	},
 }
