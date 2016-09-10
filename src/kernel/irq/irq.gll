@@ -1,6 +1,6 @@
 regmodule {
 	name = "gsys_irq",
 	sources = {
-		cc = {"irqtable.c", "do_irq.c"}
+		cxx = {"do_irq.cpp", "irq.cpp"}
 	}
 }

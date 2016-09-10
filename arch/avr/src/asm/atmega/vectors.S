@@ -15,7 +15,6 @@
 	.global	_eronly				/* Start of .data section in FLASH */
 	.global	_enoinit			/* End of uninitilized data.  Defined by ld.script */
 	.global	up_lowinit			/* Perform low level initialization */
-	.global	os_start			/* NuttX entry point */
 	.global	vectortab
 
 #if defined(CHIP_ATMEGA128)

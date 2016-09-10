@@ -6,6 +6,7 @@
 
 #define bits_set(a, b) {a |= (b);}
 #define bits_clr(a, b) {a &= ~(b);}
+#define bits_lvl(a, b, c) {a = ((c) ? ((a) | (b)) : ((a) & (~(b))));}
 #define bits_rev(a) {a = ~(a);}
 
 #define bits_mask(a,m) ((a) & (m))

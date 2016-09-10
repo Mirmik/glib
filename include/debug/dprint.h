@@ -1,8 +1,8 @@
 #ifndef GENOS_DEBUG_PRINT
-	#define GENOS_DEBUG_PRINT
+#define GENOS_DEBUG_PRINT
 	
-#include "inttypes.h" 
-#include "compiler.h"
+#include <inttypes.h> 
+#include <compiler.h>
 
 //#ifdef __cplusplus
 //#include "gxx/string.h"

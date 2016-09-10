@@ -1,0 +1,6 @@
+regmodule {
+	name = "fs",
+	sources = {
+		cc = {"pipe.c"},
+	},
+}

@@ -14,11 +14,11 @@
 
 __BEGIN_DECLS
 
-int gpio_settings(struct gpio *g, gpio_mask_t mask, int32_t mode);
+int gpio_settings(struct gpio_regs *g, gpio_mask_t mask, int32_t mode);
 
-void gpio_set_level(struct gpio* g, gpio_mask_t mask, unsigned char level);
-gpio_mask_t gpio_get_level(struct gpio* g, gpio_mask_t mask, unsigned char level);
-void gpio_tgl_level(struct gpio* g, gpio_mask_t mask);
+void gpio_set_level(struct gpio_regs* g, gpio_mask_t mask, unsigned char level);
+gpio_mask_t gpio_get_level(struct gpio_regs* g, gpio_mask_t mask, unsigned char level);
+void gpio_tgl_level(struct gpio_regs* g, gpio_mask_t mask);
 
 __END_DECLS
 

@@ -277,12 +277,16 @@ public:
 	fastdelegate(const fastdelegate& d)
 	: object(d.object), extfunction(d.extfunction) {};
 
-	fastdelegate(absmemb_t&& pr)
-	{
+	fastdelegate(absmemb_t&& pr) {
 		object = pr.first;
 		extfunction = reinterpret_cast<extfnc_t>(
 			horrible_cast<method_union,mtd_t>(pr.second).function
 			);
+	};
+
+	fastdelegate(extfnc_t func, void* obj) {
+		object = (obj_t) obj;
+		extfunction = func;
 	};
 
 	template <typename T1, typename T2>
@@ -290,8 +294,7 @@ public:
 		fastdelegate(delegate_mtd(ptr_obj, mtd))
 		{};	
 	
-	R operator()(Args ... arg) 
-	{ 
+	R operator()(Args ... arg) { 
 		return extfunction(object, arg ...);
 	};
 };

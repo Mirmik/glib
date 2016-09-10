@@ -1,8 +1,8 @@
 regmodule
 {
-	name = "arch_drivers.avr2560",
+	name = "drivers_tty",
 	sources =
 	{
-		cc = {"serial/avr_usart.c"},
+		cc = {"serial/tty.c", "serial/uart.c"},
 	},
 }

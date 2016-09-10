@@ -21,6 +21,4 @@
 		arch_shutdown(ARCH_SHUTDOWN_MODE_HALT);		\
 	} while (0)
 
-EXTERN_C void end_of_programm();
-
 #endif

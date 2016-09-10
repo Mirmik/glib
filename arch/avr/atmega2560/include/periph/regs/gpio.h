@@ -3,7 +3,7 @@
 
 #include "hal/reg.h"
 
-struct gpio {
+struct gpio_regs {
 	reg_t pin;
 	reg_t ddr;
 	reg_t port;

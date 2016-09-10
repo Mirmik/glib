@@ -18,7 +18,7 @@ public:
 	virtual void txEnable(bool) {}
 	virtual void rxEnable(bool) {}
 
-	virtual int setup(const UartParametr& param) {}
+	virtual int setup(const Uart::Settings& param) {}
 
 //	Usart(volatile uart_regs* addr) : regs(addr) {}
 };

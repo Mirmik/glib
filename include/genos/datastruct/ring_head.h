@@ -88,6 +88,20 @@ inline static struct ring_head* ring_move_tail(struct ring_head* r, size_t bias)
 	return r;
 }
 
+inline static int ring_putc(struct ring_head* r, char* buffer, char c) {
+	if (ring_is_full(r)) return 0;	
+	*(buffer + r->head) = c;
+	ring_move_head_one(r);
+	return 1;
+};
+
+inline static int ring_getc(struct ring_head* r, char* buffer) {
+	if (ring_is_empty(r)) return 0;	
+	char c = *(buffer + r->tail);
+	ring_move_tail_one(r);
+	return 1;
+};
+
 #define ring_for_each(n,r) \
 for(size_t n = (r)->tail; n != (r)->head; n = (n+1)%(r)->size)
 

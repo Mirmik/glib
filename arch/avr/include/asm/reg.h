@@ -1,6 +1,9 @@
 #ifndef GENOS_AVR_REG_H
 #define GENOS_AVR_REG_H
 
-typedef volatile unsigned char reg_t;
+#include <inttypes.h>
+
+typedef volatile uint8_t reg_t;
+typedef volatile uint16_t reg2_t;
 
 #endif
