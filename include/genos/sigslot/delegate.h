@@ -27,10 +27,10 @@ struct change_basic<T, R(B::*)(V...)>
 	using type =  R(T::*)(V...); 
 };
 
-#define delegate_mtd(obj, mtd) gxx::make_pair(reinterpret_cast<AbstractDelegate*>(obj), \
-horrible_cast<typename change_basic<AbstractDelegate, decltype(mtd)>::type, decltype(mtd)>(mtd))		
+#define delegate_mtd(mtd,obj) gxx::make_pair(horrible_cast<typename change_basic<AbstractDelegate, decltype(mtd)>::type, decltype(mtd)>(mtd), \
+reinterpret_cast<AbstractDelegate*>(obj))		
 
-#define _dmtd(obj,mtd) delegate_mtd(obj,mtd)
+#define _dmtd(obj,mtd) delegate_mtd(mtd,obj)
 
 template<typename R ,typename ... Args>	class delegate;
 template<typename R ,typename ... Args>	class fastdelegate;
@@ -50,7 +50,7 @@ class delegate
 	using mtd_t 		= R (AbstractDelegate::*)(Args ...);
 	using fnc_t 		= R (*)(Args ...);
 	using extfnc_t	 	= R (*)(void* ,Args ...);
-	using absmemb_t		= gxx::pair<obj_t , mtd_t>;
+	using absmemb_t		= gxx::pair<mtd_t, obj_t>;
 
 
 	//Соответствует истине и будет работать только в G++
@@ -98,7 +98,7 @@ class delegate
 	//@2 указатель на метод.
 	//Пример delegate<void, int> d(&a, &A::func);
 	template <typename T>
-	delegate(T* ptr_obj, R(T::*mtd)(Args ...)) {
+	delegate(R(T::*mtd)(Args ...), T* ptr_obj) {
 		object = reinterpret_cast <obj_t> (ptr_obj);
 		method.method = horrible_cast<mtd_t, R(T::*)(Args ...)>(mtd);
 	};
@@ -252,7 +252,7 @@ class fastdelegate
 	using mtd_t 		= R (AbstractDelegate::*)(Args ...);
 	using fnc_t 		= R (*)(Args ...);
 	using extfnc_t	 	= R (*)(void* ,Args ...);
-	using absmemb_t		= gxx::pair<obj_t , mtd_t>;
+	using absmemb_t		= gxx::pair<mtd_t, obj_t>;
 
 	//Соответствует истине и будет работать только в G++
 	union method_union
@@ -270,17 +270,21 @@ public:
 
 public:
 	fastdelegate(): 
-		fastdelegate((DoNothing*)0, 
-			&DoNothing::do_nothing<R,Args...>) 
+		fastdelegate(&DoNothing::do_nothing<R,Args...>, (DoNothing*)0) 
 		{};
 
 	fastdelegate(const fastdelegate& d)
 	: object(d.object), extfunction(d.extfunction) {};
 
+	void operator= (const fastdelegate& d) volatile {
+		object = d.object;
+		extfunction = d.extfunction;
+	}
+
 	fastdelegate(absmemb_t&& pr) {
-		object = pr.first;
+		object = pr.second;
 		extfunction = reinterpret_cast<extfnc_t>(
-			horrible_cast<method_union,mtd_t>(pr.second).function
+			horrible_cast<method_union,mtd_t>(pr.first).function
 			);
 	};
 
@@ -290,11 +294,11 @@ public:
 	};
 
 	template <typename T1, typename T2>
-	fastdelegate(T1* ptr_obj, R(T2::*mtd)(Args ...)) :
-		fastdelegate(delegate_mtd(ptr_obj, mtd))
+	fastdelegate(R(T2::*mtd)(Args ...), T1* ptr_obj) :
+		fastdelegate(delegate_mtd(mtd, ptr_obj))
 		{};	
 	
-	R operator()(Args ... arg) { 
+	R operator()(Args ... arg) volatile { 
 		return extfunction(object, arg ...);
 	};
 };

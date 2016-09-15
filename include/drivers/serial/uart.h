@@ -16,7 +16,7 @@ struct UartParams {
 	uint8_t n_bits = 8;
 };
 
-class Uart : public CharDevice {
+class Uart : public CharDeviceDriver {
 
 	virtual void settings(const UartParams& params) = 0;
 

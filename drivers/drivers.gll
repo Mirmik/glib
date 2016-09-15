@@ -3,6 +3,6 @@ regmodule
 	name = "drivers_tty",
 	sources =
 	{
-		cc = {"serial/tty.c", "serial/uart.c"},
+		cxx = {"serial/tty.cpp"},
 	},
 }

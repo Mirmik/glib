@@ -10,27 +10,29 @@ namespace Kernel {
 
 	typedef fastdelegate<void> IRQHandler;
 
-	static void error_handler(void*) {
-		panic("error_handler");
+	static void error_handler(void* irqno) {
+		dpr((int)irqno);
+		panic(" error_handler");
 	}
 
 	class IRQTableClass {
 
 		struct record {
-			IRQHandler 	handler;
-			uint16_t 	count;
+			volatile IRQHandler handler;
+			volatile uint16_t count;
 		};
 
+	public:
 		record table[IRQS_TOTAL];
 
 	public:
-		inline void setHandler(int irqno, IRQHandler handler) {
+		inline void setHandler(int irqno, const IRQHandler& handler) {
 			table[irqno].handler = handler;
 		}
 
 		inline void init() {
 			for (int i = 0; i < IRQS_TOTAL; i++) {
-				table[i].handler = IRQHandler(error_handler, 0);
+				table[i].handler = IRQHandler(error_handler, (void*)i);
 			}
 		}
 

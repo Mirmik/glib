@@ -2,7 +2,7 @@
 #define GENOS_HLIST_H
 
 #include "utilxx/member.h" 
-#include "gxx/container/hlist_head.h"
+#include "datastruct/hlist_head.h"
 #include "gxx/container/to_string.h"
 
 template<typename type, hlist_node type::* member>

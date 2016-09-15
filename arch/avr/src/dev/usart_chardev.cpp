@@ -32,7 +32,7 @@ namespace periph {
 	};
 
 	void Usart::enableRXInt(bool b) {
-		bits_set(regs->ucsr_b, 1 << 7);
+		bits_lvl(regs->ucsr_b, 1 << 7, b);
 	};
 	
 	void Usart::enableTXInt(bool b) {
@@ -40,7 +40,7 @@ namespace periph {
 	};
 	
 	void Usart::enableRX(bool b) {
-		bits_set(regs->ucsr_b, 1 << 4);
+		bits_lvl(regs->ucsr_b, 1 << 4, b);
 	};
 	
 	void Usart::enableTX(bool b) {
@@ -101,5 +101,6 @@ namespace periph {
 	}
 
 	Usart usart0(USART0, &USART0_IRQS);	
+	Usart usart1(USART1, &USART1_IRQS);	
 
 };

@@ -15,7 +15,9 @@ struct usart_regs {
 } __attribute__((packed));
 
 struct usart_irq_nums {
-	uint8_t tx, rx, udre;
+	uint8_t tx;
+	uint8_t rx;
+	uint8_t udre;
 };
 
 #define USART_BASE_0 0xC0
@@ -26,8 +28,8 @@ struct usart_irq_nums {
 #define USART1 ((volatile struct usart_regs *)(USART_BASE_1))
 #define USART2 ((volatile struct usart_regs *)(USART_BASE_2))
 
-const struct usart_irq_nums USART0_IRQS = {ATMEGA_IRQ_U0TX, ATMEGA_IRQ_U0RX, ATMEGA_IRQ_U0DRE};
-const struct usart_irq_nums USART1_IRQS = {ATMEGA_IRQ_U1TX, ATMEGA_IRQ_U1RX, ATMEGA_IRQ_U1DRE};
-const struct usart_irq_nums USART2_IRQS = {ATMEGA_IRQ_U2TX, ATMEGA_IRQ_U2RX, ATMEGA_IRQ_U2DRE};
+const struct usart_irq_nums USART0_IRQS = {.tx = ATMEGA_IRQ_U0TX, .rx = ATMEGA_IRQ_U0RX, .udre = ATMEGA_IRQ_U0DRE};
+const struct usart_irq_nums USART1_IRQS = {.tx = ATMEGA_IRQ_U1TX, .rx = ATMEGA_IRQ_U1RX, .udre = ATMEGA_IRQ_U1DRE};
+const struct usart_irq_nums USART2_IRQS = {.tx = ATMEGA_IRQ_U2TX, .rx = ATMEGA_IRQ_U2RX, .udre = ATMEGA_IRQ_U2DRE};
 
 #endif 

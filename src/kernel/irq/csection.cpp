@@ -11,7 +11,8 @@ namespace Kernel {
 
 	void leave_critical_section(ipl_t save) {
 		if (!is_interrupt_context()) {
-			return ipl_restore(save);
+			ipl_restore(save);
+			return;
 		}
 	}
 

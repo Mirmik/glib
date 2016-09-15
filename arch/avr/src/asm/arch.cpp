@@ -23,7 +23,7 @@ void arch_init() {
 	usart0_diag.write = diag_write_stub;
 	current_diag = &usart0_diag;
 
-	periph::timer0.setHandlerOverflow(Kernel::IRQHandler(&Kernel::SysTime, &Kernel::SysTimeClass::system_tick));
+	periph::timer0.setHandlerOverflow(Kernel::IRQHandler(&Kernel::SysTimeClass::system_tick, &Kernel::SysTime));
 	periph::timer0.setDivider(64);
 	periph::timer0.interruptEnableOverflow(true);
 	

@@ -1,7 +1,7 @@
 #ifndef GENOS_DLIST_H
 #define GENOS_DLIST_H
 
-#include "gxx/container/dlist_head.h"
+#include "datastruct/dlist_head.h"
 #include "utilxx/member.h" 
 
 namespace gxx {
@@ -99,6 +99,10 @@ namespace gxx {
 	
 		iterator begin() {return iterator(list.next);};
 		iterator end() {return iterator(&list);};
+		
+		iterator begin() const {return iterator((dlist_head*)list.next);};
+		iterator end() const {return iterator((dlist_head*)&list);};
+
 		reverse_iterator rbegin() {return reverse_iterator(list.prev);};
 		reverse_iterator rend() {return reverse_iterator(&list);};
 	

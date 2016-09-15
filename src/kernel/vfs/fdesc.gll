@@ -1,8 +1,0 @@
-regmodule
-{
-	name = "fdesc_table",
-	sources = 
-	{
-		cxx = {"fdesc.cpp"},
-	},
-}

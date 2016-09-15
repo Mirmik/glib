@@ -33,6 +33,7 @@ namespace periph {
 	};
 
 	extern Usart usart0;
+	extern Usart usart1;
 };
 
 #endif

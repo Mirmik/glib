@@ -2,7 +2,7 @@
 #define GENOS_HASHTABLE_HEAD
 
 #include <gxx/Allocator.h>
-#include <gxx/container/hlist_head.h>
+#include <datastruct/hlist_head.h>
 //#include <gxx/container/hashstrategy.h>
 
 namespace gxx {

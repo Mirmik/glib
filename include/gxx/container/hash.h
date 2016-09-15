@@ -11,7 +11,7 @@ namespace gxx {
 
 	template <typename T> 
 	inline size_t hash(const T& other, uint32_t seed) {
-		return other.hash();
+		return other.hash(seed);
 	}
 
 	inline size_t hash(const char *p, size_t len, uint32_t seed) {
