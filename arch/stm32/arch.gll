@@ -1,0 +1,22 @@
+regmodule {
+	name = "arch.stm32",
+	
+	sources = {
+		cc = {"src/arch.c", "src/gpio.c", "src/diag.c"}
+	},
+
+	modules = {
+		{name = "stm32_head"}
+	},
+}
+
+regmodule {
+	name = "stm32_head",
+	sources = {
+		cc = {
+			"src/head/vectors.S", 
+			--"src/asm/atmega/irqcall.S", 
+			"src/head/start.S", 
+		}
+	}
+}

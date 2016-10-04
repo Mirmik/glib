@@ -2,14 +2,41 @@
 #define GENOS_AVR_TIMER_DEVICE_H
 
 #include <periph/regs/timer.h>
-#include <drivers/timer_counter.h>
 #include <kernel/irq.h>
+#include <compiler.h>
+#include <inttypes.h>
 
 struct timer_irqs {
-	uint8_t ovfno;
+	uint8_t ovf;
 };
 
-class TimerDevice_8bit : public TimerDevice<uint8_t> {
+struct TimerDevice_8bit {
+	struct timer_8bit_regs*	regs;
+	struct timer_irqs	 		irqs;
+	volatile uint8_t* 	timsk;
+};
+
+struct TimerDevice_16bit {
+	struct timer_16bit_regs*	regs;
+	struct timer_irqs	 		irqs;
+	volatile uint8_t* 	timsk;
+};
+
+extern struct TimerDevice_8bit timer0;
+extern struct TimerDevice_8bit timer2;
+extern struct TimerDevice_16bit timer1;
+extern struct TimerDevice_16bit timer3;
+extern struct TimerDevice_16bit timer4;
+extern struct TimerDevice_16bit timer5;
+
+__BEGIN_DECLS
+
+void tc_8bit_divider(struct TimerDevice_8bit* timer, uint16_t div);
+void tc_8bit_interruptOverflowEnable(struct TimerDevice_8bit* timer, uint8_t en);
+
+__END_DECLS
+
+/*class TimerDevice_8bit : public TimerDevice<uint8_t> {
 	timer_8bit_regs* regs;
 	timer_irqs irqs;
 	volatile reg_t* timsk;
@@ -52,14 +79,6 @@ public:
 	void setHandlerOverflow(Kernel::IRQHandler handler);
 	void interruptEnableOverflow(bool b);
 };
-
-namespace periph {
-	extern TimerDevice_8bit timer0;
-	extern TimerDevice_8bit timer2;
-	extern TimerDevice_16bit timer1;
-	extern TimerDevice_16bit timer3;
-	extern TimerDevice_16bit timer4;
-	extern TimerDevice_16bit timer5;
-};
+*/
 
 #endif

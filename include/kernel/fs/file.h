@@ -1,32 +1,24 @@
-#ifndef GENOS_KERNEL_FILE_H
-#define GENOS_KERNEL_FILE_H
+#ifndef KERNEL_NAMESPACE_FILE_H
+#define KERNEL_NAMESPACE_FILE_H
 
-#include <defines/off_t.h>
-#include <defines/size_t.h>
-#include <defines/ssize_t.h>
+#include <inttypes.h>
+#include <debug/dprint.h>
 
-#include <proto/stream.h>
+#include <gxx/ByteArray.h>
 
-class File : public Stream {
+namespace Kernel {
 
-public:
+	class dirent;
 
-	enum Type {
-		ftype_tty,
-		ftype_pipe,		
+	class File {
+	public:
+		uint8_t 	flags;
+
+		virtual int close() = 0;
+		virtual int write(const char* data, int length, uint8_t opt) = 0;
+		virtual int read(char* data, int length, uint8_t opt) = 0;
+		virtual Kernel::dirent* readdir(char* data, int lmax) = 0;
 	};
-
-	Type type;
-	
-	virtual int open();	
-	virtual int close();
-
-	virtual int write(const char* str, size_t len);
-	virtual int read(char* str, size_t len);
-
-	virtual off_t seek(off_t offset, int whence);
-	//virtual int ioctl(int cmd, unsigned long arg);
-
 };
 
 #endif

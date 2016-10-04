@@ -3,8 +3,6 @@ regmodule
 	name = "sched";
 	sources = 
 	{
-		cxx = {"sched.cpp", "autom_schedee.cpp", "schedee.cpp", "query.cpp", "procmngr.cpp", "signal.cpp"},
-		--cxx = {"sched.cpp", "idtable.cpp", "autom_schedee.cpp", "virtee.cpp", "query.cpp"},
-		--cc = {""},
+		cxx = {"schedee.cpp", "sched.cpp"}
 	};	
 };

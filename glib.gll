@@ -1,30 +1,18 @@
-regmodule
-{
+regmodule {
 	name = "glib",
-	
 	modules = 
 	{
 		{name = "gxx"},
 		{name = "new"},
 		{name = "errno.static"},
 		
-		{name = "malloc_ops"},
-		--{name = "gQBase"},
-		
-		--{name = "fdesc_table"},
-		--{name = "libc", strtg = Strtg.standart},
-		--{name = "itoa", strtg = Strtg.standart},
-		--{name = "fs"},
-
-		
-	--	{name = "glib_stream"},
+		{name = "malloc_ops"},	
 	}
 }
 
 
 regmodule {
 	name = "gsys",
-
 	sources = {
 		cc = {
 			"src/kernel/panic/end_of_programm.c", 
@@ -32,10 +20,8 @@ regmodule {
 			"src/kernel/cxx/__cxa_pure_virtual.c"
 		},
 	},
-
 	modules = {
 		{name = "gsys_irq"},
-		--{name = "new"},
 	},
 }
 

@@ -12,9 +12,6 @@ static inline void ipl_init(void)
 	sei();
 };
 
-#define ipl_enable()  ipl_init()
-#define ipl_disable() ((void) ipl_save())
-
 static inline ipl_t ipl_save(void)
 {
 	ipl_t save = SREG;

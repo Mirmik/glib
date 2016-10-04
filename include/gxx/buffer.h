@@ -5,7 +5,7 @@
 #include "defines/size_t.h"
 #include <string.h>
 #include <assert.h>
-#include <genos/serialization.h>
+//#include <genos/serialization.h>
 
 namespace gxx {
 
@@ -26,7 +26,7 @@ public:
 		return _size;
 	}
 
-	size_t serialization(char* ptr, size_t maxlen, uint8_t flag) const {
+/*	size_t serialization(char* ptr, size_t maxlen, uint8_t flag) const {
 		size_t off = 0;
 		off += ::serialization(ptr + off, _size, maxlen - off, PROTOORD_LITTLE);
 		off += plainSerialization(ptr + off, _data, _size, maxlen - off);
@@ -49,7 +49,7 @@ public:
 		::deserialization(ptr, sz, sizeof(uint16_t), PROTOORD_LITTLE);
 		return sz + sizeof(uint16_t); 
 	}
-};
+*/};
 
 void buffer_fill(const buffer& buffer, char c);
 

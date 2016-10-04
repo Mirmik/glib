@@ -68,7 +68,7 @@ class delegate
 			
 	//Конструктор пустого делегата.		
 	delegate(): 
-		delegate((DoNothing*)0, &DoNothing::do_nothing<R,Args...>) 
+		delegate(&DoNothing::do_nothing<R,Args...>, (DoNothing*)0) 
 		{
 
 		}		

@@ -4,23 +4,17 @@
 #include <inttypes.h>
 #include <asm/systime.h>
 
-namespace Kernel {
+__BEGIN_DECLS
 
-	class SysTimeClass {
+void system_tick();
+struct TimeStamp timestamp();
 
-	public:
-		void system_tick();
-		TimeStamp timestamp();
+uint32_t millis();
+uint32_t micros();	
 
-		uint32_t millis();
-		uint32_t micros();	
+void delay(uint32_t d);
+void delayMicroseconds(uint16_t d);	
 
-		void delay(uint32_t d);
-		void delayMicroseconds(uint16_t d);	
-	};
-
-	extern SysTimeClass SysTime;
-
-}
+__END_DECLS
 
 #endif

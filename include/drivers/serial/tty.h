@@ -1,11 +1,12 @@
 #ifndef GENOS_TTY_DRIVER_H
 #define GENOS_TTY_DRIVER_H
 
-#include <kernel/fs/file.h>
+#include <defines/off_t.h>
+#include <kernel/fs/chardev.h>
 #include <gxx/ByteRing.h>
 #include <drivers/serial/uart.h>
 
-class Teletype : public File {
+class Teletype : public Kernel::CharDev {
 
 	Uart* uart;
 
@@ -16,8 +17,8 @@ public:
 	int open();	
 	int close();
 
-	int write(const char* str, size_t len);
-	int read(char* str, size_t len);
+	int write(const char* str, int len, uint8_t opt);
+	int read(char* str, int len, uint8_t opt);
 
 	off_t seek(off_t offset, int whence);
 
@@ -32,7 +33,7 @@ public:
 	}
 
 	Teletype(Uart* _uart) : uart(_uart) {
-		type = ftype_tty;
+		//type = ftype_tty;
 	}
 
 };

@@ -5,9 +5,9 @@
 
 
 void processor_delay_ms(uint16_t m) {
-	_delay_ms(m);
+//	_delay_ms(m);
 }
 
 void processor_delay_ns(uint16_t m) {
-	_delay_ns(m);
+//	_delay_ns(m);
 }

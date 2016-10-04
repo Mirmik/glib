@@ -1,52 +1,31 @@
 #ifndef GENOS_IRQ_H
 #define GENOS_IRQ_H
 
-#include <asm/irq.h>
-#include <inttypes.h>
-#include <genos/sigslot/delegate.h>
+#include <compiler.h>
 #include <kernel/panic.h>
+#include <inttypes.h>
 
-namespace Kernel {
+#include <arch/irq.h>
 
-	typedef fastdelegate<void> IRQHandler;
+typedef void(*IRQHandler)(void*);
 
-	static void error_handler(void* irqno) {
-		dpr((int)irqno);
-		panic(" error_handler");
-	}
-
-	class IRQTableClass {
-
-		struct record {
-			volatile IRQHandler handler;
-			volatile uint16_t count;
-		};
-
-	public:
-		record table[IRQS_TOTAL];
-
-	public:
-		inline void setHandler(int irqno, const IRQHandler& handler) {
-			table[irqno].handler = handler;
-		}
-
-		inline void init() {
-			for (int i = 0; i < IRQS_TOTAL; i++) {
-				table[i].handler = IRQHandler(error_handler, (void*)i);
-			}
-		}
-
-		inline void execute(uint8_t irqno) {
-			table[irqno].count++;
-			table[irqno].handler();
-		}
-	};
-
-	extern IRQTableClass IRQTable;
-
+struct IRQTableRecord {
+	IRQHandler 	handler;
+	void* 		argument;
+	volatile uint16_t count;
 };
 
-extern "C" void do_irq(uint8_t irq) __attribute__((section(".handlers")));
-extern "C" bool is_interrupt_context();
+__BEGIN_DECLS
+
+extern struct IRQTableRecord IRQTable[IRQS_TOTAL];
+
+void do_irq(uint8_t irq) __attribute__((section(".handlers")));
+unsigned char is_interrupt_context();
+
+void irqtable_init();
+
+void setIRQHandler(int irqno, IRQHandler handler, void* arg);
+
+__END_DECLS
 
 #endif

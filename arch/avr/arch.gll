@@ -12,11 +12,10 @@ regmodule {
 regmodule {
 	name = "arch.avr2560",
 	sources = {
-		cxx = {"src/asm/arch.cpp", "src/asm/systime.cpp"},
-		cc = {"src/asm/procdelay.c"},
+		cc = {"src/asm/systime.c", "src/asm/arch.c", "src/asm/procdelay.c", "atmega2560/src/periph/devices.c"},
 	},
 	modules = {
-		{name = "avr_gpio"},
+	--	{name = "avr_gpio"},
 		{name = "avr_periph_usart"},
 		{name = "avr_periph_tc"},
 	},
@@ -25,14 +24,14 @@ regmodule {
 regmodule {
 	name = "avr_periph_usart",
 	sources = {
-		cxx = {"src/dev/usart_chardev.cpp"},
+		cc = {"src/dev/usart.c"},
 	},
 }
 
 regmodule {
 	name = "avr_periph_tc",
 	sources = {
-		cxx = {"src/drivers/timer_device.cpp"},
+		cc = {"src/drivers/timer_device.c"},
 	},
 }
 

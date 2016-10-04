@@ -64,7 +64,8 @@ namespace gxx {
 		}
 	
 		T& operator[](size_t num) {
-			if (num > m_size) reserve(num);
+			reserve(num + 1);
+			if (num >= m_size) m_size = num + 1;
 			return *(m_data + num);
 		}
 

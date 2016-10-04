@@ -8,11 +8,9 @@ class schedee;
 #define SIGINT 0x02
 #define SIGSTOP 0x04
 
-namespace signal {
-
-void send(schedee* sch, sig_t sig);
-void send(id_t pid, sig_t sig);
-
+namespace Kernel {
+//	void send(schedee* sch, sig_t sig);
+//	void send(id_t pid, sig_t sig);
 };
 
 #endif

@@ -3,7 +3,7 @@
 
 #include <kernel/irq.h>
 
-class CharDeviceDriver {
+class UartDeviceDriver {
 public:
 	virtual int putc(char c);
 	virtual int getc();
