@@ -86,6 +86,23 @@ namespace gxx {
 		void invalidate();
 		ByteArray & shrink();
 		ByteArray & shrink_to_print();
+
+
+		template<typename Archive>
+		void save(Archive& ar) {
+			dprln("HERE");
+			ar.push(m_size);
+			ar.push(m_data,size());
+		};
+
+		template<typename Archive>
+		void load(Archive& ar) {
+			char buf[128];
+			size_t sz;
+			ar.pull(sz);
+			ar.pull(buf, sz);
+			copy(buf, sz);
+		};
 	};
 	
 	using string = ByteArray;

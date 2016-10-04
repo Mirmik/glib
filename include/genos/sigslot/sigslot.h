@@ -30,8 +30,8 @@ public:
 	}
 
 	template <typename T>
-	void connect(T* obj, member<T> mbr) {
-		vect.emplace_back(obj, mbr);
+	void connect(member<T> mbr, T* obj) {
+		vect.emplace_back(mbr, obj);
 	}
 
 	void connect(fnc_t func) {

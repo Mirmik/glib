@@ -1,7 +1,7 @@
 #ifndef GENOS_UTILXX_BUFFER_H
 #define GENOS_UTILXX_BUFFER_H
 
-//#include "stdint.h"
+#include "stdint.h"
 #include "defines/size_t.h"
 #include <string.h>
 #include <assert.h>

@@ -2,56 +2,42 @@
 #define GXX_INVOKER_H
 
 //#include <tuple>
-#include <gxx/future/archive.h>
+#include <gxx/future/hexarchive.h>
+#include <gxx/future/nullarchive.h>
 
 namespace gxx {
 
-	template<typename InputArchive, typename OutputArchive>
+	/*template<typename Out, typename In>
+	using invoke_func_t = uint8_t (*) (Out&, In&);
+
+	template<typename OutputArchive, typename InputArchive>
 	class ArchiveInvokerBasic {
 	public:
 		void *func;
 		ArchiveInvokerBasic(void* _f) : func(_f) {};
 
-		virtual uint8_t invoke(InputArchive&, OutputArchive&) = 0;
+		virtual uint8_t invoke(OutputArchive&, InputArchive&) = 0;
 	};
 
-	template<typename InputArchive>
-	class NoRetArchiveInvokerBasic {
+	template <typename Ret, typename Arg, typename OutputArchive, typename InputArchive>
+	class ArchiveInvoker : public ArchiveInvokerBasic<OutputArchive, InputArchive> {
+		using Parent = ArchiveInvokerBasic<OutputArchive, InputArchive>;
 	public:
-		void *func;
-		NoRetArchiveInvokerBasic(void* _f) : func(_f) {};
+		ArchiveInvoker(void* _f) :ArchiveInvokerBasic<OutputArchive, InputArchive>(_f) {};
+		ArchiveInvoker(const ArchiveInvoker& other) : ArchiveInvokerBasic<OutputArchive, InputArchive>(other.func) {};
 
-		virtual uint8_t invoke(InputArchive&) = 0;
-	};
-
-	template <typename Ret, typename Arg, typename InputArchive, typename OutputArchive>
-	class ArchiveInvoker : public ArchiveInvokerBasic<InputArchive, OutputArchive> {
-	public:
-		ArchiveInvoker(void* _f) :ArchiveInvokerBasic<InputArchive, OutputArchive>(_f) {};
-		ArchiveInvoker(const ArchiveInvoker& other) : ArchiveInvokerBasic<InputArchive, OutputArchive>(other.func) {};
-
-		uint8_t invoke(InputArchive& inar, OutputArchive& outar) {
+		uint8_t invoke(OutputArchive& outar, InputArchive& inar) {
 			Arg  arg;
+			Ret  ret;
 			gxx::load(arg,inar);
-			Ret ret = ((Ret(*)(Arg))ArchiveInvokerBasic<InputArchive, OutputArchive>::func)(arg);
+
+			auto f = (invoke_func_t<Ret,Arg>) Parent::func;
+			uint8_t code = f(ret, arg);
 			gxx::save(ret,outar);
-			return 0;
-		}
-	};
 
-	template <typename Arg, typename InputArchive>
-	class NoRetArchiveInvoker : public NoRetArchiveInvokerBasic<InputArchive> {
-	public:
-		NoRetArchiveInvoker(void* _f) : NoRetArchiveInvokerBasic<InputArchive>(_f) {};
-		NoRetArchiveInvoker(const NoRetArchiveInvoker& other) : NoRetArchiveInvokerBasic<InputArchive>(other.func) {};
-
-		uint8_t invoke(InputArchive& inar) {
-			Arg  arg;
-			gxx::load(arg,inar);
-			((void(*)(Arg))NoRetArchiveInvokerBasic<InputArchive>::func)(arg);
-			return 0;
+			return code;
 		}
-	};
+	};*/
 }
 
 #endif

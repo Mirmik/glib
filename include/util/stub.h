@@ -26,6 +26,16 @@ class DoNothing
 	R do_nothing(V...) { return (R)0; };
 };
 
+class Stub {
+public:
+	template<typename Archive>
+	void save(Archive& ar) {};
+
+	template<typename Archive>
+	void load(Archive& ar) {};
+
+};
+
 #endif //__cplusplus	
 
 #endif 

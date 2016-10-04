@@ -3,115 +3,161 @@
 
 namespace gxx {
 
-	template <typename T> class TupleBase {
+	template <int Deep, typename T> class TupleBase {
 	public:
 		T data;
+		TupleBase() : data() {};
 		TupleBase(const T& value) : data(value) {};
 		T baseValue() const {return data;};
+		T& baseReference() {return data;};
 	}; 
 
-	template <typename Head, typename ... Tail>
-	class Tuple : public Tuple<Tail ...>, public TupleBase<Head> {
+
+
+	template <int Deep, typename Head, typename ... Tail>
+	class TupleImpl : public TupleImpl<Deep-1,Tail ...>, public TupleBase<Deep,Head> {
 	public:
-		using Parent = Tuple<Tail...>;
-		using Base = TupleBase<Head>;
+		using Parent = TupleImpl<Deep-1,Tail...>;
+		using Base = TupleBase<Deep,Head>;
 	
 		//Tuple2() : Parent(), top() {}
-		Tuple(Head head, Tail ... tail) : Parent(tail ...), Base(head) {}
+		TupleImpl(Head head, Tail ... tail) : Parent(tail ...), Base(head) {}
+		TupleImpl() : Parent(), Base() {}
 
-		Head value() const {return baseValue();};
+		static constexpr int deep = Deep;
+		Head value() const {return Base::baseValue();};	
+		Head& reference() {return Base::baseReference();};
+
+		constexpr TupleImpl& get_impl() {return (TupleImpl&)*this;};
 	};
 	
 	template <typename Head>
-	class Tuple <Head> : public TupleBase<Head> {
-		using Base = TupleBase<Head>;
+	class TupleImpl <1,Head> : public TupleBase<1,Head> {
+		using Base = TupleBase<1,Head>;
 	public:	
 		//Tuple2() : top() {};
-		Tuple(Head head) : Base(head) {};
-		Head value() const {return baseValue();};
+		TupleImpl(Head head) : Base(head) {};
+		TupleImpl() : Base() {};
+		static constexpr int deep = 1;
+		Head value() const {return Base::baseValue();};
+		Head& reference() {return Base::baseReference();};
+
+		constexpr TupleImpl& get_impl() {return (TupleImpl&)*this;};
 	};
 
-
-
-/*
 
 
 	template <typename Head, typename ... Tail>
-	class Tuple : public Tuple<Tail ...> {
+	class Tuple : public TupleImpl<sizeof...(Tail) + 1, Head, Tail ...> {
 	public:
-		using Parent = Tuple<Tail...>;
-
-		Head top;
-	
-		Tuple() : Parent(), top() {}
-		Tuple(Head head, Tail ... tail) : Parent(tail ...), top(head) {}
-
-		template<typename TupleType>
-		void assign (const TupleType& other) { 
-			top = other.top; 
-			Parent::assign(static_cast<typename TupleType::Parent>(other)); 
-		}
+		using Parent = TupleImpl<sizeof...(Tail) + 1, Head, Tail ...>;
+		Tuple(Head head, Tail ... tail) : Parent(head, tail ...) {};
+		Tuple() : Parent() {};		
 	};
 	
 	template <typename Head>
-	class Tuple <Head> {
+	class Tuple <Head> : public TupleImpl<1,Head> {
 	public:
-		Head top;
-	
-		Tuple() : top() {};
-		Tuple(Head head) : top(head) {};
-
-		template<typename TupleType>
-		void assign (const TupleType& other) { top = other.top; }
+		using Parent = TupleImpl<1,Head>;
+		Tuple() : Parent() {};	
+		Tuple(Head head) : Parent(head) {};	
 	};
-	
-*/	
+
+	template <typename Tpl>
+	class tuple_size {
+	public:
+		static constexpr int value = Tpl::Parent::deep;
+	};
 
 
 	template <int Index, typename Head, typename ... Tail>
 	class GetImpl {
 	public:
-		static auto value(const Tuple<Head,Tail...> &t) -> decltype(GetImpl<Index - 1, Tail...>::value(t)) {
-			return GetImpl<Index - 1, Tail...>::value(t);
+		static auto get_value(TupleImpl<sizeof...(Tail) + 1,Head,Tail...> &t) -> decltype(GetImpl<Index - 1, Tail...>::get_value(t)) {
+			return GetImpl<Index - 1, Tail...>::get_value(t);
 		}
 	};
 	
 	template <typename Head, typename ... Tail>
 	class GetImpl<0,Head,Tail...> {
 	public:
-		static Head value(const Tuple<Head,Tail...> &t) {
-			return t.value();
+		static Head& get_value(TupleImpl<sizeof...(Tail) + 1,Head,Tail...> &t) {
+			return t.reference();
 		}
 	};
 	
 	template <int Index, typename Head, typename ... Tail>
-	auto get(const Tuple<Head,Tail...>& t) -> decltype(GetImpl<Index,Head,Tail...>::value(t)) {
-		return GetImpl<Index,Head,Tail...>::value(t);
+	auto get(Tuple<Head,Tail...>& t) -> decltype(GetImpl<Index,Head,Tail...>::get_value(t)) {
+		return GetImpl<Index,Head,Tail...>::get_value(t.get_impl());
 	}	
 	
-
-
-
-	/*template<typename Head, typename ... Tail>
-	class Tie : public Tie<Tail...> {
-	public:
-		Head& top;
-
-		Tie(Head& head, Tail& ... tail) : top(head), Tie<Tail...>(tail ...) {}
-	};
-
-	template<typename Head>
-	class Tie <Head> {
-	public:
-		Head& top;
-
-		Tie(Head& head) : top(head) {}
-	};*/
-
 	template <typename ... Args>
 	Tuple<Args&...> tie (Args& ... args) {
 		return Tuple<Args&...>(args...);
 	}
+
+
+	// Главная роль здесь у шаблона класса iterate_tuple.
+    
+    // Первый параметр шаблона класса iterate_tuple имеет тип int (index).
+    // Значение этого параметра используется функцией get, 
+    // которая "достает" из кортежа элемент по указанной позиции.
+    
+    // Мы рекурсивно сдвигаем позицию (уменьшаем index на 1) и таким образом
+    // перемещаемся по кортежу.
+    
+    // Когда значение индекса становится равно 0, рекурсия завершается,
+    // благодаря частичной специализации для индекса равного 0.
+    
+    // При этом есть особый случай, когда индекс равен -1. Он соответствует 
+    // ситуации, когда кортеж не содержит ни одного элемента.
+    
+	template<int index, typename Callback, typename... Args>
+	struct iterate_tuple 
+	{
+		static void next(Tuple<Args...>& t, Callback callback) 
+		{
+			// Уменьшаем позицию и рекурсивно вызываем этот же метод 
+			iterate_tuple<index - 1, Callback, Args...>::next(t, callback);
+			
+			// Вызываем обработчик и передаем ему позицию и значение элемента
+			callback(index, gxx::get<index>(t));
+		}
+	};
+	
+	// Частичная специализация для индекса 0 (завершает рекурсию)
+	template<typename Callback, typename... Args>
+	struct iterate_tuple<0, Callback, Args...> 
+	{
+		static void next(Tuple<Args...>& t, Callback callback) 
+		{
+			callback(0, gxx::get<0>(t));
+		}
+	};
+
+	// Частичная специализация для индекса -1 (пустой кортеж)
+	template<typename Callback, typename... Args>
+	struct iterate_tuple<-1, Callback, Args...>
+	{
+		static void next(Tuple<Args...>& t, Callback callback)
+		{
+			// ничего не делаем
+		}
+	};
+
+
+	template<typename Callback, typename... Args>
+	void tuple_for_each(gxx::Tuple<Args...>& t, Callback callback) 
+	{
+	    // Размер кортежа
+		int const t_size = tuple_size<gxx::Tuple<Args...>>::value;
+    
+ 	   	// Запускаем рекурсивный обход элементов кортежа во время компиляции
+		iterate_tuple<t_size - 1, Callback, Args...>::next(t, callback);
+	}
+
+
+
 
 };
 
