@@ -3,6 +3,7 @@
 
 #include <inttypes.h>
 #include <gxx/Allocator.h>
+#include <gxx/container/hash.h>
 
 #include <gxx/buffer.h>
 
@@ -83,6 +84,12 @@ namespace gxx {
 			return *this;
 		}
 
+		bool operator== (const ByteArray& other) {
+			if (m_data == nullptr && other.m_data == nullptr) return true;
+			if (m_data == nullptr || other.m_data == nullptr) return false;
+			return (!strcmp(m_data, other.m_data));
+		}
+
 		void invalidate();
 		ByteArray & shrink();
 		ByteArray & shrink_to_print();
@@ -93,7 +100,7 @@ namespace gxx {
 			dprln("HERE");
 			ar.push(m_size);
 			ar.push(m_data,size());
-		};
+		}
 
 		template<typename Archive>
 		void load(Archive& ar) {
@@ -102,7 +109,11 @@ namespace gxx {
 			ar.pull(sz);
 			ar.pull(buf, sz);
 			copy(buf, sz);
-		};
+		}
+
+		size_t hash(uint32_t seed) const {
+			gxx::hash(m_data, m_size, seed);
+		}
 	};
 	
 	using string = ByteArray;

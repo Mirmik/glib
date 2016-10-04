@@ -97,7 +97,7 @@ public:
 	extern Allocator* defaultAllocator;
 
 class BasicAllocated {
-protected:
+public:
 	Allocator* m_alloc;
 
 public:
@@ -106,6 +106,7 @@ public:
 	};
 
 	BasicAllocated() : m_alloc(gxx::defaultAllocator) {};
+	BasicAllocated(Allocator* alloc) : m_alloc(alloc) {};
 	BasicAllocated(const BasicAllocated& other) {
 		m_alloc = other.m_alloc;
 	};
