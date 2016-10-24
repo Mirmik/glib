@@ -2,7 +2,7 @@
 #define COMMAND_LIST_H
 
 	#include "util/stub.h"	
-	#include <gxx/container/dlist_head.h>
+	#include <datastruct/dlist_head.h>
 	#include "genos/sigslot/delegate.h"
 	#include <string.h>
 	#include <util/split.h>
