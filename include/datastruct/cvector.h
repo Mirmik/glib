@@ -91,7 +91,7 @@ static inline void* cvector_engage_back(struct cvector_t * cv) {
 	((type*)cvector_cell(cv,num))
 
 #define cvector_array(cv,type) \
-	((type*)cv->data)
+	((type*)(cv)->data)
 
 #define cvector_pushback(cv,type,nelem) \
 	(*(type*)cvector_engage_back(cv) = nelem)
@@ -103,9 +103,12 @@ static inline void* cvector_engage_back(struct cvector_t * cv) {
 	(*(type*)cvector_paste(cv,pos,1) = nelem)
 	
 #define cvector_popback(cv) \
-	(cv->sz--)
+	((cv)->sz--)
 
 #define cvector_popfront(cv) \
 	(cvector_remove(cv,0,1))
+
+#define cvector_foreach(it,cv) \
+	for (it = (typeof(it))((cv)->data); it != ((typeof(it))((cv)->data) + (cv)->sz); it++)
 
 #endif
