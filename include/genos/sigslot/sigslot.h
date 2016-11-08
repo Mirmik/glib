@@ -37,6 +37,15 @@ public:
 	void connect(fnc_t func) {
 		vect.emplace_back(func);
 	}
+
+	template <typename T>
+	void priorityConnect(member<T> mbr, T* obj) {
+		vect.emplace_front(mbr, obj);
+	}
+
+	void priorityConnect(fnc_t func) {
+		vect.emplace_front(func);
+	}
 };
 
 };
