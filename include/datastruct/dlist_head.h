@@ -35,6 +35,7 @@ static inline int8_t dlist_is_empty(struct dlist_head* head)
 {
 	return head == head->next;
 };
+#define dlist_empty(arg) dlist_is_empty(arg)
 
 static inline void __dlist_add(struct dlist_head *_new, struct dlist_head *next, struct dlist_head *prev) 
 {
