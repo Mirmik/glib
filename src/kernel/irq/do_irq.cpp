@@ -2,6 +2,7 @@
 #include "debug/dprint.h"
 
 namespace Kernel {
+
 	unsigned char __interrupt_context = 0;
 
 	void do_irq(uint8_t irq) {
@@ -14,4 +15,5 @@ namespace Kernel {
 	unsigned char is_interrupt_context() {
 		return __interrupt_context;
 	}
+
 }

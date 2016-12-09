@@ -117,8 +117,7 @@ namespace gxx {
 		return 1;
 	}
 	
-
-	unsigned char string::concat(char c) {
+	unsigned char ByteArray::concat(char c) {
 		return concat(&c, 1);
 	}
 

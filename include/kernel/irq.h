@@ -7,25 +7,25 @@
 
 #include <arch/irq.h>
 
-typedef void(*IRQHandler)(void*);
+namespace Kernel {
 
-struct IRQTableRecord {
-	IRQHandler 	handler;
-	void* 		argument;
-	volatile uint16_t count;
+	using IRQHandler = void(*)(void*);
+
+	struct IRQTableRecord {
+		IRQHandler 	handler;
+		void* 		argument;
+		volatile uint16_t count;
+	};
+
+	extern struct IRQTableRecord IRQTable[IRQS_TOTAL];
+
+	void do_irq(uint8_t irq) __attribute__((section(".handlers")));
+	unsigned char is_interrupt_context();
+
+	void irqtable_init();
+
+	void setIRQHandler(int irqno, IRQHandler handler, void* arg);
+
 };
-
-__BEGIN_DECLS
-
-extern struct IRQTableRecord IRQTable[IRQS_TOTAL];
-
-void do_irq(uint8_t irq) __attribute__((section(".handlers")));
-unsigned char is_interrupt_context();
-
-void irqtable_init();
-
-void setIRQHandler(int irqno, IRQHandler handler, void* arg);
-
-__END_DECLS
 
 #endif

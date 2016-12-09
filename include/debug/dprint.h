@@ -4,9 +4,9 @@
 #include <inttypes.h> 
 #include <compiler.h>
 
-//#ifdef __cplusplus
-//#include "gxx/string.h"
-//#endif
+#ifdef __cplusplus
+#include "gxx/buffer.h"
+#endif
 
 /*	
 	2012-2015 Mirmik
@@ -132,6 +132,11 @@ void dpr(bool obj);
 void dpr(float obj);
 void dpr(double obj);
 
+template <typename Buffer>
+void dpr(const Buffer& obj) {
+	debug_write(obj.data(), obj.size());
+}
+
 void dprbin(uint8_t obj);
 void dprbin(uint16_t obj);
 void dprbin(uint32_t obj);
@@ -142,6 +147,10 @@ void dprbin(int16_t obj);
 void dprbin(int32_t obj);
 void dprbin(int64_t obj);
 
+template <typename Buffer>
+void dprhex(const Buffer& obj) {
+	debug_print_dump(obj.data(), obj.size());
+}
 
 void dprhex(const char* obj);
 void dprhex(char obj);
@@ -163,19 +172,19 @@ void dprhex(int64_t obj);
 void dpr_dump(void* obj, uint32_t size);
 void dpr_dump_ascii(void* obj, uint32_t size);
 
-template<typename T> void dprptr(T* obj) 
+template<typename T> void dprptr(const T*& obj) 
 	{ debug_printhex_ptr((void*)obj); };
 
-template<typename T> void dprln(T obj) 
+template<typename T> void dprln(const T& obj) 
 	{ dpr(obj); debug_write("\r\n", 2); };
 
-template<typename T> void dprbinln(T obj) 
+template<typename T> void dprbinln(const T& obj) 
 	{ dprbin(obj); debug_write("\r\n", 2); };
 
-template<typename T> void dprhexln(T obj) 
+template<typename T> void dprhexln(const T& obj) 
 	{ dprhex(obj); debug_write("\r\n", 2); };
 
-template<typename T> void dprptrln(T obj) 
+template<typename T> void dprptrln(const T& obj) 
 	{ dprptr(obj); debug_write("\r\n", 2); };
 
 void dprtab();

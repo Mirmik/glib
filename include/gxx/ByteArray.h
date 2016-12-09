@@ -43,7 +43,7 @@ namespace gxx {
 		
 		unsigned char concat(const char *cstr, size_t length);
 		unsigned char concat(const char *cstr);
-		unsigned char concat(char cstr);
+		unsigned char concat(char chr);
 		
 		unsigned char concat(uint8_t num, uint8_t base = 10);
 		unsigned char concat(uint16_t num, uint8_t base = 10);

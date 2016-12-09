@@ -20,8 +20,8 @@ struct schedee_operations {
 struct schedee_t {
 	dlist_head lnk;
 
-	uint8_t static_prio;
-	uint8_t prio;
+	uint16_t static_prio;
+	uint16_t prio;
 	uint8_t flags;
 
 	const struct schedee_operations* ops;
