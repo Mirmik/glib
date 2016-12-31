@@ -2,9 +2,9 @@
 
 //debug_putchar реализуется в основной программе.
 	
-void debug_write(const char*c, int i)
-{
+void debug_write(const void * c, int i) {
+	const char * chr = c; 
 	while(i--) 
-		debug_putchar(*c++);
+		debug_putchar(*chr++);
 };
 	

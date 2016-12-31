@@ -4,7 +4,7 @@
 #include "stdint.h"
 #include "defines/size_t.h"
 #include <string.h>
-#include <assert.h>
+//#include <assert.h>
 
 namespace gxx {
 

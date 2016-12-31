@@ -12,6 +12,8 @@
 #include <string.h>
 #include <alloca.h>
 
+int rand(void);
+
 /**
  * Swap two elements of specified size.
  */

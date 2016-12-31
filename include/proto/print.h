@@ -16,11 +16,22 @@
 class Print {
 public:
 	
-	int putc(char c) {
+	virtual int putc(char c) {
 		write(&c,1);
 	}
 
 	virtual int write(const char*, size_t) = 0;
+
+	/*inline int __putcharWrite(const char* data, size_t size) {
+		const char* end = data + size;
+		size_t ret = 0;
+
+		for (data != end) {
+			ret += putchar(data++);
+		};
+
+		return ret;
+	}*/
 
 	int print(const char* str) {
 		return write(str, strlen(str));
@@ -29,7 +40,7 @@ public:
 	int print(int8_t num, uint8_t base = 10) {
 		char buf[32];
 		auto ptr = backward_numput_simple(buf, 32, num, base);
-		write(ptr, buf + 32 - ptr);
+		return write(ptr, buf + 32 - ptr);
 	}
 
 	int print(int16_t num, uint8_t base = 10) {

@@ -20,4 +20,27 @@ struct usart_regs {
   uint16_t      RESERVED6;  /*!< Reserved, 0x1A                                                */
 };
 
+struct usart_irqno {
+  uint8_t rx_irqno;
+  uint8_t tx_irqno;
+  uint8_t tx_complete_irqno;
+};
+
+/******************  Bit definition for USART_CR1 register  *******************/
+#define  USART_CR1_SBK                       ((uint16_t)0x0001)            /*!<Send Break                             */
+#define  USART_CR1_RWU                       ((uint16_t)0x0002)            /*!<Receiver wakeup                        */
+#define  USART_CR1_RE                        ((uint16_t)0x0004)            /*!<Receiver Enable                        */
+#define  USART_CR1_TE                        ((uint16_t)0x0008)            /*!<Transmitter Enable                     */
+#define  USART_CR1_IDLEIE                    ((uint16_t)0x0010)            /*!<IDLE Interrupt Enable                  */
+#define  USART_CR1_RXNEIE                    ((uint16_t)0x0020)            /*!<RXNE Interrupt Enable                  */
+#define  USART_CR1_TCIE                      ((uint16_t)0x0040)            /*!<Transmission Complete Interrupt Enable */
+#define  USART_CR1_TXEIE                     ((uint16_t)0x0080)            /*!<TXE Interrupt Enable                    */
+#define  USART_CR1_PEIE                      ((uint16_t)0x0100)            /*!<PE Interrupt Enable                    */
+#define  USART_CR1_PS                        ((uint16_t)0x0200)            /*!<Parity Selection                       */
+#define  USART_CR1_PCE                       ((uint16_t)0x0400)            /*!<Parity Control Enable                  */
+#define  USART_CR1_WAKE                      ((uint16_t)0x0800)            /*!<Wakeup method                          */
+#define  USART_CR1_M                         ((uint16_t)0x1000)            /*!<Word length                            */
+#define  USART_CR1_UE                        ((uint16_t)0x2000)            /*!<USART Enable                           */
+#define  USART_CR1_OVER8                     ((uint16_t)0x8000)            /*!<USART Oversampling by 8 enable         */
+
 #endif

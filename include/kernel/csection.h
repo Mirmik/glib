@@ -3,11 +3,10 @@
 
 #include <hal/ipl.h>
 
-namespace Kernel {
+//ipl_t critical_section_enter();
+//void critical_section_leave(ipl_t);
 
-	ipl_t enter_critical_section();
-	void leave_critical_section(ipl_t);
-
-};
+void atomic_section_enter();
+void atomic_section_leave();
 
 #endif

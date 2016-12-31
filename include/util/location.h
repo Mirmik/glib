@@ -18,8 +18,7 @@ struct location {
 	__current_location;					\
 })
 
-static inline void debug_print_location(struct location location)
-{
+static inline void debug_print_location(struct location location) {
 	debug_print("file: "); debug_print(location.file); dln();
 	debug_print("func: "); debug_print(location.func); dln();
 	debug_print("line: "); debug_printdec_uint16(location.line); dln();

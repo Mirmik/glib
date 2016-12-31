@@ -4,6 +4,7 @@
 #include "genos_configure.h" /* for default_allocator */
 
 #include <stdlib.h>
+#include <stdio.h>
 
 struct alloc_t;
 typedef struct alloc_t alloc_t;

@@ -1,18 +1,10 @@
-/**
- * @file
- * @brief ISO C99: 7.18 Integer types.
- *
- * @date 09.03.10
- * @author Eldar Abusalimov
- */
-
 #ifndef STDINT_H_
 #define STDINT_H_
 
 #include <asm/types.h>
 
 #ifndef __WORDSIZE
-# error "You must define __WORDSIZE in asm/types.h"
+# error "You must define __WORDSIZE in types.h"
 #endif
 
 #ifndef __ASSEMBLER__

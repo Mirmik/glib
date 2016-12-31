@@ -36,12 +36,12 @@ inline static struct ring_head* ring_fixup_tail(struct ring_head* r)
 	return r; 
 };
 
-inline static int8_t ring_is_empty(struct ring_head* r)
+inline static int8_t ring_empty(struct ring_head* r)
 {
 	return r->head == r->tail;
 };
 
-inline static int8_t ring_is_full(struct ring_head* r)
+inline static int8_t ring_full(struct ring_head* r)
 {
 	return r->head == (r->tail ? r->tail : r->size) - 1;
 };
@@ -89,14 +89,14 @@ inline static struct ring_head* ring_move_tail(struct ring_head* r, size_t bias)
 }
 
 inline static int ring_putc(struct ring_head* r, char* buffer, char c) {
-	if (ring_is_full(r)) return 0;	
+	if (ring_full(r)) return 0;	
 	*(buffer + r->head) = c;
 	ring_move_head_one(r);
 	return 1;
 };
 
 inline static int ring_getc(struct ring_head* r, char* buffer) {
-	if (ring_is_empty(r)) return 0;	
+	if (ring_empty(r)) return 0;	
 	char c = *(buffer + r->tail);
 	ring_move_tail_one(r);
 	return 1;

@@ -22,9 +22,9 @@
 
 .global memcpy
 .global main
-.global arch_init
-.global board_init
 .global end_of_programm
+.global cxx_invoke_init_array
+.global cxx_invoke_fini_array
 
 .section    .text
 .global __start
@@ -38,14 +38,14 @@ __start:
     ldr     r2, =_data_size
     bl	    memcpy
 
-    /*processor and peripheral init*/
-    bl      arch_init
-
-    /*board peripheral configure*/
-    bl 		board_init
+    /* init array invoke */
+    bl cxx_invoke_init_array
 
     /*user program*/
     bl 		main
+
+    /* fini array invoke */
+    bl cxx_invoke_fini_array
 
     /*return from main function*/
     bl end_of_programm

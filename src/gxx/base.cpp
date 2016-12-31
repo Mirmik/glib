@@ -3,7 +3,7 @@
 
 #include <inttypes.h>
 #include <gxx/Allocator.h>
-#include <genos_configure.h>
+#include "genos_configure.h"
 
 namespace gxx {
 

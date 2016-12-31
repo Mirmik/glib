@@ -3,14 +3,13 @@
 
 #include "compiler.h"
 #include "inttypes.h"
-#include "periph/regs/gpio.h"
+#include "asm/gpio.h"
 
 #define GPIO_MODE_IN_SECTION          0x000000FF
 #define GPIO_MODE_OUT_SECTION         0x0000FF00
-#define GPIO_MODE_INT_SECTION         0xFF000000
 
-#define GPIO_MODE_INPUT             ((int32_t)1 << 0)
-#define GPIO_MODE_OUTPUT            ((int32_t)1 << 16)
+#define GPIO_MODE_INPUT             	((int32_t)1 << 0)
+#define GPIO_MODE_OUTPUT            	((int32_t)1 << 16)
 
 __BEGIN_DECLS
 
